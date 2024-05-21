@@ -71,12 +71,12 @@ def setup_model():
 
     # Check if model files are already downloaded, else download them
     model_files = {
-        'config.json': 'https://github.com/vgentile98/text_difficulty_prediction/raw/main/app/config.json',
-        'tokenizer_config.json': 'https://github.com/vgentile98/text_difficulty_prediction/raw/main/app/tokenizer_config.json',
-        'special_tokens_map.json': 'https://github.com/vgentile98/text_difficulty_prediction/raw/main/app/special_tokens_map.json',
-        'added_tokens.json': 'https://github.com/vgentile98/text_difficulty_prediction/raw/main/app/added_tokens.json',
-        'model.safetensors': 'https://github.com/vgentile98/text_difficulty_prediction/raw/main/app/model.safetensors',
-        'sentencepiece.bpe': 'https://github.com/vgentile98/text_difficulty_prediction/raw/main/app/sentencepiece.bpe.model'
+        'config.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/config.json',
+        'tokenizer_config.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/tokenizer_config.json',
+        'special_tokens_map.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/special_tokens_map.json',
+        'added_tokens.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/added_tokens.json',
+        'model.safetensors': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/model.safetensors',
+        'sentencepiece.bpe': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/sentencepiece.bpe.model'
     }
 
     for file_name, url in model_files.items():
