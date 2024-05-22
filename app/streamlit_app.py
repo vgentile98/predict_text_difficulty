@@ -8,6 +8,7 @@ import streamlit.components.v1 as components
 from itertools import cycle
 from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
+import isodate
 
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 
@@ -60,34 +61,51 @@ def assign_article_levels(articles):
 # YouTube API key
 youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
         
-# Fetch YouTube videos based on category with available transcripts
+# Fetch YouTube videos with transcripts
 def fetch_youtube_videos_with_transcripts(query):
     youtube = build('youtube', 'v3', developerKey=youtube_api_key)
     search_response = youtube.search().list(
         q=query,
         part='id,snippet',
-        type='video',
         maxResults=5,
-        regionCode='FR',
+        type='video',
+        videoCaption='closedCaption',
         relevanceLanguage='fr'
     ).execute()
 
     videos = []
-    for item in search_response['items']:
+    for item in search_response.get('items', []):
         video_id = item['id']['videoId']
-        try:
-            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['fr'])
-            full_text = " ".join([text['text'] for text in transcript])
-            videos.append({
-                'id': video_id,
-                'title': item['snippet']['title'],
-                'description': item['snippet']['description'],
-                'transcript': full_text
-            })
-        except (TranscriptsDisabled, NoTranscriptFound):
-            continue
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+        video_title = item['snippet']['title']
+        video_description = item['snippet']['description']
+        video_url = f'https://www.youtube.com/watch?v={video_id}'
+        video_duration = youtube.videos().list(
+            part='contentDetails',
+            id=video_id
+        ).execute()['items'][0]['contentDetails']['duration']
+
+        # Convert duration from ISO 8601 format to seconds
+        duration_seconds = isodate.parse_duration(video_duration).total_seconds()
+
+        if duration_seconds <= 480:  # 8 minutes
+            try:
+                transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+                transcript = transcript_list.find_transcript(['fr'])
+                transcript_text = " ".join([text['text'] for text in transcript.fetch()])
+
+                videos.append({
+                    'video_id': video_id,
+                    'title': video_title,
+                    'description': video_description,
+                    'url': video_url,
+                    'transcript': transcript_text,
+                })
+            except (TranscriptsDisabled, NoTranscriptFound, Exception):
+                continue
+
+        if len(videos) >= 3:
+            break
+
     return videos
         
 # Dummy function to assign levels to videos based on the transcript
