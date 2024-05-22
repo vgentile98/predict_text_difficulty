@@ -46,6 +46,27 @@ def is_valid_image_url(url):
         return response.status_code == 200 and 'image' in response.headers['Content-Type']
     except requests.RequestException:
         return False
+        
+# Fetch YouTube videos
+youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
+youtube_base_url = "https://www.googleapis.com/youtube/v3/search"
+
+def fetch_youtube_videos(query):
+    params = {
+        'part': 'snippet',
+        'q': query,
+        'type': 'video',
+        'maxResults': 3,
+        'key': youtube_api_key,
+        'regionCode': 'FR',
+        'relevanceLanguage': 'fr'
+    }
+    response = requests.get(youtube_base_url, params=params)
+    if response.status_code == 200:
+        return response.json()['items']
+    else:
+        st.error('Failed to retrieve YouTube videos.')
+        return []
 
 # Function to assign levels to articles
 def assign_article_levels(articles):
@@ -315,6 +336,38 @@ def main():
                     st.markdown("---")
         else:
             st.write("No articles found. Try adjusting your filters.")
+        
+        # Fetch and display YouTube videos
+        videos = fetch_youtube_videos(category)
+        if videos:
+            for idx, video in enumerate(videos):
+                with st.container():
+                    col1, col2 = st.columns([0.9, 0.1])
+                    with col1:
+                        st.video(f"https://www.youtube.com/watch?v={video['id']['videoId']}")
+                    with col2:
+                        st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{category.capitalize()}</strong></div>", unsafe_allow_html=True)
+                    st.subheader(video['snippet']['title'])
+                    st.write(video['snippet']['description'])
+                    with st.expander("**Watch Now**", expanded=False):
+                        st.write("#### Full Video")
+                        st.video(f"https://www.youtube.com/watch?v={video['id']['videoId']}")
+                        st.write("#### How was it?")  # Prompt for feedback
+                        cols = st.columns(7, gap="small")
+                        feedback_options = [
+                            ('Too Easy', '😌'),
+                            ('Just Right', '😊'),
+                            ('Challenging', '😅'),
+                            ('Too Difficult', '😓')
+                        ]
+                        for i, (option, emoji) in enumerate(feedback_options):
+                            if cols[i].button(f"{emoji} {option}", key=f"video_feedback_{idx}_{i}"):
+                                new_level = update_user_level(user_id, option)
+                                st.session_state['users'][user_id]['level'] = new_level
+                                st.experimental_rerun()
+                    st.markdown("---")
+        else:
+            st.write("No videos found. Try adjusting your filters.")
 
 if __name__ == '__main__':
     main()
