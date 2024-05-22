@@ -48,12 +48,12 @@ def is_valid_image_url(url):
         return False
 
 # Function to assign levels to articles
-# def assign_article_levels(articles):
-#     level_cycle = cycle(cefr_levels)  # Create a cycle iterator from CEFR levels
-#     valid_articles = [article for article in articles if is_valid_image_url(article.get('image'))]
-#     for article in valid_articles:
-#         article['level'] = next(level_cycle)  # Assign levels in a cyclic manner
-#     return valid_articles
+def assign_article_levels(articles):
+     level_cycle = cycle(cefr_levels)  # Create a cycle iterator from CEFR levels
+     valid_articles = [article for article in articles if is_valid_image_url(article.get('image'))]
+     for article in valid_articles:
+         article['level'] = next(level_cycle)  # Assign levels in a cyclic manner
+     return valid_articles
 
 # Load the model from GitHub
 def download_file_from_github(url, destination):
@@ -235,7 +235,7 @@ def main():
 
         articles = fetch_news(category)
         if articles:
-            articles = predict_article_levels(articles, model, tokenizer)
+            articles = assign_article_levels(articles)
             articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))]
             for idx, article in enumerate(articles):
                 with st.container():
