@@ -172,16 +172,15 @@ def initial_assessment():
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 0px;
+            margin-bottom: 20px;
             color: #241000;
-            min-height: 95px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .question-text {
             font-size: 16px;
-            margin-bottom: 0px;
-        }
-        .radio-button {
-            margin-top: 0px;
             margin-bottom: 10px;
         }
         </style>
