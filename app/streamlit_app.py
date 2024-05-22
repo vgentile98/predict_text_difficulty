@@ -257,7 +257,11 @@ def main():
 
     else:
         # Title
-        st.title('Voilà ! My Top Picks Just for You')
+        col1, col2, col3 = st.columns([2, 1, 1])
+        with col1:
+            st.title('Voilà ! My Top Picks Just for You')
+        with col2:
+            st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_articles.png", width=250)
 
         # Select options for the API request
         category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
