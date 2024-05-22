@@ -181,7 +181,8 @@ def initial_assessment():
             margin-bottom: 0px;
         }
         .radio-button {
-            margin-top: 10px;
+            margin-top: 0px;
+            margin-bottom: 10px;
         }
         </style>
         """,
