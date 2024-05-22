@@ -149,7 +149,7 @@ def initial_assessment():
     with col1:
         st.title('Bonjour ! I\'m Baguette, your new French buddy')
         st.subheader("Let\'s start our adventure with a game")
-        st.text("Read each sentence and choose the main idea from the options below. Let\'s see how much you already know!")
+        st.write("Read each sentence and choose the main idea from the options below. Let\'s see how much you already know!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_bonjour.png", width=200)
 
