@@ -28,7 +28,7 @@ def fetch_news(category):
         'access_key': mediastack_api_key,
         'languages': "fr",
         'categories': category,
-        'limit': 1
+        'limit': 3
     }
     response = requests.get(base_url, params=params)
     if response.status_code == 200:
