@@ -56,9 +56,13 @@ def assign_article_levels(articles):
      for article in valid_articles:
          article['level'] = next(level_cycle)  # Assign levels in a cyclic manner
      return valid_articles
+
+# YouTube API key
+youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
         
 # Fetch YouTube videos based on category with available transcripts
 def fetch_youtube_videos_with_transcripts(query):
+    youtube = build('youtube', 'v3', developerKey=youtube_api_key)
     search_response = youtube.search().list(
         q=query,
         part='id,snippet',
