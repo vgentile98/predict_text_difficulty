@@ -163,42 +163,44 @@ def initial_assessment():
         ("Auparavant, la duplication de l'ADN se faisait par clonage moléculaire : la séquence d'intérêt était insérée dans le génome d'une bactérie et l'on se servait du taux de croissance élevé du micro-organisme pour obtenir autant de clones de la séquence d'ADN.", ["DNA duplication was done through molecular cloning.", "DNA was duplicated by using viruses.", "Molecular cloning was used to destroy DNA."], 0, 'C2')
     ]
 
-    total_score = 0
+    responses = {}
 
-    for idx, (sentence, options, correct_idx, level) in enumerate(questions):
-        col1, col2 = st.columns(2)
-        with col1:
-            if idx % 2 == 0:
-                st.markdown(f"<div style='background-color: white; padding: 15px; border-radius: 10px;'><b>{idx + 1}. {sentence}</b></div>", unsafe_allow_html=True)
-                selected_option = st.radio("Choose the main idea:", options, key=f"assessment_{idx}")
-                if selected_option == options[correct_idx]:
-                    total_score += 1
-        with col2:
-            if idx % 2 != 0:
-                st.markdown(f"<div style='background-color: white; padding: 15px; border-radius: 10px;'><b>{idx + 1}. {sentence}</b></div>", unsafe_allow_html=True)
-                selected_option = st.radio("Choose the main idea:", options, key=f"assessment_{idx}")
-                if selected_option == options[correct_idx]:
-                    total_score += 1
+    for i in range(0, len(questions), 2):
+        cols = st.columns(2)
+        for col, (sentence, choices, correct, level) in zip(cols, questions[i:i+2]):
+            with col:
+                st.markdown(
+                    f"<div style='background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px;'>"
+                    f"<b>{i+1}. {sentence}</b></div>",
+                    unsafe_allow_html=True
+                )
+                responses[f"q_{i}"] = st.radio(
+                    "Choose the main idea:",
+                    choices,
+                    key=f"q_{i}"
+                )
 
-    if st.button("Submit Assessment"):
+    if st.button("Submit"):
+        total_score = 0
+        for i, (_, choices, correct, level) in enumerate(questions):
+            if responses.get(f"q_{i}") == choices[correct]:
+                total_score += 1
+
         user_id = 'default_user'
         if total_score <= 2:
-            initial_level = 'A1'
+            st.session_state['users'][user_id]['level'] = 'A1'
         elif total_score <= 4:
-            initial_level = 'A2'
+            st.session_state['users'][user_id]['level'] = 'A2'
         elif total_score <= 6:
-            initial_level = 'B1'
+            st.session_state['users'][user_id]['level'] = 'B1'
         elif total_score <= 8:
-            initial_level = 'B2'
+            st.session_state['users'][user_id]['level'] = 'B2'
         elif total_score <= 10:
-            initial_level = 'C1'
+            st.session_state['users'][user_id]['level'] = 'C1'
         else:
-            initial_level = 'C2'
+            st.session_state['users'][user_id]['level'] = 'C2'
         
-        st.session_state['users'][user_id]['level'] = initial_level
         st.session_state['initial_assessment'] = False
-        st.experimental_rerun()
-
 def main():
     ensure_user_data()
 
