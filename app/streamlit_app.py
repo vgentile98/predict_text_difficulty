@@ -174,7 +174,7 @@ def initial_assessment():
                     <div style='background-color: #cba181; padding: 20px; border-radius: 10px; margin-bottom: 10px;'>
                         <b>{j+k+1}. {sentence}</b>
                         <div style='margin-top: 10px;'>
-                            {st.radio("", choices, key=f"q_{j+k}", index=-1)}
+                            {st.radio("", choices, key=f"q_{j+k}")}
                         </div>
                     </div>
                     """,
