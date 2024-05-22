@@ -145,8 +145,8 @@ def predict_article_levels(articles, model, tokenizer):
 
 # Function for initial assessment
 def initial_assessment():
-    st.title('Initial French Level Assessment')
-    st.write("Select the main idea of the following sentences:")
+    st.title('Bonjour ! Let's start with a game')
+    st.write("Can you guess the main idea of these sentences?")
 
     questions = [
         ("Le restaurant 'Bon appétit' recherche des serveurs pour l'été.", ["A restaurant is looking for summer staff.", "A restaurant is closing for the summer.", "A restaurant is changing its menu."], 0, 'A1'),
