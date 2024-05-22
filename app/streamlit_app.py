@@ -163,19 +163,17 @@ def initial_assessment():
         ("Auparavant, la duplication de l'ADN se faisait par clonage moléculaire : la séquence d'intérêt était insérée dans le génome d'une bactérie et l'on se servait du taux de croissance élevé du micro-organisme pour obtenir autant de clones de la séquence d'ADN.", ["DNA duplication was done through molecular cloning.", "DNA was duplicated by using viruses.", "Molecular cloning was used to destroy DNA."], 0, 'C2')
     ]
 
-    responses = {}
-
     for j in range(0, len(questions), 2):
         cols = st.columns(2)
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
-                    f"<div style='background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px;'>"
+                    f"<div style='background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; min-height: 200px;'>"
                     f"<b>{j+k+1}. {sentence}</b></div>",
                     unsafe_allow_html=True
                 )
                 responses[f"q_{j+k}"] = st.radio(
-                    "Choose the main idea:",
+                    "",
                     choices,
                     key=f"q_{j+k}"
                 )
