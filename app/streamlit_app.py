@@ -170,14 +170,15 @@ def initial_assessment():
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
-                    f"<div style='background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; min-height: 80px;'>"
-                    f"<b>{j+k+1}. {sentence}</b></div>",
+                    f"""
+                    <div style='background-color: #cba181; padding: 20px; border-radius: 10px; margin-bottom: 10px;'>
+                        <b>{j+k+1}. {sentence}</b>
+                        <div style='margin-top: 10px;'>
+                            {st.radio("", choices, key=f"q_{j+k}", index=-1)}
+                        </div>
+                    </div>
+                    """,
                     unsafe_allow_html=True
-                )
-                responses[f"q_{j+k}"] = st.radio(
-                    "",
-                    choices,
-                    key=f"q_{j+k}"
                 )
 
     if st.button("Submit"):
