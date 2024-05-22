@@ -172,9 +172,9 @@ def initial_assessment():
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: -10px;
+            margin-top: 5px;
             color: #241000;
-            min-height: 95px;
+            min-height: 90px;
         }
         .question-text {
             font-size: 16px;
