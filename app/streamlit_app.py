@@ -190,25 +190,23 @@ def initial_assessment():
 
     responses = {}
     for j in range(0, len(questions), 2):
-        cols = st.columns(2, gap="medium")
+        cols = st.columns(2, gap="large")
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
                     f"""
                     <div class='question-box'>
                         <div class='question-text'><b>{j+k+1}. {sentence}</b></div>
-                        <div class='radio-button'>
-                            {st.radio("", choices, key=f"q_{j+k}", index=-1)}
-                        </div>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
-                
+                responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
+
     if st.button("Submit"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
-            selected = st.session_state.get(f"q_{i}")
+            selected = responses.get(f"q_{i}")
             if selected == choices[correct]:
                 total_score += 1
 
@@ -227,7 +225,6 @@ def initial_assessment():
             st.session_state['users'][user_id]['level'] = 'C2'
         
         st.session_state['initial_assessment'] = False
-
 
 def main():
     ensure_user_data()
