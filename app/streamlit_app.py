@@ -163,6 +163,8 @@ def initial_assessment():
         ("Auparavant, la duplication de l'ADN se faisait par clonage moléculaire : la séquence d'intérêt était insérée dans le génome d'une bactérie et l'on se servait du taux de croissance élevé du micro-organisme pour obtenir autant de clones de la séquence d'ADN.", ["DNA duplication was done through molecular cloning.", "DNA was duplicated by using viruses.", "Molecular cloning was used to destroy DNA."], 0, 'C2')
     ]
 
+    responses = {}
+
     for j in range(0, len(questions), 2):
         cols = st.columns(2)
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
