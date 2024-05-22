@@ -170,17 +170,17 @@ def initial_assessment():
         with col1:
             if idx % 2 == 0:
                 st.markdown(f"<div style='background-color: white; padding: 15px; border-radius: 10px;'><b>{idx + 1}. {sentence}</b></div>", unsafe_allow_html=True)
-                selected_option = st.radio(options, key=f"assessment_{idx}")
+                selected_option = st.radio("Choose the main idea:", options, key=f"assessment_{idx}")
                 if selected_option == options[correct_idx]:
                     total_score += 1
         with col2:
             if idx % 2 != 0:
                 st.markdown(f"<div style='background-color: white; padding: 15px; border-radius: 10px;'><b>{idx + 1}. {sentence}</b></div>", unsafe_allow_html=True)
-                selected_option = st.radio(options, key=f"assessment_{idx}")
+                selected_option = st.radio("Choose the main idea:", options, key=f"assessment_{idx}")
                 if selected_option == options[correct_idx]:
                     total_score += 1
 
-    if st.button("C'est parti !"):
+    if st.button("Submit Assessment"):
         user_id = 'default_user'
         if total_score <= 2:
             initial_level = 'A1'
