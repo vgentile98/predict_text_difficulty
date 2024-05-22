@@ -176,7 +176,7 @@ def initial_assessment():
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             color: #241000;
-            min-height: 450px;
+            min-height: 200px;
         }
         .question-text {
             font-size: 16px;
