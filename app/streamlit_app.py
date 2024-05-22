@@ -166,28 +166,37 @@ def initial_assessment():
     total_score = 0
 
     for idx, (sentence, options, correct_idx, level) in enumerate(questions):
-        st.write(f"**Sentence {idx + 1}:** {sentence}")
-        answer = st.radio("What is the main idea?", options, key=f"assessment_{idx}")
-        if options.index(answer) == correct_idx:
-            total_score += 1
+        col1, col2 = st.columns(2)
+        with col1:
+            if idx % 2 == 0:
+                st.markdown(f"<div style='background-color: white; padding: 15px; border-radius: 10px;'><b>{idx + 1}. {sentence}</b></div>", unsafe_allow_html=True)
+                selected_option = st.radio("Choose the main idea:", options, key=f"assessment_{idx}")
+                if selected_option == options[correct_idx]:
+                    total_score += 1
+        with col2:
+            if idx % 2 != 0:
+                st.markdown(f"<div style='background-color: white; padding: 15px; border-radius: 10px;'><b>{idx + 1}. {sentence}</b></div>", unsafe_allow_html=True)
+                selected_option = st.radio("Choose the main idea:", options, key=f"assessment_{idx}")
+                if selected_option == options[correct_idx]:
+                    total_score += 1
 
-    if st.button("Submit"):
+    if st.button("C'est parti !"):
         user_id = 'default_user'
         if total_score <= 2:
-            level = 'A1'
+            initial_level = 'A1'
         elif total_score <= 4:
-            level = 'A2'
+            initial_level = 'A2'
         elif total_score <= 6:
-            level = 'B1'
+            initial_level = 'B1'
         elif total_score <= 8:
-            level = 'B2'
+            initial_level = 'B2'
         elif total_score <= 10:
-            level = 'C1'
+            initial_level = 'C1'
         else:
-            level = 'C2'
-        st.session_state['users'][user_id]['level'] = level
+            initial_level = 'C2'
+        
+        st.session_state['users'][user_id]['level'] = initial_level
         st.session_state['initial_assessment'] = False
-        st.write(f"Your level is: {level}")
         st.experimental_rerun()
 
 def main():
