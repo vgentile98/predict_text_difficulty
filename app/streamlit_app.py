@@ -257,7 +257,7 @@ def main():
 
     else:
         # Title
-        st.title('Curated articles just for you')
+        st.title('Voilà ! My Top Picks Just for You')
         st.subheader('Read, learn, and grow at your own pace!')
 
         # Select options for the API request
