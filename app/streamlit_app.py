@@ -296,10 +296,10 @@ def main():
                         st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{article['level']}</strong></div>", unsafe_allow_html=True)
                     st.subheader(article['title'])
                     st.write(article['description'])
-                    with st.expander("**Read Now**", expanded=False):
+                    with st.expander("####Read Now", expanded=False):
                         components.iframe(article['url'], height=450, scrolling=True)
-                        st.write("### How was it?")  # Prompt for feedback
-                        cols = st.columns(4)
+                        st.write("#### How was it?")  # Prompt for feedback
+                        cols = st.columns(4, gap="medium")
                         feedback_options = [
                             ('Too Easy', '😌'),
                             ('Just Right', '😊'),
