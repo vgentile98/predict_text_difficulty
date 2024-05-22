@@ -151,7 +151,7 @@ def initial_assessment():
         st.subheader("Let\'s start our adventure with a game")
         st.write("Read each sentence and choose the main idea from the options below. Let\'s see how much you already know!")
     with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_bonjour.png", width=250)
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_bonjour.png", width=250)
 
     questions = [
         ("Le restaurant 'Bon appétit' recherche des serveurs pour l'été.", ["A restaurant is closing for the summer.", "A restaurant is looking for summer staff.", "A restaurant is changing its menu."], 1, 'A1'),
@@ -244,7 +244,7 @@ def main():
         with col2:
             left_co, cent_co, last_co = st.columns(3)
             with cent_co:
-                st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_logo.png")
+                st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png")
             st.markdown("<h1 style='text-align: center; color: black;'>From 'Oui Oui' to Fluent</h1>", unsafe_allow_html=True)
             st.markdown("<h4 style='text-align: center; color: black;'>Start your journey to master French now</h4>", unsafe_allow_html=True)
             if st.button("Je commence!"):
@@ -262,7 +262,7 @@ def main():
             st.header('Voilà ! My Top Picks Just for You')
             st.subheader('Ready to Explore?')
         with col2:
-            st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_articles.png", width=200)
+            st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_glasses.png", width=200)
 
         # Select options for the API request
         category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
@@ -270,7 +270,7 @@ def main():
 
         # Sidebar elements
         with st.sidebar:
-            logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_logo.png"
+            logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png"
             st.image(logo_url, width=200)
             user_id = 'default_user'
             ensure_user_data()
