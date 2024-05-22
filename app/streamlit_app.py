@@ -187,7 +187,7 @@ def initial_assessment():
 
     responses = {}
     for j in range(0, len(questions), 2):
-        cols = st.columns(2, gap="large")
+        cols = st.columns(2, gap="medium")
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
@@ -200,7 +200,7 @@ def initial_assessment():
                 )
                 responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
                 
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
     if col2.button("C'est parti !"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
