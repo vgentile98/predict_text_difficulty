@@ -200,8 +200,8 @@ def initial_assessment():
                 )
                 responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
                 
-    col1, col2, col3 = st.columns(3)
-    if col2.button("C'est parti !"):
+    st.markdown("<style>div.row-widget.stButton > button:first-child {margin: 0 auto; display: block;}</style>", unsafe_allow_html=True)
+    if st.button("C'est parti !"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
             selected = responses.get(f"q_{i}")
