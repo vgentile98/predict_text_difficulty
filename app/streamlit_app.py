@@ -7,6 +7,7 @@ from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import streamlit.components.v1 as components
 from itertools import cycle
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 import isodate
 
