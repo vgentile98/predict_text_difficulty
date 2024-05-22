@@ -198,18 +198,18 @@ def initial_assessment():
                     <div class='question-box'>
                         <div class='question-text'><b>{j+k+1}. {sentence}</b></div>
                         <div class='radio-button'>
-                        {st.radio("", choices, key=f"q_{j+k}", index=-1)}
+                            {"".join([f"<label><input type='radio' name='q_{j+k}' value='{choice}'/>{choice}</label><br/>" for choice in choices])}
                         </div>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
-                responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
 
     if st.button("Submit"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
-            if responses.get(f"q_{i}") == choices[correct]:
+            selected = st.session_state.get(f"q_{i}")
+            if selected == choices[correct]:
                 total_score += 1
 
         user_id = 'default_user'
