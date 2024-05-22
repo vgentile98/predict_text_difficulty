@@ -170,7 +170,7 @@ def initial_assessment():
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
-                    f"<div style='background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; min-height: 200px;'>"
+                    f"<div style='background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; min-height: 100px;'>"
                     f"<b>{j+k+1}. {sentence}</b></div>",
                     unsafe_allow_html=True
                 )
