@@ -145,7 +145,7 @@ def predict_article_levels(articles, model, tokenizer):
 
 # Function for initial assessment
 def initial_assessment():
-    st.title('Bonjour ! Let's start with a game')
+    st.title('Bonjour ! Let\'s start with a game')
     st.write("Can you guess the main idea of these sentences?")
 
     questions = [
