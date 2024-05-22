@@ -259,7 +259,7 @@ def main():
         # Title
         col1, col2 = st.columns([2, 1])
         with col1:
-            st.title('Voilà ! \ My Top Picks Just for You')
+            st.title('Voilà ! \n My Top Picks Just for You')
         with col2:
             st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_articles.png", width=200)
 
