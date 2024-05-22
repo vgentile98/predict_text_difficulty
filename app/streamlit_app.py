@@ -258,10 +258,9 @@ def main():
     else:
         # Title
         st.title('Voilà ! My Top Picks Just for You')
-        st.subheader('Read, learn, and grow at your own pace!')
 
         # Select options for the API request
-        category = st.selectbox("What do you want to read about?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
+        category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
         st.markdown("---")
 
         # Sidebar elements
