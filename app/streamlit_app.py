@@ -204,7 +204,7 @@ def initial_assessment():
                 )
                 responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
 
-   st.markdown("<div class='center-button'>", unsafe_allow_html=True)
+    st.markdown("<div class='center-button'>", unsafe_allow_html=True)
     if st.button("C'est parti !"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
