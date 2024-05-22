@@ -299,7 +299,7 @@ def main():
                     with st.expander("<h4><strong>Read Now</strong></h4>", expanded=False):
                         components.iframe(article['url'], height=450, scrolling=True)
                         st.write("#### How was it?")  # Prompt for feedback
-                        cols = st.columns(5, gap="small")
+                        cols = st.columns(8, gap="small")
                         feedback_options = [
                             ('Too Easy', '😌'),
                             ('Just Right', '😊'),
