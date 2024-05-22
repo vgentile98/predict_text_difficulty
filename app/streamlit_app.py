@@ -259,8 +259,8 @@ def main():
         # Title
         col1, col2 = st.columns([2, 1])
         with col1:
-            st.header('Voilà !')
-            st.subheader('My Top Picks Just for You')
+            st.header('Voilà ! My Top Picks Just for You')
+            st.subheader('Ready to Explore?')
         with col2:
             st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_articles.png", width=200)
 
