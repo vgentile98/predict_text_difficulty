@@ -3,3 +3,4 @@ requests
 transformers
 tokenizers
 sentencepiece
+torch
