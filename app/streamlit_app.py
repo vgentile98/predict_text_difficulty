@@ -163,8 +163,6 @@ def initial_assessment():
         ("Auparavant, la duplication de l'ADN se faisait par clonage moléculaire : la séquence d'intérêt était insérée dans le génome d'une bactérie et l'on se servait du taux de croissance élevé du micro-organisme pour obtenir autant de clones de la séquence d'ADN.", ["DNA duplication was done through molecular cloning.", "DNA was duplicated by using viruses.", "Molecular cloning was used to destroy DNA."], 0, 'C2')
     ]
 
-    responses = {}
-
     # CSS style for custom design
     st.markdown(
         """
@@ -176,7 +174,7 @@ def initial_assessment():
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             color: #241000;
-            min-height: 200px;
+            min-height: 250px;
         }
         .question-text {
             font-size: 16px;
@@ -190,8 +188,9 @@ def initial_assessment():
         unsafe_allow_html=True
     )
 
+    responses = {}
     for j in range(0, len(questions), 2):
-        cols = st.columns(2, gap="medium")
+        cols = st.columns(2, gap="large")
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
@@ -199,13 +198,13 @@ def initial_assessment():
                     <div class='question-box'>
                         <div class='question-text'><b>{j+k+1}. {sentence}</b></div>
                         <div class='radio-button'>
-                            {"".join([f"<label><input type='radio' name='q_{j+k}' value='{choice}'/>{choice}</label><br/>" for choice in choices])}
+                            {st.radio("", choices, key=f"q_{j+k}", index=-1)}
                         </div>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
-
+                
     if st.button("Submit"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
