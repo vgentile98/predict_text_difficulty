@@ -150,7 +150,7 @@ def initial_assessment():
         st.title('Bonjour ! Let\'s start with a game')
         st.subheader("Can you guess the main idea of these sentences?")
     with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_bonjour.png")
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_bonjour.png", width=200)
 
     questions = [
         ("Le restaurant 'Bon appétit' recherche des serveurs pour l'été.", ["A restaurant is looking for summer staff.", "A restaurant is closing for the summer.", "A restaurant is changing its menu."], 0, 'A1'),
