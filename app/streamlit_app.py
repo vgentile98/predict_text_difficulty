@@ -297,9 +297,10 @@ def main():
                     st.subheader(article['title'])
                     st.write(article['description'])
                     with st.expander("<h4><strong>Read Now</strong></h4>", expanded=False):
+                        st.markdown("<h4><strong>Read Now</strong></h4>", unsafe_allow_html=True)
                         components.iframe(article['url'], height=450, scrolling=True)
                         st.write("#### How was it?")  # Prompt for feedback
-                        cols = st.columns(8, gap="small")
+                        cols = st.columns(6, gap="small")
                         feedback_options = [
                             ('Too Easy', '😌'),
                             ('Just Right', '😊'),
