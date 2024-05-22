@@ -184,7 +184,7 @@ def initial_assessment():
             margin-top: 0px;
             margin-bottom: 10px;
         }
-                .center-button {
+        .center-button {
             display: flex;
             justify-content: center;
             align-items: center;
