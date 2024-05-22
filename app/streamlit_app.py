@@ -66,7 +66,7 @@ def download_file_from_github(url, destination):
 
 def setup_model():
     """Setup the model by ensuring all necessary files are downloaded and loaded."""
-    model_dir = 'text_difficulty_prediction/app'
+    model_dir = 'predict_text_difficulty/app'
     os.makedirs(model_dir, exist_ok=True)
 
     # Check if model files are already downloaded, else download them
@@ -199,7 +199,7 @@ def main():
         with col2:
             left_co, cent_co, last_co = st.columns(3)
             with cent_co:
-                st.image("https://raw.githubusercontent.com/vgentile98/text_difficulty_prediction/main/app/baguette_logo.png")
+                st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_logo.png")
             st.markdown("<h1 style='text-align: center; color: black;'>From 'Oui Oui' to Fluent</h1>", unsafe_allow_html=True)
             st.markdown("<h4 style='text-align: center; color: black;'>Start your journey to master French now</h4>", unsafe_allow_html=True)
             if st.button("Je commence!"):
@@ -221,7 +221,7 @@ def main():
 
         # Sidebar elements
         with st.sidebar:
-            logo_url = "https://raw.githubusercontent.com/vgentile98/text_difficulty_prediction/main/app/baguette_logo.png"
+            logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_logo.png"
             st.image(logo_url, width=200)
             user_id = 'default_user'
             ensure_user_data()
