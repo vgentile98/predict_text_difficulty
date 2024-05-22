@@ -6,6 +6,8 @@ import os
 from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import streamlit.components.v1 as components
 from itertools import cycle
+from googleapiclient.discovery import build
+from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 
@@ -47,27 +49,6 @@ def is_valid_image_url(url):
     except requests.RequestException:
         return False
         
-# Fetch YouTube videos
-youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
-youtube_base_url = "https://www.googleapis.com/youtube/v3/search"
-
-def fetch_youtube_videos(query):
-    params = {
-        'part': 'snippet',
-        'q': query,
-        'type': 'video',
-        'maxResults': 3,
-        'key': youtube_api_key,
-        'regionCode': 'FR',
-        'relevanceLanguage': 'fr'
-    }
-    response = requests.get(youtube_base_url, params=params)
-    if response.status_code == 200:
-        return response.json()['items']
-    else:
-        st.error('Failed to retrieve YouTube videos.')
-        return []
-
 # Function to assign levels to articles
 def assign_article_levels(articles):
      level_cycle = cycle(cefr_levels)  # Create a cycle iterator from CEFR levels
@@ -75,6 +56,42 @@ def assign_article_levels(articles):
      for article in valid_articles:
          article['level'] = next(level_cycle)  # Assign levels in a cyclic manner
      return valid_articles
+        
+# Fetch YouTube videos based on category with available transcripts
+def fetch_youtube_videos_with_transcripts(query):
+    search_response = youtube.search().list(
+        q=query,
+        part='id,snippet',
+        type='video',
+        maxResults=5,
+        regionCode='FR',
+        relevanceLanguage='fr'
+    ).execute()
+
+    videos = []
+    for item in search_response['items']:
+        video_id = item['id']['videoId']
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['fr'])
+            full_text = " ".join([text['text'] for text in transcript])
+            videos.append({
+                'id': video_id,
+                'title': item['snippet']['title'],
+                'description': item['snippet']['description'],
+                'transcript': full_text
+            })
+        except (TranscriptsDisabled, NoTranscriptFound):
+            continue
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+    return videos
+        
+# Dummy function to assign levels to videos based on the transcript
+def assign_video_levels(videos):
+    level_cycle = cycle(cefr_levels)
+    for video in videos:
+        video['level'] = next(level_cycle)
+    return videos
 
 # Load the model from GitHub
 def download_file_from_github(url, destination):
@@ -303,6 +320,7 @@ def main():
         user_id = 'default_user'
         user_level = st.session_state['users'][user_id]['level']
 
+        # Fetch and display news articles
         articles = fetch_news(category)
         if articles:
             articles = assign_article_levels(articles)
@@ -337,21 +355,21 @@ def main():
         else:
             st.write("No articles found. Try adjusting your filters.")
         
-        # Fetch and display YouTube videos
-        videos = fetch_youtube_videos(category)
+        # Fetch and display YouTube videos with transcripts
+        videos = fetch_youtube_videos_with_transcripts(category)
         if videos:
+            videos = assign_video_levels(videos)
             for idx, video in enumerate(videos):
                 with st.container():
                     col1, col2 = st.columns([0.9, 0.1])
                     with col1:
-                        st.video(f"https://www.youtube.com/watch?v={video['id']['videoId']}")
+                        st.video(f"https://www.youtube.com/watch?v={video['id']}")
                     with col2:
-                        st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{category.capitalize()}</strong></div>", unsafe_allow_html=True)
-                    st.subheader(video['snippet']['title'])
-                    st.write(video['snippet']['description'])
-                    with st.expander("**Watch Now**", expanded=False):
-                        st.write("#### Full Video")
-                        st.video(f"https://www.youtube.com/watch?v={video['id']['videoId']}")
+                        st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video['level']}</strong></div>", unsafe_allow_html=True)
+                    st.subheader(video['title'])
+                    st.write(video['description'])
+                    with st.expander("**See Transcript**", expanded=False):
+                        st.write(video['transcript'])
                         st.write("#### How was it?")  # Prompt for feedback
                         cols = st.columns(7, gap="small")
                         feedback_options = [
@@ -368,6 +386,7 @@ def main():
                     st.markdown("---")
         else:
             st.write("No videos found. Try adjusting your filters.")
+
 
 if __name__ == '__main__':
     main()
