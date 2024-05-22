@@ -174,33 +174,11 @@ def initial_assessment():
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 5px;
             color: #241000;
-            min-height: 200px;
+            min-height: 90px;
         }
         .question-text {
             font-size: 16px;
             margin-bottom: 0px;
-        }
-        .radio-button {
-            margin-top: 0px;
-            margin-bottom: 10px;
-        }
-        .center-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .center-button button {
-            background-color: #ff7f50;
-            color: white;
-            font-size: 16px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .center-button button:hover {
-            background-color: #e67350;
         }
         </style>
         """,
@@ -221,9 +199,9 @@ def initial_assessment():
                     unsafe_allow_html=True
                 )
                 responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
-
-    st.markdown("<div class='center-button'>", unsafe_allow_html=True)
-    if st.button("C'est parti !"):
+                
+    col1, col2, col3 = st.beta_columns(3)
+    if col2.button("C'est parti !"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
             selected = responses.get(f"q_{i}")
@@ -245,7 +223,6 @@ def initial_assessment():
             st.session_state['users'][user_id]['level'] = 'C2'
         
         st.session_state['initial_assessment'] = False
-    st.markdown("</div>", unsafe_allow_html=True)
 
 def main():
     ensure_user_data()
