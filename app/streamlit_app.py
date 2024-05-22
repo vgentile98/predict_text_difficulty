@@ -192,6 +192,7 @@ def initial_assessment():
     for j in range(0, len(questions), 2):
         cols = st.columns(2, gap="large")
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
+            print(choices)  # Add this line for debugging
             with cols[k]:
                 st.markdown(
                     f"""
