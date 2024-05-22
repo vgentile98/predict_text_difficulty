@@ -145,7 +145,7 @@ def predict_article_levels(articles, model, tokenizer):
 
 # Function for initial assessment
 def initial_assessment():
-    col1, col2, col3 = st.columns([2, 1, 1])
+    col1, col2 = st.columns([2, 1])
     with col1:
         st.title('Bonjour ! I\'m Baguette, your new French buddy')
         st.subheader("Let\'s start our adventure with a game")
