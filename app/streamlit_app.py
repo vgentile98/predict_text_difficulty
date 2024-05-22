@@ -300,7 +300,7 @@ def main():
                         st.write("#### Full Article")  # Prompt for feedback
                         components.iframe(article['url'], height=450, scrolling=True)
                         st.write("#### How was it?")  # Prompt for feedback
-                        cols = st.columns(6, gap="small")
+                        cols = st.columns(7, gap="small")
                         feedback_options = [
                             ('Too Easy', '😌'),
                             ('Just Right', '😊'),
