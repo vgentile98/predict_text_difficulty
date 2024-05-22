@@ -204,7 +204,8 @@ def initial_assessment():
                 )
                 responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
 
-    if st.button("Submit"):
+   st.markdown("<div class='center-button'>", unsafe_allow_html=True)
+    if st.button("C'est parti !"):
         total_score = 0
         for i, (_, choices, correct, level) in enumerate(questions):
             selected = responses.get(f"q_{i}")
@@ -226,6 +227,7 @@ def initial_assessment():
             st.session_state['users'][user_id]['level'] = 'C2'
         
         st.session_state['initial_assessment'] = False
+    st.markdown("</div>", unsafe_allow_html=True)
 
 def main():
     ensure_user_data()
