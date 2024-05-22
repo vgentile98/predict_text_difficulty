@@ -174,7 +174,7 @@ def initial_assessment():
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 5px;
             color: #241000;
-            min-height: 90px;
+            min-height: 200px;
         }
         .question-text {
             font-size: 16px;
@@ -188,6 +188,7 @@ def initial_assessment():
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-top: 20px;
         }
         .center-button button {
             background-color: #ff7f50;
