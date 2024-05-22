@@ -178,11 +178,10 @@ def initial_assessment():
         }
         .question-text {
             font-size: 16px;
-            margin-top: -10px;
             margin-bottom: 0px;
         }
         .radio-button {
-            margin-top: 0px;
+            margin-top: -15px;
             margin-bottom: 10px;
         }
         </style>
