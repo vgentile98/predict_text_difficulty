@@ -184,6 +184,23 @@ def initial_assessment():
             margin-top: 0px;
             margin-bottom: 10px;
         }
+                .center-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .center-button button {
+            background-color: #ff7f50;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .center-button button:hover {
+            background-color: #e67350;
+        }
         </style>
         """,
         unsafe_allow_html=True
