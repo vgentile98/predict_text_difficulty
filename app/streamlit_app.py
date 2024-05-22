@@ -389,7 +389,7 @@ def main():
                     with col2:
                         st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video['level']}</strong></div>", unsafe_allow_html=True)
                     st.subheader(video['title'])
-                    st.write(video['description'])
+                    #st.write(video['description'])
                     with st.expander("**See Transcript**", expanded=False):
                         st.write(video['transcript'])
                         st.write("#### How was it?")  # Prompt for feedback
