@@ -257,7 +257,7 @@ def main():
 
     else:
         # Title
-        col1, col2, col3 = st.columns([2, 1, 1])
+        col1, col2 = st.columns([2, 1])
         with col1:
             st.title('Voilà ! My Top Picks Just for You')
         with col2:
