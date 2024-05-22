@@ -174,11 +174,11 @@ def initial_assessment():
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             color: #241000;
-            min-height: 250px;
+            min-height: 80px;
         }
         .question-text {
             font-size: 16px;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
         }
         .radio-button {
             margin-top: 10px;
