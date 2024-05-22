@@ -165,14 +165,41 @@ def initial_assessment():
 
     responses = {}
 
+    # CSS style for custom design
+    st.markdown(
+        """
+        <style>
+        .question-box {
+            background-color: #cba181;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .radio-button {
+            margin-top: 10px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     for j in range(0, len(questions), 2):
-        cols = st.columns(2)
+        cols = st.columns(2, gap="large")
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
             with cols[k]:
                 st.markdown(
                     f"""
-                    <div style='background-color: #cba181; padding: 12px; border-radius: 10px; margin-bottom: -10px; margin-top: 5px; min-height: 80px;'>
-                        <b>{j+k+1}. {sentence}</b>
+                    <div class='question-box'>
+                        <div class='question-text'><b>{j+k+1}. {sentence}</b></div>
+                        <div class='radio-button'>
+                        {st.radio("", choices, key=f"q_{j+k}", index=-1)}
+                        </div>
                     </div>
                     """,
                     unsafe_allow_html=True
