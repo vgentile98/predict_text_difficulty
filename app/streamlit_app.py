@@ -192,19 +192,7 @@ def initial_assessment():
     for j in range(0, len(questions), 2):
         cols = st.columns(2, gap="large")
         for k, (sentence, choices, correct, level) in enumerate(questions[j:j+2]):
-            st.write(choices)  # Add this line for debugging
-            with cols[k]:
-                st.markdown(
-                    f"""
-                    <div class='question-box'>
-                        <div class='question-text'><b>{j+k+1}. {sentence}</b></div>
-                        <div class='radio-button'>
-                            {st.radio("", choices, key=f"q_{j+k}", index=-1)}
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+            selected_option = st.selectbox("", choices, key=f"q_{j+k}")
                 
     if st.button("Submit"):
         total_score = 0
