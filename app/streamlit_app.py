@@ -63,50 +63,60 @@ youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
         
 # Fetch YouTube videos with transcripts
 def fetch_youtube_videos_with_transcripts(query):
-    youtube = build('youtube', 'v3', developerKey=youtube_api_key)
-    search_response = youtube.search().list(
-        q=query,
-        part='id,snippet',
-        maxResults=5,
-        type='video',
-        videoCaption='closedCaption',
-        relevanceLanguage='fr'
-    ).execute()
+    try:
+        youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 
-    videos = []
-    for item in search_response.get('items', []):
-        video_id = item['id']['videoId']
-        video_title = item['snippet']['title']
-        video_description = item['snippet']['description']
-        video_url = f'https://www.youtube.com/watch?v={video_id}'
-        video_duration = youtube.videos().list(
-            part='contentDetails',
-            id=video_id
-        ).execute()['items'][0]['contentDetails']['duration']
+        # Search for videos
+        search_response = youtube.search().list(
+            q=query,
+            part='id,snippet',
+            maxResults=3,
+            type='video',
+            relevanceLanguage='fr',
+            videoDuration='short'  # Filters videos to be less than 4 minutes
+        ).execute()
 
-        # Convert duration from ISO 8601 format to seconds
-        duration_seconds = isodate.parse_duration(video_duration).total_seconds()
+        videos = []
+        for item in search_response.get('items', []):
+            video_id = item['id']['videoId']
+            video_url = f'https://www.youtube.com/watch?v={video_id}'
 
-        if duration_seconds <= 480:  # 8 minutes
-            try:
-                transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-                transcript = transcript_list.find_transcript(['fr'])
-                transcript_text = " ".join([text['text'] for text in transcript.fetch()])
+            # Get video details
+            video_response = youtube.videos().list(
+                part='contentDetails',
+                id=video_id
+            ).execute()
 
-                videos.append({
-                    'video_id': video_id,
-                    'title': video_title,
-                    'description': video_description,
-                    'url': video_url,
-                    'transcript': transcript_text,
-                })
-            except (TranscriptsDisabled, NoTranscriptFound, Exception):
+            duration = video_response['items'][0]['contentDetails']['duration']
+            minutes = int(duration[2:].split('M')[0]) if 'M' in duration else 0
+            seconds = int(duration.split('M')[-1][:-1]) if 'S' in duration else 0
+
+            # Filter out videos longer than 10 minutes
+            if minutes >= 10:
                 continue
 
-        if len(videos) >= 3:
-            break
+            try:
+                # Get transcript
+                transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['fr'])
+                full_text = " ".join([text['text'] for text in transcript])
 
-    return videos
+                videos.append({
+                    'id': video_id,
+                    'url': video_url,
+                    'title': item['snippet']['title'],
+                    'description': item['snippet']['description'],
+                    'transcript': full_text,
+                    'duration': duration
+                })
+            except (NoTranscriptFound, TranscriptsDisabled):
+                continue
+
+        return videos
+
+    except HttpError as e:
+        st.error("An error occurred with the YouTube API.")
+        st.error(e)
+        return []
         
 # Dummy function to assign levels to videos based on the transcript
 def assign_video_levels(videos):
@@ -391,6 +401,7 @@ def main():
                     st.subheader(video['title'])
                     #st.write(video['description'])
                     with st.expander("**See Transcript**", expanded=False):
+                        st.write("#### Transcript")  # Prompt for feedback
                         st.write(video['transcript'])
                         st.write("#### How was it?")  # Prompt for feedback
                         cols = st.columns(7, gap="small")
