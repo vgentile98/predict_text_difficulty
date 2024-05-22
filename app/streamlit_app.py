@@ -171,7 +171,7 @@ def initial_assessment():
             with cols[k]:
                 st.markdown(
                     f"""
-                    <div style='background-color: #cba181; padding: 10px; border-radius: 10px; margin-bottom: -10px; margin-top: 5px; min-height: 50px;'>
+                    <div style='background-color: #cba181; padding: 12px; border-radius: 10px; margin-bottom: -10px; margin-top: 5px; min-height: 80px;'>
                         <b>{j+k+1}. {sentence}</b>
                     </div>
                     """,
