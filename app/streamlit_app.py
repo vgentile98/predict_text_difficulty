@@ -173,13 +173,11 @@ def initial_assessment():
                     f"""
                     <div style='background-color: #cba181; padding: 20px; border-radius: 10px; margin-bottom: 20px;'>
                         <b>{j+k+1}. {sentence}</b>
-                        <div style='margin-top: 10px;'>
-                            {st.radio("", choices, key=f"q_{j+k}", index=-1)}
-                        </div>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
+                responses[f"q_{j+k}"] = st.radio("", choices, key=f"q_{j+k}")
 
     if st.button("Submit"):
         total_score = 0
