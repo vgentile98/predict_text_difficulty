@@ -85,19 +85,19 @@ def setup_model():
             download_file_from_github(url, file_path)
 
     # Load model and tokenizer
-    try:
-        tokenizer = CamembertTokenizer.from_pretrained(model_dir)
-        model = CamembertForSequenceClassification.from_pretrained(model_dir)
-        return model, tokenizer
-    except Exception as e:
-        st.exception(e)
-        raise
+    #try:
+        #tokenizer = CamembertTokenizer.from_pretrained(model_dir)
+        #model = CamembertForSequenceClassification.from_pretrained(model_dir)
+        #return model, tokenizer
+    #except Exception as e:
+        #st.exception(e)
+        #raise
 
 # Setup the model
-try:
-    model, tokenizer = setup_model()
-except Exception as e:
-    st.error("An error occurred while setting up the model.")
+#try:
+    #model, tokenizer = setup_model()
+#except Exception as e:
+    #st.error("An error occurred while setting up the model.")
 
 # Function to update user level based on feedback
 def update_user_level(user_id, feedback):
