@@ -151,7 +151,7 @@ def initial_assessment():
         st.subheader("Let\'s start our adventure with a game")
         st.write("Read each sentence and choose the main idea from the options below. Let\'s see how much you already know!")
     with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_bonjour.png", width=300)
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/baguette_bonjour.png", width=250)
 
     questions = [
         ("Le restaurant 'Bon appétit' recherche des serveurs pour l'été.", ["A restaurant is closing for the summer.", "A restaurant is looking for summer staff.", "A restaurant is changing its menu."], 1, 'A1'),
