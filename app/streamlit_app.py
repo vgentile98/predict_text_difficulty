@@ -65,7 +65,7 @@ youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
 # Fetch YouTube videos with transcripts
 def fetch_youtube_videos_with_transcripts(query):
     try:
-        youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+        youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 
         # Search for videos
         search_response = youtube.search().list(
