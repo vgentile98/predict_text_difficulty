@@ -622,8 +622,6 @@ def track_page():
     
     with col1:
         st.subheader("Language Level Evolution")
-        current_level = st.session_state['users']['default_user']['level']
-        st.write(f"Current Level: {current_level}")
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
