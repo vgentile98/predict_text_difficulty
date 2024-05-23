@@ -98,7 +98,7 @@ allowed_channels = [
 ]
         
 # Fetch YouTube videos with transcripts from specific channels
-def fetch_youtube_videos_with_transcripts(query, max_videos=10):
+def fetch_youtube_videos_with_transcripts(query, max_videos=3):
     try:
         youtube = build('youtube', 'v3', developerKey=youtube_api_key)
         videos = []
@@ -110,7 +110,7 @@ def fetch_youtube_videos_with_transcripts(query, max_videos=10):
             search_response = youtube.search().list(
                 q=query,
                 part='id,snippet',
-                maxResults=3,
+                maxResults=1,
                 type='video',
                 relevanceLanguage='fr',
                 channelId=channel_id
@@ -404,7 +404,7 @@ def main():
                     # First row for image and level
                     col1, col2 = st.columns([0.9, 0.1])
                     with col1:
-                        st.image(article['image'], width=300)
+                        st.image(article['image'], width=350)
                     with col2:
                         st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{article['level']}</strong></div>", unsafe_allow_html=True)
                     st.subheader(article['title'])
@@ -428,16 +428,30 @@ def main():
                     st.markdown("---")
         else:
             st.write("No articles found. Try adjusting your filters.")
+
+        # Custom CSS for video width
+        st.markdown(
+            """
+            <style>
+            .custom-video {
+                max-width: 300px;
+                width: 100%;
+                height: auto;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
         
         # Fetch and display YouTube videos with transcripts
-        videos = fetch_youtube_videos_with_transcripts(category, max_videos=10)
+        videos = fetch_youtube_videos_with_transcripts(category, max_videos=3)
         if videos:
             videos = assign_video_levels(videos)
             for idx, video in enumerate(videos):
                 with st.container():
                     col1, col2 = st.columns([0.9, 0.1])
                     with col1:
-                        st.video(f"https://www.youtube.com/watch?v={video['id']}")
+                        st.markdown(f'<iframe class="custom-video" src="https://www.youtube.com/embed/{video["id"]}" frameborder="0" allowfullscreen></iframe>', unsafe_allow_html=True)
                     with col2:
                         st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video['level']}</strong></div>", unsafe_allow_html=True)
                     st.subheader(video['title'])
