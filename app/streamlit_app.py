@@ -393,7 +393,7 @@ def learn_page():
     # Title
     col1, col2 = st.columns([2, 1])
     with col1:
-        st.header('Voilà ! My Top Picks Just for You 🗞️')
+        st.title('Voilà ! My Top Picks Just for You 🗞️')
         st.subheader('Ready to Explore?')
         # Select options for the API request
         category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
