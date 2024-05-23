@@ -535,13 +535,13 @@ if 'learned_words' not in st.session_state:
     st.session_state['learned_words'] = []
             
 def rehearse_page():
-    col1, col2 = st.columns([3,1])
+    col1, col2 = st.columns([3, 1])
     with col1:
         st.title("Let's Rehearse Your French Vocabulary! 📚")
 
         st.subheader("Got a new word that's puzzling you?")
         new_word_placeholder = st.empty()
-        new_word = new_word_placeholder.text_input("Type in the French word here:", "")
+        new_word = new_word_placeholder.text_input("Type in the French word here:", key="new_word")
 
         if st.button("Add to My List ✍️"):
             if new_word:
@@ -551,15 +551,15 @@ def rehearse_page():
                 update_tracking_data('word', word=new_word.strip())  # Update tracking data
                 time.sleep(2)
                 success_placeholder.empty()
-                new_word_placeholder.empty()  # Clear the input field after adding the word
+                # Clear the input field by re-rendering it with an empty string
+                new_word_placeholder.empty()
+                new_word_placeholder.text_input("Type in the French word here:", key="new_word_reset")
             else:
                 st.warning("Oops! Don't forget to type a word before adding it. 📝")
-                
-        new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
 
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=300)
-    
+
     st.markdown("---")
 
     st.subheader("Your Current Vocabulary List 🗒️")
@@ -583,10 +583,9 @@ def rehearse_page():
                 if st.button("🗑️ Remove", key=f"remove_{idx}"):
                     st.session_state['vocab_list'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
-
     else:
         st.write("No words here yet. Add some new vocabulary to get started! ✨")
-    
+
     st.markdown("---")
 
     st.subheader("Your Learned Words 🏅")
@@ -610,8 +609,9 @@ def rehearse_page():
                     st.experimental_rerun()  # Refresh the page to reflect changes
     else:
         st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
-        
+
     st.markdown("---")
+
 
 # Tracking data update function
 def update_tracking_data(type, category=None, word=None):
