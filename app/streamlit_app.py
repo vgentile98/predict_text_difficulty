@@ -686,7 +686,7 @@ def track_page():
         combined_read['Count'] = 1
         combined_read_grouped = combined_read.groupby('Date').sum().reset_index()
 
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2, gap="large")
         with col1:
             st.subheader("Articles and Videos Read Over Time")
             plt.figure(figsize=(10, 5))
