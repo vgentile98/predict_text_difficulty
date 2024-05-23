@@ -370,8 +370,8 @@ def learn_page():
         st.image(logo_url, width=200)
         
         st.subheader("Your Progress")
-        st.write(f"####🚀 Current level: {user_level}")
-        st.write("####🌟 Badge: Beginner Explorer")  # Replace with dynamic badge based on user's progress
+        st.write(f"🚀 Current level: {user_level}")
+        st.write("🌟 Badge: Beginner Explorer")  
 
         st.subheader("Add to Vocabulary")
         new_word_sidebar = st.text_input("Got a new word that's puzzling you?")
