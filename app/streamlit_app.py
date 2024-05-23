@@ -112,7 +112,7 @@ def fetch_youtube_videos_with_transcripts(query, max_videos=10):
                 part='id,snippet',
                 maxResults=3,
                 type='video',
-                videoDuration='short',  # Filters videos to be less than 10 minutes
+                relevanceLanguage='fr',
                 channelId=channel_id
             ).execute()
 
@@ -132,8 +132,8 @@ def fetch_youtube_videos_with_transcripts(query, max_videos=10):
                 duration = video_response['items'][0]['contentDetails']['duration']
                 duration_seconds = isodate.parse_duration(duration).total_seconds()
 
-                # Filter out videos longer than 10 minutes
-                if duration_seconds >= 600:
+                # Filter out videos not in the 2 to 15 minutes range
+                if duration_seconds < 120 or duration_seconds > 900:
                     continue
 
                 try:
