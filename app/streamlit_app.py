@@ -27,16 +27,18 @@ cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
 # Initialize some initial tracking data to simulate evolution if not already initialized
-if not st.session_state['tracking_data']['levels']:
+if 'tracking_data' not in st.session_state:
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(10)]
     initial_levels = ['A1', 'A1', 'A2', 'A2', 'B1', 'B1', 'B2', 'B2', 'C1', 'C1']
     initial_articles = ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health', 'general', 'business', 'technology']
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
 
-    st.session_state['tracking_data']['levels'] = list(zip(initial_dates, initial_levels))
-    st.session_state['tracking_data']['articles_read'] = list(zip(initial_dates, initial_articles))
-    st.session_state['tracking_data']['videos_watched'] = list(zip(initial_dates, initial_articles))
-    st.session_state['tracking_data']['words_learned'] = list(zip(initial_dates, initial_words))
+    st.session_state['tracking_data'] = {
+        'levels': list(zip(initial_dates, initial_levels)),
+        'articles_read': list(zip(initial_dates, initial_articles)),
+        'videos_watched': list(zip(initial_dates, initial_articles)),
+        'words_learned': list(zip(initial_dates, initial_words))
+    }
 
 # Function to ensure that user data is initialized in session state
 def ensure_user_data():
@@ -615,13 +617,10 @@ def track_page():
     # Customizing plots
     sns.set_style("whitegrid", {'axes.facecolor': '#fdf1e1', 'figure.facecolor': '#fdf1e1'})
 
-    # Current Level and Evolution
-    st.subheader("Your Current Language Level")
-    current_level = st.session_state['users']['default_user']['level']
-    st.write(f"Current Level: {current_level}")
-
     # Evolution of Language Level
     st.subheader("Language Level Evolution")
+    current_level = st.session_state['users']['default_user']['level']
+    st.write(f"Current Level: {current_level}")
     level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
     if not level_evolution.empty:
         plt.figure(figsize=(10, 5))
