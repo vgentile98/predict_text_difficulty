@@ -14,6 +14,8 @@ from streamlit_navigation_bar import st_navbar
 from googletrans import Translator
 from PyDictionary import PyDictionary
 import time
+import pandas as pd
+from datetime import datetime
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
