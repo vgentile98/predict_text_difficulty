@@ -416,29 +416,30 @@ def learn_page():
         st.header("Your Vocabulary")
         
         st.subheader("Word Details")
-        check_word_sidebar = st.text_input("Not sure about a word?")
-        if st.button("Check Word"):
+        check_word_sidebar = st.text_input("Not sure about a word?", key="check_word")
+        if st.button("Check Word", key="check_word_button"):
             if check_word_sidebar:
-                translation = translate_to_english(check_word_sidebar)
-                definition = get_single_definition(check_word_sidebar)
-                st.write(f"**Translation:** {translation}")
-                st.write(f"**Definition:** {definition}")
+                st.session_state['translation'] = translate_to_english(check_word_sidebar)
+                st.session_state['definition'] = get_single_definition(check_word_sidebar)
+                st.experimental_rerun()  # Rerun to display the results
             else:
                 st.warning("Please enter a word before checking.")
-                
+
+        if 'translation' in st.session_state and 'definition' in st.session_state:
+            st.write(f"**Translation:** {st.session_state['translation']}")
+            st.write(f"**Definition:** {st.session_state['definition']}")
+
         st.subheader("Add to Vocabulary")      
-        new_word_placeholder = st.empty()
-        new_word_sidebar = new_word_placeholder.text_input("Got a new word that's puzzling you?")
-        if st.button("Add Word"):
+        new_word_sidebar = st.text_input("Got a new word that's puzzling you?", key="new_word_sidebar")
+        if st.button("Add Word", key="add_word_sidebar"):
             if new_word_sidebar:
                 st.session_state['vocab_list'].append(new_word_sidebar.strip())
-                new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
-                success_placeholder = st.empty()
                 st.success(f"'{new_word_sidebar}' added to vocabulary!")
+                update_tracking_data('word', word=new_word_sidebar.strip())  # Update tracking data
                 time.sleep(2)
+                st.experimental_rerun()  # Rerun to clear the input field
             else:
                 st.warning("Please enter a word before adding.")
-
     # Fetch and display news articles
     articles = fetch_news(category)
     if articles:
