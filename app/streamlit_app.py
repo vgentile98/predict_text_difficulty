@@ -487,7 +487,8 @@ def learn_page():
                 col1, col2 = st.columns([0.9, 0.1])
                 with col1:
                     if 'id' in video and video['id']:
-                        st.video(f"https://www.youtube.com/watch?v={video['id']}")
+                        video_url = f"https://www.youtube.com/embed/{video['id']}"
+                        st.components.v1.iframe(video_url, height=400)
                     else:
                         st.error("Error: Video ID not found.")
                 with col2:
