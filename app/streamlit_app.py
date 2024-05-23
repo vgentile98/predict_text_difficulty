@@ -61,56 +61,94 @@ def assign_article_levels(articles):
 
 # YouTube API key
 youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
+
+# Define the list of allowed channel IDs
+allowed_channels = [
+    'UCAcAnMF0OrCtUep3Y4M-ZPw', #HugoDécrypte
+    'UC8ggH3zU61XO0nMskSQwZdA', #CanalplusSport
+    'UCb4UAZwZqS4a35FrBcLlMXA', #Canalplus
+    'UCYpRDnhk5H8h16jpS84uqsA', #lemondefr
+    'UCCDz_XYeKWd0OIyjp95dqyQ', #LeFigaro
+    'UCdKTlsmvczkdvGjiLinQwmw', #Philoxime
+    'UCNovJemYKcdKt7PDdptJZfQ', #jean-marcjancovici2537
+    'UCah8C0gmLkdtvsy0b2jrjrw', #CyrusNorth
+    'UCkkY_V2YSa_oln5CXm4zDzw', #Amideslobbies
+    'UCSULDz1yaHLVQWHpm4g_GHA', # monsieurbidouille
+    'UC1EacOJoqsKaYxaDomTCTEQ', #LeReveilleur
+    'UCsT0YIqwnpJCM-mx7-gSA4Q', #TEDx
+    'UCYxgidQYV3WPD0eeVGOgibg', #Startupfood
+    'MarketingMania', #UCSmUdD2Dd_v5uqBuRwtEZug
+    'UC4ii4_aeS8iOFzsHuhJTq2w', #poissonfecond
+    'UCaNlbnghtwlsGF-KzAFThqA', #ScienceEtonnante
+    'UCWnfDPdZw6A23UtuBpYBbAg', #DrNozman
+    'UCeR8BYZS7IHYjk_9Mh5JgkA', #scilabus
+    'UCS_7tplUgzJG4DhA16re5Yg', #BaladeMentale
+    'UCOchT7ZJ4TXe3stdLW1Sfxw', #DansTonCorps
+    'UC9BnGZLT4iPaJtDOXYwQuHQ', #PrimumNonNocereVideo
+    'UCDqEttzOpPbDoeC05HRPPDQ', #AsclepiosYT
+    'UCsE6tdKFV2oSHFyDll72rWg', #PsykoCouac
+    'UCAkhrilzn2OWOp1AsB3VJmg', #Bananamo
+    'UC8fgz_7wFO_APrt6LXcQ_iw', #JacksTeam
+    'UC5WFSncb01pBfKcQw3mfO9A', #latribunetvevents
+    'UCO6K_kkdP-lnSCiO3tPx7WA', #franceinfo
+    'UCwI-JbGNsojunnHbFAc0M4Q', #arte
+    'UCJy0lX8ThZ7lCtst7JnegWQ', #jojol
+    'UC5Twj1Axp_-9HLsZ5o_cEQQ', #DocSeven
+    'UC__xRB5L4toU9yYawt_lIKg' #blastinfo
+]
         
-# Fetch YouTube videos with transcripts
+# Fetch YouTube videos with transcripts from specific channels
 def fetch_youtube_videos_with_transcripts(query):
     try:
-        youtube = build('youtube', 'v3', developerKey=youtube_api_key)
-
-        # Search for videos
-        search_response = youtube.search().list(
-            q=query,
-            part='id,snippet',
-            maxResults=3,
-            type='video',
-            relevanceLanguage='fr',
-            videoDuration='short'  # Filters videos to be less than 4 minutes
-        ).execute()
+        youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 
         videos = []
-        for item in search_response.get('items', []):
-            video_id = item['id']['videoId']
-            video_url = f'https://www.youtube.com/watch?v={video_id}'
 
-            # Get video details
-            video_response = youtube.videos().list(
-                part='contentDetails',
-                id=video_id
+        for channel_id in allowed_channels:
+            # Search for videos in the specific channel
+            search_response = youtube.search().list(
+                q=query,
+                part='id,snippet',
+                maxResults=3,
+                type='video',
+                relevanceLanguage='fr',
+                videoDuration='short',  # Filters videos to be less than 10 minutes
+                channelId=channel_id
             ).execute()
 
-            duration = video_response['items'][0]['contentDetails']['duration']
-            minutes = int(duration[2:].split('M')[0]) if 'M' in duration else 0
-            seconds = int(duration.split('M')[-1][:-1]) if 'S' in duration else 0
+            for item in search_response.get('items', []):
+                video_id = item['id']['videoId']
+                video_url = f'https://www.youtube.com/watch?v={video_id}'
 
-            # Filter out videos longer than 10 minutes
-            if minutes >= 10:
-                continue
+                # Get video details
+                video_response = youtube.videos().list(
+                    part='contentDetails',
+                    id=video_id
+                ).execute()
 
-            try:
-                # Get transcript
-                transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['fr'])
-                full_text = " ".join([text['text'] for text in transcript])
+                duration = video_response['items'][0]['contentDetails']['duration']
+                minutes = int(duration[2:].split('M')[0]) if 'M' in duration else 0
+                seconds = int(duration.split('M')[-1][:-1]) if 'S' in duration else 0
 
-                videos.append({
-                    'id': video_id,
-                    'url': video_url,
-                    'title': item['snippet']['title'],
-                    'description': item['snippet']['description'],
-                    'transcript': full_text,
-                    'duration': duration
-                })
-            except (NoTranscriptFound, TranscriptsDisabled):
-                continue
+                # Filter out videos longer than 30 minutes
+                if minutes >= 30:
+                    continue
+
+                try:
+                    # Get transcript
+                    transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['fr'])
+                    full_text = " ".join([text['text'] for text in transcript])
+
+                    videos.append({
+                        'id': video_id,
+                        'url': video_url,
+                        'title': item['snippet']['title'],
+                        'description': item['snippet']['description'],
+                        'transcript': full_text,
+                        'duration': duration
+                    })
+                except (NoTranscriptFound, TranscriptsDisabled):
+                    continue
 
         return videos
 
