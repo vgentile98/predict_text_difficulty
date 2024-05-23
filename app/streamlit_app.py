@@ -356,6 +356,12 @@ def learn_page():
 
     st.markdown("---")
 
+    # Sidebar elements
+    with st.sidebar:
+        logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png"
+        st.image(logo_url, width=200)
+        st.subheader(f"Your current level: {user_level}")
+
     # Fetch and display news articles
     articles = fetch_news(category)
     if articles:
@@ -468,3 +474,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
