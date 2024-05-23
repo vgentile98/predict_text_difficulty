@@ -127,11 +127,10 @@ def fetch_youtube_videos_with_transcripts(query):
                 ).execute()
 
                 duration = video_response['items'][0]['contentDetails']['duration']
-                minutes = int(duration[2:].split('M')[0]) if 'M' in duration else 0
-                seconds = int(duration.split('M')[-1][:-1]) if 'S' in duration else 0
+                duration_seconds = isodate.parse_duration(duration).total_seconds()
 
-                # Filter out videos longer than 30 minutes
-                if minutes >= 30:
+                # Filter out videos longer than 20 minutes
+                if duration_seconds >= 1200:
                     continue
 
                 try:
@@ -156,6 +155,7 @@ def fetch_youtube_videos_with_transcripts(query):
         st.error("An error occurred with the YouTube API.")
         st.error(e)
         return []
+
         
 # Dummy function to assign levels to videos based on the transcript
 def assign_video_levels(videos):
