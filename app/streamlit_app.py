@@ -15,7 +15,7 @@ from googletrans import Translator
 from PyDictionary import PyDictionary
 import time
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -26,14 +26,17 @@ st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
-# Initialize session state for tracking progress if it doesn't exist
-if 'tracking_data' not in st.session_state:
-    st.session_state['tracking_data'] = {
-        'levels': [],
-        'articles_read': [],
-        'videos_watched': [],
-        'words_learned': []
-    }
+# Initialize some initial tracking data to simulate evolution if not already initialized
+if not st.session_state['tracking_data']['levels']:
+    initial_dates = [datetime.today() - timedelta(days=i) for i in range(10)]
+    initial_levels = ['A1', 'A1', 'A2', 'A2', 'B1', 'B1', 'B2', 'B2', 'C1', 'C1']
+    initial_articles = ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health', 'general', 'business', 'technology']
+    initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
+
+    st.session_state['tracking_data']['levels'] = list(zip(initial_dates, initial_levels))
+    st.session_state['tracking_data']['articles_read'] = list(zip(initial_dates, initial_articles))
+    st.session_state['tracking_data']['videos_watched'] = list(zip(initial_dates, initial_articles))
+    st.session_state['tracking_data']['words_learned'] = list(zip(initial_dates, initial_words))
 
 # Function to ensure that user data is initialized in session state
 def ensure_user_data():
@@ -601,15 +604,8 @@ def update_tracking_data(type, category=None, word=None):
     if type == 'word':
         st.session_state['tracking_data']['words_learned'].append((date_today, word))
 
-def track_page():
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        st.title("Track Your Progress 📈")
-        st.subheader("You've been working hard, it's time to check where you're at!")
-    with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=250)
-
-    st.markdown("---")
+    # Customizing plots
+    sns.set_style("whitegrid", {'axes.facecolor': '#fdf1e1', 'figure.facecolor': '#fdf1e1'})
 
     # Current Level and Evolution
     st.subheader("Your Current Language Level")
@@ -621,11 +617,13 @@ def track_page():
     level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
     if not level_evolution.empty:
         plt.figure(figsize=(10, 5))
-        plt.plot(level_evolution['Date'], level_evolution['Level'], marker='o')
+        plt.plot(level_evolution['Date'], level_evolution['Level'], marker='o', color='#fda500')
         plt.title('Language Level Evolution Over Time')
         plt.xlabel('Date')
         plt.ylabel('Level')
         plt.grid(True)
+        plt.gca().set_facecolor('#fdf1e1')
+        plt.gcf().set_facecolor('#fdf1e1')
         st.pyplot(plt)
     else:
         st.write("No data available yet.")
@@ -642,18 +640,22 @@ def track_page():
 
         st.subheader("Reading Activity Over Time")
         plt.figure(figsize=(10, 5))
-        sns.lineplot(data=combined_read_grouped, x='Date', y='Count', hue='Category', marker='o')
+        sns.lineplot(data=combined_read_grouped, x='Date', y='Count', hue='Category', marker='o', palette=['#fda500'])
         plt.title('Articles and Videos Read Over Time')
         plt.xlabel('Date')
         plt.ylabel('Count')
         plt.grid(True)
+        plt.gca().set_facecolor('#fdf1e1')
+        plt.gcf().set_facecolor('#fdf1e1')
         st.pyplot(plt)
 
         st.subheader("Distribution of Types of Content Read")
         plt.figure(figsize=(10, 5))
         content_counts = combined_read['Category'].value_counts()
-        plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140)
+        plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
         plt.title('Distribution of Types of Content Read')
+        plt.gca().set_facecolor('#fdf1e1')
+        plt.gcf().set_facecolor('#fdf1e1')
         st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
@@ -666,11 +668,13 @@ def track_page():
         words_learned_grouped = words_learned.groupby('Date').sum().reset_index()
 
         plt.figure(figsize=(10, 5))
-        plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o')
+        plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o', color='#fda500')
         plt.title('Words Learned Over Time')
         plt.xlabel('Date')
         plt.ylabel('Count')
         plt.grid(True)
+        plt.gca().set_facecolor('#fdf1e1')
+        plt.gcf().set_facecolor('#fdf1e1')
         st.pyplot(plt)
     else:
         st.write("No words learned yet.")
