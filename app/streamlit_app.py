@@ -383,8 +383,8 @@ def learn_page():
             if check_word_sidebar:
                 translation = translate_to_english(check_word_sidebar)
                 definition = get_single_definition(check_word_sidebar)
-                st.sidebar.write(f"**Translation:** {translation}")
-                st.sidebar.write(f"**Definition:** {definition}")
+                st.write(f"**Translation:** {translation}")
+                st.write(f"**Definition:** {definition}")
             else:
                 st.warning("Please enter a word before checking.")
                 
@@ -397,12 +397,7 @@ def learn_page():
                 new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
                 success_placeholder = st.empty()
                 st.success(f"'{new_word_sidebar}' added to vocabulary!")
-                translation = translate_to_english(new_word_sidebar)
-                definition = get_single_definition(new_word_sidebar)
                 time.sleep(2)
-                success_placeholder.empty()
-                st.sidebar.write(f"**Translation:** {translation}")
-                st.sidebar.write(f"**Definition:** {definition}")
             else:
                 st.warning("Please enter a word before adding.")
 
