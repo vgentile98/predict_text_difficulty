@@ -686,7 +686,7 @@ def track_page():
         combined_read = pd.concat([articles_read, videos_watched])
         combined_read['Date'] = pd.to_datetime(combined_read['Date'])
         combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby(['Date']).sum().reset_index()
+        combined_read_grouped = combined_read.groupby('Date').sum().reset_index()
 
         col1, col2 = st.columns(2)
         with col1:
