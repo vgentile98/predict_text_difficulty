@@ -631,7 +631,7 @@ def track_page():
     col1, col2 = st.columns([2, 1])
     with col1:
         st.title("Track Your Progress 📈")
-        st.subheader("You've been working hard - It's time to check where you're at!")
+        st.subheader("Bravo! You've been working hard - It's time to check where you're at!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=300)
 
@@ -641,8 +641,6 @@ def track_page():
 
     with col1:
         st.subheader("Language Level Evolution")
-        current_level = st.session_state['users']['default_user']['level']
-        st.write(f"Current Level: {current_level}")
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
@@ -703,7 +701,7 @@ def track_page():
 
         with col2:
             st.subheader("Distribution of Types of Content Read")
-            plt.figure(figsize=(10, 5))
+            plt.figure(figsize=(8, 3))
             content_counts = combined_read['Category'].value_counts()
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
             plt.gca().set_facecolor('#fdf1e1')
