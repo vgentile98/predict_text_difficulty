@@ -440,6 +440,7 @@ def learn_page():
                 st.experimental_rerun()  # Rerun to clear the input field
             else:
                 st.warning("Please enter a word before adding.")
+                
     # Fetch and display news articles
     articles = fetch_news(category)
     if articles:
@@ -485,13 +486,16 @@ def learn_page():
             with st.container():
                 col1, col2 = st.columns([0.9, 0.1])
                 with col1:
-                    st.video(f"https://www.youtube.com/watch?v={video['id']}", height=450)
+                    if 'id' in video and video['id']:
+                        st.video(f"https://www.youtube.com/watch?v={video['id']}", height=450)
+                    else:
+                        st.error("Error: Video ID not found.")
                 with col2:
-                    st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video['level']}</strong></div>", unsafe_allow_html=True)
-                st.subheader(video['title'])
+                    st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video.get('level', 'Unknown')}</strong></div>", unsafe_allow_html=True)
+                st.subheader(video.get('title', 'No Title'))
                 with st.expander("**See Transcript**", expanded=False):
                     st.write("#### Transcript")  # Prompt for feedback
-                    st.write(video['transcript'])
+                    st.write(video.get('transcript', 'No transcript available.'))
                     st.write("#### How was it?")  # Prompt for feedback
                     cols = st.columns(7, gap="small")
                     feedback_options = [
@@ -510,7 +514,6 @@ def learn_page():
                 st.markdown("---")
     else:
         st.write("No videos found. Try adjusting your filters.")
-
 # Initialize Translator and PyDictionary
 translator = Translator()
 dictionary = PyDictionary()
