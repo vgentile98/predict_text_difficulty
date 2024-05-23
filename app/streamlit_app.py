@@ -476,7 +476,7 @@ def rehearse_page():
     st.subheader("Your Vocabulary List")
     if st.session_state['vocab_list']:
         for idx, word in enumerate(st.session_state['vocab_list']):
-            col1, col2, col3 = st.columns([1, 2, 3])
+            col1, col2, col3, col4 = st.columns([1, 1, 3, 1])
             with col1:
                 st.write(word)
             with col2:
@@ -485,10 +485,11 @@ def rehearse_page():
             with col3:
                 definition = get_single_definition(translation)
                 st.write(definition)
-            if st.button(f"Mark as Learned", key=f"learn_{idx}"):
-                st.session_state['learned_words'].append((word, translation, definition))
-                st.session_state['vocab_list'].pop(idx)
-                st.experimental_rerun()  # Refresh the page to reflect changes
+            with col4:
+                if st.button(f"✅", key=f"learn_{idx}"):
+                    st.session_state['learned_words'].append((word, translation, definition))
+                    st.session_state['vocab_list'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
 
     else:
         st.write("You have no words in your vocabulary list.")
@@ -505,6 +506,7 @@ def rehearse_page():
                 st.write(definition)
     else:
         st.write("You have no learned words yet.")
+        
 def track_page():
     st.title("Track")
     st.write("This is the Track page. You can add progress tracking here.")
