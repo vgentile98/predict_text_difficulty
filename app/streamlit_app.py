@@ -487,7 +487,7 @@ def learn_page():
                 col1, col2 = st.columns([0.9, 0.1])
                 with col1:
                     if 'id' in video and video['id']:
-                        st.video(f"https://www.youtube.com/watch?v={video['id']}", height=450)
+                        st.video(f"https://www.youtube.com/watch?v={video['id']}")
                     else:
                         st.error("Error: Video ID not found.")
                 with col2:
@@ -514,6 +514,7 @@ def learn_page():
                 st.markdown("---")
     else:
         st.write("No videos found. Try adjusting your filters.")
+        
 # Initialize Translator and PyDictionary
 translator = Translator()
 dictionary = PyDictionary()
