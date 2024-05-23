@@ -344,6 +344,11 @@ def initial_assessment():
         st.session_state['initial_assessment'] = False
 
 def learn_page():
+    # User Data
+    ensure_user_data()
+    user_id = 'default_user'
+    user_level = st.session_state['users'][user_id]['level']
+
     # Title
     col1, col2 = st.columns([2, 1])
     with col1:
