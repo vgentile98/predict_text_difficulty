@@ -475,7 +475,7 @@ def rehearse_page():
             else:
                 st.warning("Oops! Don't forget to type a word before adding it. 📝")
     with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=200)
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", height=300)
 
     st.subheader("Your Current Vocabulary List 🗒️")
     if st.session_state['vocab_list']:
