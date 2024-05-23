@@ -381,6 +381,10 @@ def learn_page():
             if new_word_sidebar:
                 st.session_state['vocab_list'].append(new_word_sidebar.strip())
                 st.success(f"'{new_word_sidebar}' added to vocabulary!")
+                translation = translate_to_english(new_word_sidebar)
+                definition = get_single_definition(new_word_sidebar)
+                st.sidebar.write(f"**Translation:** {translation}")
+                st.sidebar.write(f"**Definition:** {definition}")
             else:
                 st.warning("Please enter a word before adding.")
 
