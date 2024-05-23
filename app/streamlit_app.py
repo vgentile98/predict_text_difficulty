@@ -404,7 +404,7 @@ def main():
                     # First row for image and level
                     col1, col2 = st.columns([0.9, 0.1])
                     with col1:
-                        st.image(article['image'], width=350)
+                        st.image(article['image'], width=450)
                     with col2:
                         st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{article['level']}</strong></div>", unsafe_allow_html=True)
                     st.subheader(article['title'])
@@ -434,7 +434,7 @@ def main():
             """
             <style>
             .custom-video {
-                max-width: 300px;
+                max-width: 500px;
                 width: 100%;
                 height: auto;
             }
