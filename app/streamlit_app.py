@@ -603,7 +603,7 @@ def track_page():
     col1, col2 = st.columns([2, 1])
     with col1:
         st.title("Track Your Progress 📈")
-        st.title("You've been working hard, it's time to check where you're at!")
+        st.subheader("You've been working hard, it's time to check where you're at!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=250)
 
