@@ -8,3 +8,5 @@ google-api-python-client
 youtube-transcript-api
 isodate
 streamlit-navigation-bar
+googletrans==4.0.0-rc1
+PyDictionary
