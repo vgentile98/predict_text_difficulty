@@ -64,14 +64,14 @@ youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
 
 # Define the list of allowed channel IDs
 allowed_channels = [
-    'UCAcAnMF0OrCtUep3Y4M-ZPw', #HugoDécrypte
-    'UC8ggH3zU61XO0nMskSQwZdA', #CanalplusSport
-    'UCb4UAZwZqS4a35FrBcLlMXA', #Canalplus
     'UCYpRDnhk5H8h16jpS84uqsA', #lemondefr
     'UCCDz_XYeKWd0OIyjp95dqyQ', #LeFigaro
+    'UCAcAnMF0OrCtUep3Y4M-ZPw', #HugoDécrypte
+    'UCb4UAZwZqS4a35FrBcLlMXA', #Canalplus
     'UCdKTlsmvczkdvGjiLinQwmw', #Philoxime
     'UCNovJemYKcdKt7PDdptJZfQ', #jean-marcjancovici2537
     'UCah8C0gmLkdtvsy0b2jrjrw', #CyrusNorth
+    'UC8ggH3zU61XO0nMskSQwZdA', #CanalplusSport
     'UCkkY_V2YSa_oln5CXm4zDzw', #Amideslobbies
     'UCSULDz1yaHLVQWHpm4g_GHA', # monsieurbidouille
     'UC1EacOJoqsKaYxaDomTCTEQ', #LeReveilleur
@@ -98,25 +98,28 @@ allowed_channels = [
 ]
         
 # Fetch YouTube videos with transcripts from specific channels
-def fetch_youtube_videos_with_transcripts(query):
+def fetch_youtube_videos_with_transcripts(query, max_videos=10):
     try:
         youtube = build('youtube', 'v3', developerKey=youtube_api_key)
-
         videos = []
 
         for channel_id in allowed_channels:
-            # Search for videos in the specific channel
+            if len(videos) >= max_videos:
+                break
+
             search_response = youtube.search().list(
                 q=query,
                 part='id,snippet',
                 maxResults=3,
                 type='video',
-                relevanceLanguage='fr',
                 videoDuration='short',  # Filters videos to be less than 10 minutes
                 channelId=channel_id
             ).execute()
 
             for item in search_response.get('items', []):
+                if len(videos) >= max_videos:
+                    break
+
                 video_id = item['id']['videoId']
                 video_url = f'https://www.youtube.com/watch?v={video_id}'
 
@@ -129,8 +132,8 @@ def fetch_youtube_videos_with_transcripts(query):
                 duration = video_response['items'][0]['contentDetails']['duration']
                 duration_seconds = isodate.parse_duration(duration).total_seconds()
 
-                # Filter out videos longer than 20 minutes
-                if duration_seconds >= 1200:
+                # Filter out videos longer than 10 minutes
+                if duration_seconds >= 600:
                     continue
 
                 try:
@@ -427,7 +430,7 @@ def main():
             st.write("No articles found. Try adjusting your filters.")
         
         # Fetch and display YouTube videos with transcripts
-        videos = fetch_youtube_videos_with_transcripts(category)
+        videos = fetch_youtube_videos_with_transcripts(category, max_videos=10)
         if videos:
             videos = assign_video_levels(videos)
             for idx, video in enumerate(videos):
