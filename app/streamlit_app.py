@@ -540,20 +540,15 @@ def rehearse_page():
         st.title("Let's Rehearse Your French Vocabulary! 📚")
 
         st.subheader("Got a new word that's puzzling you?")
-        new_word_placeholder = st.empty()
-        new_word = new_word_placeholder.text_input("Type in the French word here:", key="new_word")
+        new_word = st.text_input("Type in the French word here:", key="new_word")
 
-        if st.button("Add to My List ✍️"):
+        if st.button("Add to My List ✍️", key="add_word"):
             if new_word:
                 st.session_state['vocab_list'].append(new_word.strip())
-                success_placeholder = st.empty()
                 st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
                 update_tracking_data('word', word=new_word.strip())  # Update tracking data
                 time.sleep(2)
-                success_placeholder.empty()
-                # Clear the input field by re-rendering it with an empty string
-                new_word_placeholder.empty()
-                new_word_placeholder.text_input("Type in the French word here:", key="new_word_reset")
+                st.experimental_rerun()  # Rerun to clear the input field
             else:
                 st.warning("Oops! Don't forget to type a word before adding it. 📝")
 
@@ -611,7 +606,6 @@ def rehearse_page():
         st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
 
     st.markdown("---")
-
 
 # Tracking data update function
 def update_tracking_data(type, category=None, word=None):
