@@ -100,7 +100,7 @@ allowed_channels = [
 # Fetch YouTube videos with transcripts from specific channels
 def fetch_youtube_videos_with_transcripts(query):
     try:
-        youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+        youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 
         videos = []
 
