@@ -32,7 +32,7 @@ if 'tracking_data' not in st.session_state:
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
     initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
-    
+
     # Create a variable number of words learned per day
     words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2]
     words_learned = []
