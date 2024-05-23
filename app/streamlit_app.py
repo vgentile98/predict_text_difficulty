@@ -496,6 +496,7 @@ def learn_page():
     videos = fetch_youtube_videos_with_transcripts(category)
     if videos:
         videos = assign_video_levels(videos)
+        user_level_videos = [video for video in videos if video.get('level') == user_level]  # Filter videos by user level
         for idx, video in enumerate(videos):
             with st.container():
                 col1, col2 = st.columns([0.9, 0.1])
