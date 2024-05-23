@@ -468,10 +468,8 @@ def main():
         initial_assessment()
 
     else:
-        parent_dir = os.path.dirname(os.path.abspath(__file__))
-        logo_path = os.path.join(parent_dir, "baguette_logo.svg")
         pages = ["Learn", "Rehearse", "Track"]
-        page = st_navbar(pages, logo_path)
+        page = st_navbar(pages)
         
         if page == "Learn":
             learn_page()
