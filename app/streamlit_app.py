@@ -376,7 +376,9 @@ def learn_page():
         st.markdown("---")
 
         st.header("Your Vocabulary")
+        
         st.subheader("Word Details")
+        check_word_sidebar = st.text_input("Not sure about a word?")
         if st.button("Check Word"):
             if check_word_sidebar:
                 check_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
@@ -390,7 +392,6 @@ def learn_page():
         st.subheader("Add to Vocabulary")      
         new_word_placeholder = st.empty()
         new_word_sidebar = new_word_placeholder.text_input("Got a new word that's puzzling you?")
-        
         if st.button("Add Word"):
             if new_word_sidebar:
                 st.session_state['vocab_list'].append(new_word_sidebar.strip())
