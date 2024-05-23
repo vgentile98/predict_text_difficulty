@@ -626,7 +626,7 @@ def update_tracking_data(type, category=None, word=None):
         st.session_state['tracking_data']['words_learned'].append((date_today, word))
 
 def track_page():
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([3, 1])
     with col1:
         st.title("Track Your Progress 📈")
         st.subheader("Bravo! You've been working hard - It's time to check where you're at!")
