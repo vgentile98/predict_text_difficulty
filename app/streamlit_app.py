@@ -77,7 +77,7 @@ allowed_channels = [
     'UC1EacOJoqsKaYxaDomTCTEQ', #LeReveilleur
     'UCsT0YIqwnpJCM-mx7-gSA4Q', #TEDx
     'UCYxgidQYV3WPD0eeVGOgibg', #Startupfood
-    'MarketingMania', #UCSmUdD2Dd_v5uqBuRwtEZug
+    'UCSmUdD2Dd_v5uqBuRwtEZug', #MarketingMania
     'UC4ii4_aeS8iOFzsHuhJTq2w', #poissonfecond
     'UCaNlbnghtwlsGF-KzAFThqA', #ScienceEtonnante
     'UCWnfDPdZw6A23UtuBpYBbAg', #DrNozman
