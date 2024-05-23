@@ -22,6 +22,15 @@ st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
+# Initialize session state for tracking progress if it doesn't exist
+if 'tracking_data' not in st.session_state:
+    st.session_state['tracking_data'] = {
+        'levels': [],
+        'articles_read': [],
+        'videos_watched': [],
+        'words_learned': []
+    }
+
 # Function to ensure that user data is initialized in session state
 def ensure_user_data():
     if 'users' not in st.session_state:
@@ -431,6 +440,8 @@ def learn_page():
                         if cols[i].button(f"{emoji} {option}", key=f"feedback_{idx}_{i}"):
                             new_level = update_user_level(user_id, option)
                             st.session_state['users'][user_id]['level'] = new_level
+                            update_tracking_data('article', category=category)  # Update tracking data
+                            update_tracking_data('level')  # Track level change
                             st.experimental_rerun()
                 st.markdown("---")
     else:
@@ -463,6 +474,8 @@ def learn_page():
                         if cols[i].button(f"{emoji} {option}", key=f"video_feedback_{idx}_{i}"):
                             new_level = update_user_level(user_id, option)
                             st.session_state['users'][user_id]['level'] = new_level
+                            update_tracking_data('video', category=category)  # Update tracking data
+                            update_tracking_data('level')  # Track level change
                             st.experimental_rerun()
                 st.markdown("---")
     else:
@@ -507,6 +520,7 @@ def rehearse_page():
                 new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
                 success_placeholder = st.empty()
                 st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
+                update_tracking_data('word', word=new_word.strip())  # Update tracking data
                 time.sleep(2)
                 success_placeholder.empty()
             else:
@@ -567,9 +581,64 @@ def rehearse_page():
         
     st.markdown("---")
 
+def update_tracking_data(type, category=None, word=None):
+    date_today = datetime.today().strftime('%Y-%m-%d')
+    
+    if type == 'level':
+        level = st.session_state['users']['default_user']['level']
+        st.session_state['tracking_data']['levels'].append((date_today, level))
+    
+    if type == 'article':
+        st.session_state['tracking_data']['articles_read'].append((date_today, category))
+    
+    if type == 'video':
+        st.session_state['tracking_data']['videos_watched'].append((date_today, category))
+    
+    if type == 'word':
+        st.session_state['tracking_data']['words_learned'].append((date_today, word))
+
 def track_page():
-    st.title("Track")
-    st.write("This is the Track page. You can add progress tracking here.")
+    st.title("Track Your Progress 📈")
+
+    # Current Level and Evolution
+    st.subheader("Your Current Language Level")
+    current_level = st.session_state['users']['default_user']['level']
+    st.write(f"Current Level: {current_level}")
+
+    # Evolution of Language Level
+    level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
+    if not level_evolution.empty:
+        st.line_chart(level_evolution.set_index('Date'))
+    else:
+        st.write("No data available yet.")
+
+    # Articles and Videos Read
+    st.subheader("Articles and Videos Read")
+    articles_read = pd.DataFrame(st.session_state['tracking_data']['articles_read'], columns=['Date', 'Category'])
+    videos_watched = pd.DataFrame(st.session_state['tracking_data']['videos_watched'], columns=['Date', 'Category'])
+
+    if not articles_read.empty or not videos_watched.empty:
+        combined_read = pd.concat([articles_read, videos_watched])
+        combined_read['Count'] = 1
+        combined_read_grouped = combined_read.groupby(['Date', 'Category']).sum().reset_index()
+
+        st.line_chart(combined_read_grouped.pivot(index='Date', columns='Category', values='Count').fillna(0))
+
+        st.subheader("Distribution of Types of Content Read")
+        st.bar_chart(combined_read['Category'].value_counts())
+    else:
+        st.write("No articles or videos read yet.")
+
+    # Words Learned
+    st.subheader("Words Learned")
+    words_learned = pd.DataFrame(st.session_state['tracking_data']['words_learned'], columns=['Date', 'Word'])
+    if not words_learned.empty:
+        words_learned['Count'] = 1
+        words_learned_grouped = words_learned.groupby('Date').sum().reset_index()
+
+        st.line_chart(words_learned_grouped.set_index('Date')['Count'])
+    else:
+        st.write("No words learned yet.")
 
 def main():
     ensure_user_data()
