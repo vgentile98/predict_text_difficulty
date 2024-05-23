@@ -381,7 +381,6 @@ def learn_page():
         check_word_sidebar = st.text_input("Not sure about a word?")
         if st.button("Check Word"):
             if check_word_sidebar:
-                check_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
                 translation = translate_to_english(check_word_sidebar)
                 definition = get_single_definition(check_word_sidebar)
                 st.sidebar.write(f"**Translation:** {translation}")
