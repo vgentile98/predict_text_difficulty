@@ -7,3 +7,4 @@ torch
 google-api-python-client
 youtube-transcript-api
 isodate
+streamlit-navigation-bar
