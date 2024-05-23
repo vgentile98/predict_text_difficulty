@@ -484,8 +484,8 @@ def learn_page():
     <style>
     .custom-video {
         max-width: 100%;
-        width: 500px;
-        height: 500px;
+        width: 600px;
+        height: 300px;
         }
         </style>
         """,
