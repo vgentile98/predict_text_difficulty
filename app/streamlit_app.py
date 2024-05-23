@@ -509,7 +509,7 @@ def rehearse_page():
             with col3:
                 st.write(definition)
             with col4:
-                if st.button(f"🔙 Rehearse Again", key=f"rehearse_{idx}"):
+                if st.button(f"🔙 Rehearse", key=f"rehearse_{idx}"):
                     st.session_state['vocab_list'].append((word, translation, definition))
                     st.session_state['learned_words'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
