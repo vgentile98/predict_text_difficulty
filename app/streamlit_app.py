@@ -461,22 +461,22 @@ if 'learned_words' not in st.session_state:
     st.session_state['learned_words'] = []
             
 def rehearse_page():
-    st.title("Rehearse Your Vocabulary")
+    st.title("Let's Rehearse Your French Vocabulary! 📚")
 
-    st.subheader("Enter a word you don't understand:")
-    new_word = st.text_input("New Vocabulary Word", "")
-    
-    if st.button("Add Word"):
+    st.subheader("Got a new word that's puzzling you? 🤔")
+    new_word = st.text_input("Type in the French word here:", "")
+
+    if st.button("Add to My List ✍️"):
         if new_word:
             st.session_state['vocab_list'].append(new_word.strip())
-            st.success(f"'{new_word}' added to the vocabulary list!")
+            st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
         else:
-            st.warning("Please enter a word before adding.")
-    
-    st.subheader("Your Vocabulary List")
+            st.warning("Oops! Don't forget to type a word before adding it. 📝")
+
+    st.subheader("Your Current Vocabulary List 🗒️")
     if st.session_state['vocab_list']:
         for idx, word in enumerate(st.session_state['vocab_list']):
-            col1, col2, col3, col4 = st.columns([1, 1, 3, 1])
+            col1, col2, col3, col4, col5 = st.columns([1, 1, 2, 3, 1])
             with col1:
                 st.write(word)
             with col2:
@@ -486,15 +486,19 @@ def rehearse_page():
                 definition = get_single_definition(translation)
                 st.write(definition)
             with col4:
-                if st.button(f"✅", key=f"learn_{idx}"):
+                if st.button(f"✅ Learned", key=f"learn_{idx}"):
                     st.session_state['learned_words'].append((word, translation, definition))
+                    st.session_state['vocab_list'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
+            with col5:
+                if st.button("🗑️", key=f"remove_{idx}"):
                     st.session_state['vocab_list'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
 
     else:
-        st.write("You have no words in your vocabulary list.")
+        st.write("No words here yet. Add some new vocabulary to get started! ✨")
 
-    st.subheader("Learned Words")
+    st.subheader("Your Learned Words 🏅")
     if st.session_state['learned_words']:
         for word, translation, definition in st.session_state['learned_words']:
             col1, col2, col3 = st.columns([1, 2, 3])
@@ -505,7 +509,8 @@ def rehearse_page():
             with col3:
                 st.write(definition)
     else:
-        st.write("You have no learned words yet.")
+        st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
+
         
 def track_page():
     st.title("Track")
