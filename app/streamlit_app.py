@@ -18,6 +18,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import seaborn as sns
+import random
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
