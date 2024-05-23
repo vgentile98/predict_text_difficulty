@@ -467,7 +467,7 @@ def rehearse_page():
 
         st.subheader("Got a new word that's puzzling you?")
         new_word_placeholder = st.empty()
-        new_word = st.text_input("Type in the French word here:", "")
+        new_word = new_word_placeholder.text_input("Type in the French word here:", "")
 
         if st.button("Add to My List ✍️"):
             if new_word:
