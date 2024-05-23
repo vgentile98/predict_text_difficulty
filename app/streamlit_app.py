@@ -376,13 +376,20 @@ def learn_page():
         st.markdown("---")
 
         st.header("Add to Vocabulary")
-        new_word_sidebar = st.text_input("Got a new word that's puzzling you?")
+                
+        new_word_placeholder = st.empty()
+        new_word_sidebar = new_word_placeholder.text_input("Got a new word that's puzzling you?")
+        
         if st.button("Add Word"):
             if new_word_sidebar:
                 st.session_state['vocab_list'].append(new_word_sidebar.strip())
+                new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
+                success_placeholder = st.empty()
                 st.success(f"'{new_word_sidebar}' added to vocabulary!")
                 translation = translate_to_english(new_word_sidebar)
                 definition = get_single_definition(new_word_sidebar)
+                time.sleep(2)
+                success_placeholder.empty()
                 st.sidebar.write(f"**Translation:** {translation}")
                 st.sidebar.write(f"**Definition:** {definition}")
             else:
