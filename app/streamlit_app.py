@@ -510,12 +510,12 @@ def rehearse_page():
                 st.write(definition)
             with col4:
                 if st.button(f"🔙 Rehearse Again", key=f"rehearse_{idx}"):
-                    st.session_state['learned_words'].append((word, translation, definition))
-                    st.session_state['vocab_list'].pop(idx)
+                    st.session_state['vocab_list'].append((word, translation, definition))
+                    st.session_state['learned_words'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
             with col5:
                 if st.button("🗑️ Remove", key=f"remove_again_{idx}"):
-                    st.session_state['vocab_list'].pop(idx)
+                    st.session_state['learned_words'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
     else:
         st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
