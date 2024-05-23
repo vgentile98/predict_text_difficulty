@@ -16,6 +16,8 @@ from PyDictionary import PyDictionary
 import time
 import pandas as pd
 from datetime import datetime
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
@@ -615,9 +617,16 @@ def track_page():
     st.write(f"Current Level: {current_level}")
 
     # Evolution of Language Level
+    st.subheader("Language Level Evolution")
     level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
     if not level_evolution.empty:
-        st.line_chart(level_evolution.set_index('Date'))
+        plt.figure(figsize=(10, 5))
+        plt.plot(level_evolution['Date'], level_evolution['Level'], marker='o')
+        plt.title('Language Level Evolution Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Level')
+        plt.grid(True)
+        st.pyplot(plt)
     else:
         st.write("No data available yet.")
 
@@ -631,10 +640,21 @@ def track_page():
         combined_read['Count'] = 1
         combined_read_grouped = combined_read.groupby(['Date', 'Category']).sum().reset_index()
 
-        st.line_chart(combined_read_grouped.pivot(index='Date', columns='Category', values='Count').fillna(0))
+        st.subheader("Reading Activity Over Time")
+        plt.figure(figsize=(10, 5))
+        sns.lineplot(data=combined_read_grouped, x='Date', y='Count', hue='Category', marker='o')
+        plt.title('Articles and Videos Read Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Count')
+        plt.grid(True)
+        st.pyplot(plt)
 
         st.subheader("Distribution of Types of Content Read")
-        st.bar_chart(combined_read['Category'].value_counts())
+        plt.figure(figsize=(10, 5))
+        content_counts = combined_read['Category'].value_counts()
+        plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140)
+        plt.title('Distribution of Types of Content Read')
+        st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
 
@@ -645,7 +665,13 @@ def track_page():
         words_learned['Count'] = 1
         words_learned_grouped = words_learned.groupby('Date').sum().reset_index()
 
-        st.line_chart(words_learned_grouped.set_index('Date')['Count'])
+        plt.figure(figsize=(10, 5))
+        plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o')
+        plt.title('Words Learned Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Count')
+        plt.grid(True)
+        st.pyplot(plt)
     else:
         st.write("No words learned yet.")
 
