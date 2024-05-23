@@ -706,7 +706,7 @@ def track_page():
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
-            plt.gcf().set_size_inches(10, 5)
+            #plt.gcf().set_size_inches(10, 5)
             st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
