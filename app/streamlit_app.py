@@ -680,7 +680,10 @@ def track_page():
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
-            plt.gca().get_legend().remove()  # Remove the legend
+            if len(combined_read_grouped['Category'].unique()) > 1:
+                plt.legend(loc='upper right')
+            else:
+                plt.gca().get_legend().remove()
             st.pyplot(plt)
 
         with col2:
