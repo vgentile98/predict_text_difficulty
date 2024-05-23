@@ -607,13 +607,13 @@ def update_tracking_data(type, category=None, word=None):
         st.session_state['tracking_data']['words_learned'].append((date_today, word))
 
 def track_page():
-    col1, col2 = st.columns([2,1])
+    col1, col2 = st.columns([2, 1])
     with col1:
         st.title("Track Your Progress 📈")
         st.subheader("You've been working hard - It's time to check where you're at!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=300)
-        
+
     # Customizing plots
     sns.set_style("whitegrid", {'axes.facecolor': '#fdf1e1', 'figure.facecolor': '#fdf1e1'})
 
@@ -622,50 +622,52 @@ def track_page():
     current_level = st.session_state['users']['default_user']['level']
     st.write(f"Current Level: {current_level}")
     level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
+    
     if not level_evolution.empty:
-        plt.figure(figsize=(10, 5))
-        plt.plot(level_evolution['Date'], level_evolution['Level'], marker='o', color='#fda500')
-        plt.title('Language Level Evolution Over Time')
-        plt.xlabel('Date')
-        plt.ylabel('Level')
-        plt.grid(True)
-        plt.gca().set_facecolor('#fdf1e1')
-        plt.gcf().set_facecolor('#fdf1e1')
-        st.pyplot(plt)
-    else:
-        st.write("No data available yet.")
+        col1, col2 = st.columns(2)
+        with col1:
+            plt.figure(figsize=(10, 5))
+            plt.plot(level_evolution['Date'], level_evolution['Level'], marker='o', color='#fda500')
+            plt.title('Language Level Evolution Over Time')
+            plt.xlabel('Date')
+            plt.ylabel('Level')
+            plt.grid(True)
+            plt.gca().set_facecolor('#fdf1e1')
+            plt.gcf().set_facecolor('#fdf1e1')
+            st.pyplot(plt)
 
-    # Articles and Videos Read
-    st.subheader("Articles and Videos Read")
-    articles_read = pd.DataFrame(st.session_state['tracking_data']['articles_read'], columns=['Date', 'Category'])
-    videos_watched = pd.DataFrame(st.session_state['tracking_data']['videos_watched'], columns=['Date', 'Category'])
+        # Articles and Videos Read
+        articles_read = pd.DataFrame(st.session_state['tracking_data']['articles_read'], columns=['Date', 'Category'])
+        videos_watched = pd.DataFrame(st.session_state['tracking_data']['videos_watched'], columns=['Date', 'Category'])
 
-    if not articles_read.empty or not videos_watched.empty:
-        combined_read = pd.concat([articles_read, videos_watched])
-        combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby(['Date', 'Category']).sum().reset_index()
+        if not articles_read.empty or not videos_watched.empty:
+            combined_read = pd.concat([articles_read, videos_watched])
+            combined_read['Count'] = 1
+            combined_read_grouped = combined_read.groupby(['Date', 'Category']).sum().reset_index()
 
-        st.subheader("Reading Activity Over Time")
-        plt.figure(figsize=(10, 5))
-        sns.lineplot(data=combined_read_grouped, x='Date', y='Count', hue='Category', marker='o', palette=['#fda500'])
-        plt.title('Articles and Videos Read Over Time')
-        plt.xlabel('Date')
-        plt.ylabel('Count')
-        plt.grid(True)
-        plt.gca().set_facecolor('#fdf1e1')
-        plt.gcf().set_facecolor('#fdf1e1')
-        st.pyplot(plt)
+            with col2:
+                plt.figure(figsize=(10, 5))
+                sns.lineplot(data=combined_read_grouped, x='Date', y='Count', hue='Category', marker='o', palette=['#fda500'])
+                plt.title('Articles and Videos Read Over Time')
+                plt.xlabel('Date')
+                plt.ylabel('Count')
+                plt.grid(True)
+                plt.gca().set_facecolor('#fdf1e1')
+                plt.gcf().set_facecolor('#fdf1e1')
+                st.pyplot(plt)
 
-        st.subheader("Distribution of Types of Content Read")
-        plt.figure(figsize=(10, 5))
-        content_counts = combined_read['Category'].value_counts()
-        plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
-        plt.title('Distribution of Types of Content Read')
-        plt.gca().set_facecolor('#fdf1e1')
-        plt.gcf().set_facecolor('#fdf1e1')
-        st.pyplot(plt)
-    else:
-        st.write("No articles or videos read yet.")
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("Distribution of Types of Content Read")
+                plt.figure(figsize=(10, 5))
+                content_counts = combined_read['Category'].value_counts()
+                plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
+                plt.title('Distribution of Types of Content Read')
+                plt.gca().set_facecolor('#fdf1e1')
+                plt.gcf().set_facecolor('#fdf1e1')
+                st.pyplot(plt)
+        else:
+            st.write("No articles or videos read yet.")
 
     # Words Learned
     st.subheader("Words Learned")
@@ -674,17 +676,20 @@ def track_page():
         words_learned['Count'] = 1
         words_learned_grouped = words_learned.groupby('Date').sum().reset_index()
 
-        plt.figure(figsize=(10, 5))
-        plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o', color='#fda500')
-        plt.title('Words Learned Over Time')
-        plt.xlabel('Date')
-        plt.ylabel('Count')
-        plt.grid(True)
-        plt.gca().set_facecolor('#fdf1e1')
-        plt.gcf().set_facecolor('#fdf1e1')
-        st.pyplot(plt)
+        col1, col2 = st.columns(2)
+        with col1:
+            plt.figure(figsize=(10, 5))
+            plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o', color='#fda500')
+            plt.title('Words Learned Over Time')
+            plt.xlabel('Date')
+            plt.ylabel('Count')
+            plt.grid(True)
+            plt.gca().set_facecolor('#fdf1e1')
+            plt.gcf().set_facecolor('#fdf1e1')
+            st.pyplot(plt)
     else:
         st.write("No words learned yet.")
+
 
 def main():
     ensure_user_data()
