@@ -461,17 +461,21 @@ if 'learned_words' not in st.session_state:
     st.session_state['learned_words'] = []
             
 def rehearse_page():
-    st.title("Let's Rehearse Your French Vocabulary! 📚")
+    col1, col2 = st.columns([3,1])
+    with col1:
+        st.title("Let's Rehearse Your French Vocabulary! 📚")
 
-    st.subheader("Got a new word that's puzzling you? 🤔")
-    new_word = st.text_input("Type in the French word here:", "")
+        st.subheader("Got a new word that's puzzling you?")
+        new_word = st.text_input("Type in the French word here:", "")
 
-    if st.button("Add to My List ✍️"):
-        if new_word:
-            st.session_state['vocab_list'].append(new_word.strip())
-            st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
-        else:
-            st.warning("Oops! Don't forget to type a word before adding it. 📝")
+        if st.button("Add to My List ✍️"):
+            if new_word:
+                st.session_state['vocab_list'].append(new_word.strip())
+                st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
+            else:
+                st.warning("Oops! Don't forget to type a word before adding it. 📝")
+    with col2:
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=200)
 
     st.subheader("Your Current Vocabulary List 🗒️")
     if st.session_state['vocab_list']:
