@@ -11,6 +11,8 @@ from googleapiclient.errors import HttpError
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 import isodate
 from streamlit_navigation_bar import st_navbar
+from googletrans import Translator
+from PyDictionary import PyDictionary
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
@@ -433,11 +435,76 @@ def learn_page():
                 st.markdown("---")
     else:
         st.write("No videos found. Try adjusting your filters.")
+
+# Initialize Translator and PyDictionary
+translator = Translator()
+dictionary = PyDictionary()
+
+# Function to translate text from French to English
+def translate_to_english(word):
+    translation = translator.translate(word, src='fr', dest='en')
+    return translation.text
+
+# Function to get a single definition of a word
+def get_single_definition(word):
+    meaning = dictionary.meaning(word)
+    if meaning:
+        for pos, defs in meaning.items():
+            if defs:
+                return defs[0]
+    return "No definition found."
+
+# Initialize session state for vocab list if it doesn't exist
+if 'vocab_list' not in st.session_state:
+    st.session_state['vocab_list'] = []
+if 'learned_words' not in st.session_state:
+    st.session_state['learned_words'] = []
             
 def rehearse_page():
-    st.title("Rehearse")
-    st.write("This is the Rehearse page. You can add vocabulary practice here.")
+    st.title("Rehearse Your Vocabulary")
 
+    st.subheader("Enter a word you don't understand:")
+    new_word = st.text_input("New Vocabulary Word", "")
+    
+    if st.button("Add Word"):
+        if new_word:
+            st.session_state['vocab_list'].append(new_word.strip())
+            st.success(f"'{new_word}' added to the vocabulary list!")
+        else:
+            st.warning("Please enter a word before adding.")
+    
+    st.subheader("Your Vocabulary List")
+    if st.session_state['vocab_list']:
+        for idx, word in enumerate(st.session_state['vocab_list']):
+            col1, col2, col3 = st.columns([1, 2, 3])
+            with col1:
+                st.write(word)
+            with col2:
+                translation = translate_to_english(word)
+                st.write(translation)
+            with col3:
+                definition = get_single_definition(translation)
+                st.write(definition)
+            if st.button(f"Mark as Learned", key=f"learn_{idx}"):
+                st.session_state['learned_words'].append((word, translation, definition))
+                st.session_state['vocab_list'].pop(idx)
+                st.experimental_rerun()  # Refresh the page to reflect changes
+
+    else:
+        st.write("You have no words in your vocabulary list.")
+
+    st.subheader("Learned Words")
+    if st.session_state['learned_words']:
+        for word, translation, definition in st.session_state['learned_words']:
+            col1, col2, col3 = st.columns([1, 2, 3])
+            with col1:
+                st.write(word)
+            with col2:
+                st.write(translation)
+            with col3:
+                st.write(definition)
+    else:
+        st.write("You have no learned words yet.")
 def track_page():
     st.title("Track")
     st.write("This is the Track page. You can add progress tracking here.")
