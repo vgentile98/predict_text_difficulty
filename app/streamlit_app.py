@@ -468,7 +468,7 @@ def main():
         initial_assessment()
 
     else:
-        page = st_navbar(["Learn", "Rehearse", "Track"], logo_path='predict_text_difficulty/app/images/baguette_logo.svg')
+        page = st_navbar(["Learn", "Rehearse", "Track"], logo_path='images/baguette_logo.svg')
         
         if page == "Learn":
             learn_page()
