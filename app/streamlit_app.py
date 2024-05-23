@@ -476,6 +476,8 @@ def rehearse_page():
                 st.warning("Oops! Don't forget to type a word before adding it. 📝")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=300)
+    
+    st.markdown("---")
 
     st.subheader("Your Current Vocabulary List 🗒️")
     if st.session_state['vocab_list']:
@@ -501,6 +503,8 @@ def rehearse_page():
 
     else:
         st.write("No words here yet. Add some new vocabulary to get started! ✨")
+    
+    st.markdown("---")
 
     st.subheader("Your Learned Words 🏅")
     if st.session_state['learned_words']:
@@ -523,8 +527,9 @@ def rehearse_page():
                     st.experimental_rerun()  # Refresh the page to reflect changes
     else:
         st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
-
         
+    st.markdown("---")
+
 def track_page():
     st.title("Track")
     st.write("This is the Track page. You can add progress tracking here.")
