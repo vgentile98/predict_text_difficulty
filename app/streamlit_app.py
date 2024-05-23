@@ -12,6 +12,7 @@ from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, No
 import isodate
 from streamlit_navigation_bar import st_navbar
 
+# Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 
 # Initialize user data and levels
