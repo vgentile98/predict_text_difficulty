@@ -627,12 +627,14 @@ def track_page():
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
+            level_evolution['Level'] = pd.Categorical(level_evolution['Level'], categories=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], ordered=True)
             plt.figure(figsize=(10, 5))
-            plt.plot(level_evolution['Date'], level_evolution['Level'], marker='o', color='#fda500')
+            plt.plot(level_evolution['Date'], level_evolution['Level'].cat.codes + 1, marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Level')
+            plt.yticks(ticks=[1, 2, 3, 4, 5, 6], labels=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'])
             plt.grid(True)
-            plt.gca().invert_yaxis()  # Invert y-axis to show levels from A1 to C1
+            plt.gca().invert_yaxis()  # Invert y-axis to show levels from A1 to C2
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
@@ -673,13 +675,14 @@ def track_page():
         with col1:
             st.subheader("Articles and Videos Read Over Time")
             plt.figure(figsize=(10, 5))
-            sns.lineplot(data=combined_read_grouped, x='Date', y='Count', hue='Category', marker='o', palette=['#fda500'])
+            sns.lineplot(data=combined_read_grouped, x='Date', y='Count', marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
+            plt.legend([],[], frameon=False)  # Remove the legend
             st.pyplot(plt)
 
         with col2:
@@ -689,10 +692,10 @@ def track_page():
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
+            plt.gcf().set_size_inches(10, 5)  # Set the same size for all graphs
             st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
-
 
 def main():
     ensure_user_data()
