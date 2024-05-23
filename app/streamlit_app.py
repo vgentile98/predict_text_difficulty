@@ -434,7 +434,8 @@ def main():
             """
             <style>
             .custom-video {
-                max-width: 1000px;
+                max-width: 300px;
+                width: 100%;
                 height: auto;
             }
             </style>
