@@ -354,7 +354,7 @@ def learn_page():
     # Title
     col1, col2 = st.columns([2, 1])
     with col1:
-        st.header('Voilà ! My Top Picks Just for You')
+        st.header('Voilà ! My Top Picks Just for You 🗞️')
         st.subheader('Ready to Explore?')
         # Select options for the API request
         category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
@@ -463,7 +463,7 @@ if 'learned_words' not in st.session_state:
 def rehearse_page():
     st.title("Let's Rehearse Your French Vocabulary! 📚")
 
-    st.subheader("Got a new word that's puzzling you? 🤔")
+    st.subheader("Got a new word that's puzzling you?")
     new_word = st.text_input("Type in the French word here:", "")
 
     if st.button("Add to My List ✍️"):
@@ -509,12 +509,12 @@ def rehearse_page():
             with col3:
                 st.write(definition)
             with col4:
-                if st.button(f"🔙 Rehearse", key=f"rehearse_{idx}"):
+                if st.button(f"🔙 Rehearse", key=f"learn_{idx}_learned"):
                     st.session_state['vocab_list'].append((word, translation, definition))
                     st.session_state['learned_words'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
             with col5:
-                if st.button("🗑️ Remove", key=f"remove_again_{idx}"):
+                if st.button("🗑️ Remove", key=f"remove_{idx}_learned"):
                     st.session_state['learned_words'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
     else:
