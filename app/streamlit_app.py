@@ -463,7 +463,7 @@ if 'learned_words' not in st.session_state:
 def rehearse_page():
     st.title("Let's Rehearse Your French Vocabulary! 📚")
 
-    st.subheader("Got a new word that's puzzling you?")
+    st.subheader("Got a new word that's puzzling you? 🤔")
     new_word = st.text_input("Type in the French word here:", "")
 
     if st.button("Add to My List ✍️"):
@@ -500,7 +500,7 @@ def rehearse_page():
 
     st.subheader("Your Learned Words 🏅")
     if st.session_state['learned_words']:
-        for word, translation, definition in st.session_state['learned_words']:
+        for idx, (word, translation, definition) in enumerate(st.session_state['learned_words']):
             col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
             with col1:
                 st.write(word)
@@ -509,8 +509,8 @@ def rehearse_page():
             with col3:
                 st.write(definition)
             with col4:
-                if st.button(f"🔙 Rehearse", key=f"learn_{idx}_learned"):
-                    st.session_state['vocab_list'].append((word, translation, definition))
+                if st.button(f"🔙 Rehearse", key=f"rehearse_{idx}_learned"):
+                    st.session_state['vocab_list'].append(word)
                     st.session_state['learned_words'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
             with col5:
