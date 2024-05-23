@@ -10,6 +10,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 import isodate
+from streamlit_navigation_bar import st_navbar
 
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 
@@ -341,6 +342,94 @@ def initial_assessment():
         
         st.session_state['initial_assessment'] = False
 
+def learn_page():
+    # Title
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.header('Voilà ! My Top Picks Just for You')
+        st.subheader('Ready to Explore?')
+        # Select options for the API request
+        category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
+    with col2:
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_newspaper.png", width=200)
+
+    st.markdown("---")
+
+    # Fetch and display news articles
+    articles = fetch_news(category)
+    if articles:
+        articles = assign_article_levels(articles)
+        articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))]
+        for idx, article in enumerate(articles):
+            with st.container():
+                # First row for image and level
+                col1, col2 = st.columns([0.9, 0.1])
+                with col1:
+                    st.image(article['image'], width=300)
+                with col2:
+                    st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{article['level']}</strong></div>", unsafe_allow_html=True)
+                st.subheader(article['title'])
+                st.write(article['description'])
+                with st.expander("**Read Now**", expanded=False):
+                    st.write("#### Full Article")  # Prompt for feedback
+                    components.iframe(article['url'], height=450, scrolling=True)
+                    st.write("#### How was it?")  # Prompt for feedback
+                    cols = st.columns(7, gap="small")
+                    feedback_options = [
+                        ('Too Easy', '😌'),
+                        ('Just Right', '😊'),
+                        ('Challenging', '😅'),
+                        ('Too Difficult', '😓')
+                    ]
+                    for i, (option, emoji) in enumerate(feedback_options):
+                        if cols[i].button(f"{emoji} {option}", key=f"feedback_{idx}_{i}"):
+                            new_level = update_user_level(user_id, option)
+                            st.session_state['users'][user_id]['level'] = new_level
+                            st.experimental_rerun()
+                st.markdown("---")
+    else:
+        st.write("No articles found. Try adjusting your filters.")
+    
+    # Fetch and display YouTube videos with transcripts
+    videos = fetch_youtube_videos_with_transcripts(category)
+    if videos:
+        videos = assign_video_levels(videos)
+        for idx, video in enumerate(videos):
+            with st.container():
+                col1, col2 = st.columns([0.9, 0.1])
+                with col1:
+                    st.video(f"https://www.youtube.com/watch?v={video['id']}", height=450)
+                with col2:
+                    st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video['level']}</strong></div>", unsafe_allow_html=True)
+                st.subheader(video['title'])
+                with st.expander("**See Transcript**", expanded=False):
+                    st.write("#### Transcript")  # Prompt for feedback
+                    st.write(video['transcript'])
+                    st.write("#### How was it?")  # Prompt for feedback
+                    cols = st.columns(7, gap="small")
+                    feedback_options = [
+                        ('Too Easy', '😌'),
+                        ('Just Right', '😊'),
+                        ('Challenging', '😅'),
+                        ('Too Difficult', '😓')
+                    ]
+                    for i, (option, emoji) in enumerate(feedback_options):
+                        if cols[i].button(f"{emoji} {option}", key=f"video_feedback_{idx}_{i}"):
+                            new_level = update_user_level(user_id, option)
+                            st.session_state['users'][user_id]['level'] = new_level
+                            st.experimental_rerun()
+                st.markdown("---")
+    else:
+        st.write("No videos found. Try adjusting your filters.")
+            
+def rehearse_page():
+    st.title("Rehearse")
+    st.write("This is the Rehearse page. You can add vocabulary practice here.")
+
+def track_page():
+    st.title("Track")
+    st.write("This is the Track page. You can add progress tracking here.")
+
 def main():
     ensure_user_data()
 
@@ -363,119 +452,18 @@ def main():
                 st.session_state['start'] = True
                 st.session_state['initial_assessment'] = True
 
-    # Initial Assessment
     elif st.session_state.get('initial_assessment', False):
         initial_assessment()
 
     else:
-        # Title
-        col1, col2 = st.columns([2, 1])
-        with col1:
-            st.header('Voilà ! My Top Picks Just for You')
-            st.subheader('Ready to Explore?')
-            # Select options for the API request
-            category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
-        with col2:
-            st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_newspaper.png", width=200)
-
-        st.markdown("---")
-
-        # Sidebar elements
-        with st.sidebar:
-            logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png"
-            st.image(logo_url, width=200)
-            user_id = 'default_user'
-            ensure_user_data()
-            user_level = st.session_state['users'][user_id]['level']
-            st.subheader(f"Your current level: {user_level}")
-
-        ensure_user_data()
-
-        user_id = 'default_user'
-        user_level = st.session_state['users'][user_id]['level']
-
-        # Fetch and display news articles
-        articles = fetch_news(category)
-        if articles:
-            articles = assign_article_levels(articles)
-            articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))]
-            for idx, article in enumerate(articles):
-                with st.container():
-                    # First row for image and level
-                    col1, col2 = st.columns([0.9, 0.1])
-                    with col1:
-                        st.image(article['image'], width=450)
-                    with col2:
-                        st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{article['level']}</strong></div>", unsafe_allow_html=True)
-                    st.subheader(article['title'])
-                    st.write(article['description'])
-                    with st.expander("**Read Now**", expanded=False):
-                        st.write("#### Full Article")  # Prompt for feedback
-                        components.iframe(article['url'], height=450, scrolling=True)
-                        st.write("#### How was it?")  # Prompt for feedback
-                        cols = st.columns(7, gap="small")
-                        feedback_options = [
-                            ('Too Easy', '😌'),
-                            ('Just Right', '😊'),
-                            ('Challenging', '😅'),
-                            ('Too Difficult', '😓')
-                        ]
-                        for i, (option, emoji) in enumerate(feedback_options):
-                            if cols[i].button(f"{emoji} {option}", key=f"feedback_{idx}_{i}"):
-                                new_level = update_user_level(user_id, option)
-                                st.session_state['users'][user_id]['level'] = new_level
-                                st.experimental_rerun()
-                    st.markdown("---")
-        else:
-            st.write("No articles found. Try adjusting your filters.")
-
-        # Custom CSS for video width
-        st.markdown(
-            """
-            <style>
-            .custom-video {
-                max-height: 400px;
-                height: 100%;
-                width: auto;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
+        page = st_navbar(["Learn", "Rehearse", "Track"])
         
-        # Fetch and display YouTube videos with transcripts
-        videos = fetch_youtube_videos_with_transcripts(category, max_videos=3)
-        if videos:
-            videos = assign_video_levels(videos)
-            for idx, video in enumerate(videos):
-                with st.container():
-                    col1, col2 = st.columns([0.9, 0.1])
-                    with col1:
-                        st.markdown(f'<iframe class="custom-video" src="https://www.youtube.com/embed/{video["id"]}" frameborder="0" allowfullscreen></iframe>', unsafe_allow_html=True)
-                    with col2:
-                        st.markdown(f"<div style='border: 1px solid gray; border-radius: 4px; padding: 10px; text-align: center;'><strong>{video['level']}</strong></div>", unsafe_allow_html=True)
-                    st.subheader(video['title'])
-                    #st.write(video['description'])
-                    with st.expander("**See Transcript**", expanded=False):
-                        st.write("#### Transcript")  # Prompt for feedback
-                        st.write(video['transcript'])
-                        st.write("#### How was it?")  # Prompt for feedback
-                        cols = st.columns(7, gap="small")
-                        feedback_options = [
-                            ('Too Easy', '😌'),
-                            ('Just Right', '😊'),
-                            ('Challenging', '😅'),
-                            ('Too Difficult', '😓')
-                        ]
-                        for i, (option, emoji) in enumerate(feedback_options):
-                            if cols[i].button(f"{emoji} {option}", key=f"video_feedback_{idx}_{i}"):
-                                new_level = update_user_level(user_id, option)
-                                st.session_state['users'][user_id]['level'] = new_level
-                                st.experimental_rerun()
-                    st.markdown("---")
-        else:
-            st.write("No videos found. Try adjusting your filters.")
-
+        if page == "Learn":
+            learn_page()
+        elif page == "Rehearse":
+            rehearse_page()
+        elif page == "Track":
+            track_page()
 
 if __name__ == '__main__':
     main()
