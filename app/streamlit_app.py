@@ -477,7 +477,21 @@ def learn_page():
                 st.markdown("---")
     else:
         st.write("No articles found. Try adjusting your filters.")
-    
+
+    # Custom CSS for video width
+    st.markdown(
+     """
+    <style>
+    .custom-video {
+        max-height: 500px;
+        height: 100%;
+        width: auto;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     # Fetch and display YouTube videos with transcripts
     videos = fetch_youtube_videos_with_transcripts(category)
     if videos:
@@ -487,8 +501,9 @@ def learn_page():
                 col1, col2 = st.columns([0.9, 0.1])
                 with col1:
                     if 'id' in video and video['id']:
-                        video_url = f"https://www.youtube.com/embed/{video['id']}"
-                        st.components.v1.iframe(video_url, height=400, style="max-width: 500px; width: 100%;")
+                        st.markdown(f'<iframe class="custom-video" src="https://www.youtube.com/embed/{video["id"]}" frameborder="0" allowfullscreen></iframe>', unsafe_allow_html=True)
+                        #video_url = f"https://www.youtube.com/embed/{video['id']}"
+                        #st.components.v1.iframe(video_url, height=400, style="max-width: 500px; width: 100%;")
                     else:
                         st.error("Error: Video ID not found.")
                 with col2:
