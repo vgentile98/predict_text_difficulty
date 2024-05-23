@@ -12,3 +12,5 @@ googletrans==4.0.0-rc1
 PyDictionary
 pandas
 datetime
+matplotlib
+seaborn
