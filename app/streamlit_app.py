@@ -31,6 +31,8 @@ if 'tracking_data' not in st.session_state:
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
     initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
+    
+    # Create a variable number of words learned per day
     words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2]
     words_learned = []
     word_index = 0
@@ -44,9 +46,9 @@ if 'tracking_data' not in st.session_state:
     articles_read = []
     videos_watched = []
     for date in initial_dates:
-        for _ in range(random.randint(0, 2)):
+        for _ in range(random.randint(0, 3)):  # Variable number of articles per day
             articles_read.append((date, random.choice(categories)))
-        for _ in range(random.randint(0, 2)):
+        for _ in range(random.randint(0, 2)):  # Variable number of videos per day
             videos_watched.append((date, random.choice(categories)))
 
     st.session_state['tracking_data'] = {
@@ -628,7 +630,7 @@ def track_page():
     col1, col2 = st.columns([2, 1])
     with col1:
         st.title("Track Your Progress 📈")
-        st.subheader("Bravo! You've been working hard - It's time to check where you're at!")
+        st.subheader("You've been working hard - It's time to check where you're at!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=300)
 
@@ -638,6 +640,8 @@ def track_page():
 
     with col1:
         st.subheader("Language Level Evolution")
+        current_level = st.session_state['users']['default_user']['level']
+        st.write(f"Current Level: {current_level}")
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
@@ -677,18 +681,15 @@ def track_page():
     articles_read = pd.DataFrame(st.session_state['tracking_data']['articles_read'], columns=['Date', 'Category'])
     videos_watched = pd.DataFrame(st.session_state['tracking_data']['videos_watched'], columns=['Date', 'Category'])
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Articles and Videos Read Over Time")
-        articles_read = pd.DataFrame(st.session_state['tracking_data']['articles_read'], columns=['Date', 'Category'])
-        videos_watched = pd.DataFrame(st.session_state['tracking_data']['videos_watched'], columns=['Date', 'Category'])
+    if not articles_read.empty or not videos_watched.empty:
+        combined_read = pd.concat([articles_read, videos_watched])
+        combined_read['Date'] = pd.to_datetime(combined_read['Date'])
+        combined_read['Count'] = 1
+        combined_read_grouped = combined_read.groupby(['Date']).sum().reset_index()
 
-        if not articles_read.empty or not videos_watched.empty:
-            combined_read = pd.concat([articles_read, videos_watched])
-            combined_read['Date'] = pd.to_datetime(combined_read['Date'])
-            combined_read['Count'] = 1
-            combined_read_grouped = combined_read.groupby('Date').sum().reset_index()
-
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("Articles and Videos Read Over Time")
             plt.figure(figsize=(10, 5))
             sns.lineplot(data=combined_read_grouped, x='Date', y='Count', marker='o', color='#fda500')
             plt.xlabel('Date')
@@ -698,8 +699,18 @@ def track_page():
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
             st.pyplot(plt)
-        else:
-            st.write("No articles or videos read yet.")
+
+        with col2:
+            st.subheader("Distribution of Types of Content Read")
+            plt.figure(figsize=(10, 5))
+            content_counts = combined_read['Category'].value_counts()
+            plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
+            plt.gca().set_facecolor('#fdf1e1')
+            plt.gcf().set_facecolor('#fdf1e1')
+            plt.gcf().set_size_inches(10, 5)
+            st.pyplot(plt)
+    else:
+        st.write("No articles or videos read yet.")
 
 def main():
     ensure_user_data()
