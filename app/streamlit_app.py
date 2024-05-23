@@ -28,8 +28,8 @@ default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
 # Initialize some initial tracking data to simulate evolution if not already initialized
 if 'tracking_data' not in st.session_state:
-    initial_dates = [datetime.today() - timedelta(days=i) for i in range(10)]
-    initial_levels = ['A1', 'A1', 'A2', 'A2', 'B1', 'B1', 'B2', 'B2', 'C1', 'C1']
+    initial_dates = [datetime.today() - timedelta(days=i) for i in range(9, -1, -1)]
+    initial_levels = ['A1']*5 + ['A2']*5
     initial_articles = ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health', 'general', 'business', 'technology']
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
 
@@ -37,7 +37,7 @@ if 'tracking_data' not in st.session_state:
         'levels': list(zip(initial_dates, initial_levels)),
         'articles_read': list(zip(initial_dates, initial_articles)),
         'videos_watched': list(zip(initial_dates, initial_articles)),
-        'words_learned': list(zip(initial_dates, initial_words))
+        'words_learned': [(initial_dates[i], initial_words[i % len(initial_words)]) for i in range(10)]
     }
 
 # Function to ensure that user data is initialized in session state
@@ -263,6 +263,7 @@ def update_user_level(user_id, feedback):
 
     # Update the user data in session state
     st.session_state['users'][user_id] = user_data
+    update_tracking_data('level')
 
     return user_data['level']
 
@@ -590,6 +591,7 @@ def rehearse_page():
         
     st.markdown("---")
 
+# Tracking data update function
 def update_tracking_data(type, category=None, word=None):
     date_today = datetime.today().strftime('%Y-%m-%d')
     
@@ -613,33 +615,32 @@ def track_page():
         st.subheader("You've been working hard - It's time to check where you're at!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=300)
-        
-    # Customizing plots
+
     sns.set_style("whitegrid", {'axes.facecolor': '#fdf1e1', 'figure.facecolor': '#fdf1e1'})
 
-    # Evolution of Language Level and Words Learned
     col1, col2 = st.columns(2)
-    
+
     with col1:
         st.subheader("Language Level Evolution")
+        current_level = st.session_state['users']['default_user']['level']
+        st.write(f"Current Level: {current_level}")
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
-            level_evolution['Level'] = pd.Categorical(level_evolution['Level'], categories=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], ordered=True)
+            level_evolution['Level'] = pd.Categorical(level_evolution['Level'], categories=cefr_levels, ordered=True)
             plt.figure(figsize=(10, 5))
             plt.plot(level_evolution['Date'], level_evolution['Level'].cat.codes + 1, marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Level')
-            plt.yticks(ticks=[1, 2, 3, 4, 5, 6], labels=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'])
+            plt.yticks(ticks=range(1, len(cefr_levels)+1), labels=cefr_levels)
             plt.grid(True)
-            plt.gca().invert_yaxis()  # Invert y-axis to show levels from A1 to C2
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
             st.pyplot(plt)
         else:
             st.write("No data available yet.")
-    
+
     with col2:
         st.subheader("Words Learned Over Time")
         words_learned = pd.DataFrame(st.session_state['tracking_data']['words_learned'], columns=['Date', 'Word'])
@@ -659,7 +660,6 @@ def track_page():
         else:
             st.write("No words learned yet.")
 
-    # Articles and Videos Read and Distribution of Types of Content Read
     articles_read = pd.DataFrame(st.session_state['tracking_data']['articles_read'], columns=['Date', 'Category'])
     videos_watched = pd.DataFrame(st.session_state['tracking_data']['videos_watched'], columns=['Date', 'Category'])
 
@@ -680,7 +680,7 @@ def track_page():
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
-            plt.legend([],[], frameon=False)  # Remove the legend
+            plt.gca().get_legend().remove()  # Remove the legend
             st.pyplot(plt)
 
         with col2:
@@ -690,7 +690,7 @@ def track_page():
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'])
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
-            plt.gcf().set_size_inches(10, 5)  # Set the same size for all graphs
+            plt.gcf().set_size_inches(10, 5)
             st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
