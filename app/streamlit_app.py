@@ -369,11 +369,13 @@ def learn_page():
         logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png"
         st.image(logo_url, width=200)
         
-        st.subheader("Your Progress")
+        st.header("Your Progress")
         st.write(f"🚀 Current level: {user_level}")
-        st.write("🌟 Badge: Beginner Explorer")  
+        st.write("🌟 Badge: Beginner Explorer")
 
-        st.subheader("Add to Vocabulary")
+        st.markdown("---")
+
+        st.header("Add to Vocabulary")
         new_word_sidebar = st.text_input("Got a new word that's puzzling you?")
         if st.button("Add Word"):
             if new_word_sidebar:
