@@ -476,7 +476,7 @@ def rehearse_page():
     st.subheader("Your Current Vocabulary List 🗒️")
     if st.session_state['vocab_list']:
         for idx, word in enumerate(st.session_state['vocab_list']):
-            col1, col2, col3, col4, col5 = st.columns([1, 1, 2, 3, 1])
+            col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
             with col1:
                 st.write(word)
             with col2:
@@ -491,7 +491,7 @@ def rehearse_page():
                     st.session_state['vocab_list'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
             with col5:
-                if st.button("🗑️", key=f"remove_{idx}"):
+                if st.button("🗑️ Remove", key=f"remove_{idx}"):
                     st.session_state['vocab_list'].pop(idx)
                     st.experimental_rerun()  # Refresh the page to reflect changes
 
@@ -501,13 +501,22 @@ def rehearse_page():
     st.subheader("Your Learned Words 🏅")
     if st.session_state['learned_words']:
         for word, translation, definition in st.session_state['learned_words']:
-            col1, col2, col3 = st.columns([1, 2, 3])
+            col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
             with col1:
                 st.write(word)
             with col2:
                 st.write(translation)
             with col3:
                 st.write(definition)
+            with col4:
+            if st.button(f"🔙 Rehearse Again", key=f"learn_{idx}"):
+                st.session_state['learned_words'].append((word, translation, definition))
+                st.session_state['vocab_list'].pop(idx)
+                st.experimental_rerun()  # Refresh the page to reflect changes
+            with col5:
+                if st.button("🗑️ Remove", key=f"remove_{idx}"):
+                    st.session_state['vocab_list'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
     else:
         st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
 
