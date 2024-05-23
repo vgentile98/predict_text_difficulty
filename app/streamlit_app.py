@@ -546,14 +546,17 @@ def rehearse_page():
         if st.button("Add to My List ✍️"):
             if new_word:
                 st.session_state['vocab_list'].append(new_word.strip())
-                new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
                 success_placeholder = st.empty()
                 st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
                 update_tracking_data('word', word=new_word.strip())  # Update tracking data
                 time.sleep(2)
                 success_placeholder.empty()
+                new_word_placeholder.empty()  # Clear the input field after adding the word
             else:
                 st.warning("Oops! Don't forget to type a word before adding it. 📝")
+                
+        new_word_placeholder.text_input("Type in the French word here:", "", key="new_word")
+
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=300)
     
