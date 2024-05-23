@@ -600,7 +600,13 @@ def update_tracking_data(type, category=None, word=None):
         st.session_state['tracking_data']['words_learned'].append((date_today, word))
 
 def track_page():
-    st.title("Track Your Progress 📈")
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.header("Track Your Progress 📈")
+    with col2:
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=250)
+
+    st.markdown("---")
 
     # Current Level and Evolution
     st.subheader("Your Current Language Level")
