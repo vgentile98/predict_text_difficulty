@@ -368,13 +368,13 @@ def learn_page():
     with st.sidebar:
         logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png"
         st.image(logo_url, width=200)
-        st.subheader(f"Your current level: {user_level}")
         
         st.sidebar.subheader("Your Progress")
+        st.subheader(f"🚀 Current level: {user_level}")
         st.sidebar.write("🌟 Badge: Beginner Explorer")  # Replace with dynamic badge based on user's progress
 
         st.sidebar.subheader("Add to Vocabulary")
-        new_word_sidebar = st.sidebar.text_input("Add a new French word:")
+        new_word_sidebar = st.sidebar.text_input("Got a new word that's puzzling you?")
         if st.sidebar.button("Add Word"):
             if new_word_sidebar:
                 st.session_state['vocab_list'].append(new_word_sidebar.strip())
