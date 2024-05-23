@@ -703,7 +703,7 @@ def track_page():
             st.subheader("Distribution of Types of Content Read")
             plt.figure(figsize=(5, 2))
             content_counts = combined_read['Category'].value_counts()
-            plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'], textprops={'fontsize': 8})
+            plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'], textprops={'fontsize': 5})
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             #plt.gcf().set_size_inches(10, 5)
