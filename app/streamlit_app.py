@@ -28,18 +28,25 @@ default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
 # Initialize some initial tracking data to simulate evolution if not already initialized
 if 'tracking_data' not in st.session_state:
-    initial_dates = [datetime.today() - timedelta(days=i) for i in range(9, -1, -1)]
-    initial_levels = ['A1']*5 + ['A2']*5
-    initial_articles = ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health', 'general', 'business', 'technology']
+    initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
+    initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
+    initial_articles = ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health', 'general', 'business', 'technology', 'general', 'business', 'technology', 'entertainment', 'sports']
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
+    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2]
+    words_learned = []
+    word_index = 0
+    for i, date in enumerate(initial_dates):
+        for _ in range(words_per_day[i]):
+            words_learned.append((date, initial_words[word_index % len(initial_words)]))
+            word_index += 1
 
     st.session_state['tracking_data'] = {
         'levels': list(zip(initial_dates, initial_levels)),
         'articles_read': list(zip(initial_dates, initial_articles)),
         'videos_watched': list(zip(initial_dates, initial_articles)),
-        'words_learned': [(initial_dates[i], initial_words[i % len(initial_words)]) for i in range(10)]
+        'words_learned': words_learned
     }
-
+    
 # Function to ensure that user data is initialized in session state
 def ensure_user_data():
     if 'users' not in st.session_state:
@@ -632,7 +639,7 @@ def track_page():
             plt.plot(level_evolution['Date'], level_evolution['Level'].cat.codes + 1, marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Level')
-            plt.yticks(ticks=range(1, len(cefr_levels)+1), labels=cefr_levels)
+            plt.yticks(ticks=range(1, len(cefr_levels) + 1), labels=cefr_levels)
             plt.grid(True)
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
@@ -667,7 +674,7 @@ def track_page():
         combined_read = pd.concat([articles_read, videos_watched])
         combined_read['Date'] = pd.to_datetime(combined_read['Date'])
         combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby(['Date', 'Category']).sum().reset_index()
+        combined_read_grouped = combined_read.groupby(['Date']).sum().reset_index()
 
         col1, col2 = st.columns(2)
         with col1:
@@ -680,10 +687,6 @@ def track_page():
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
             plt.xticks(rotation=45)
-            if len(combined_read_grouped['Category'].unique()) > 1:
-                plt.legend(loc='upper right')
-            else:
-                plt.gca().get_legend().remove()
             st.pyplot(plt)
 
         with col2:
