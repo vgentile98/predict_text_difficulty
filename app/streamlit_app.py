@@ -391,7 +391,7 @@ def learn_page():
     user_level = st.session_state['users'][user_id]['level']
 
     # Title
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([3, 1])
     with col1:
         st.title('Voilà ! My Top Picks Just for You 🗞️')
         st.subheader('Ready to Explore?')
