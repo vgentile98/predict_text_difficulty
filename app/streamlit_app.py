@@ -359,7 +359,7 @@ def learn_page():
         # Select options for the API request
         category = st.selectbox("What piques your curiosity in the world of French?", ['general', 'business', 'technology', 'entertainment', 'sports', 'science', 'health'], index=1)
     with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_newspaper.png", width=200)
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_news.png", width=200)
 
     st.markdown("---")
 
