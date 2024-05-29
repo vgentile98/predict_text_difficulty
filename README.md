@@ -1,4 +1,4 @@
-# Prediction the Difficulty Level of French Text
+# Predicting the Difficulty Level of French Texts
 
 ## Why? - Our Challenge
 
