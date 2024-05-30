@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import random
 import numpy as np
+import copy
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
@@ -28,7 +29,7 @@ st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def initialize_tracking_data():
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
     initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
@@ -62,18 +63,17 @@ def initialize_tracking_data():
 
 if 'tracking_data' not in st.session_state:
     st.session_state['tracking_data'] = initialize_tracking_data()
-    
+
 # Function to ensure that user data is initialized in session state
 def ensure_user_data():
     if 'users' not in st.session_state:
-        st.session_state['users'] = default_user_data.copy()
+        st.session_state['users'] = copy.deepcopy(default_user_data)
 
 # Fetch news articles from MediaStack
 mediastack_api_key = '76ab282b82f324666ac2a5510fd7f9f2'
 base_url = "http://api.mediastack.com/v1/news"
 
 @st.cache
-# Fetch news articles from mediastack API
 def fetch_news(category):
     params = {
         'access_key': mediastack_api_key,
@@ -97,55 +97,54 @@ def is_valid_image_url(url):
         return response.status_code == 200 and 'image' in response.headers['Content-Type']
     except requests.RequestException:
         return False
-        
+
 # Function to assign levels to articles
 def assign_article_levels(articles):
-     level_cycle = cycle(cefr_levels)  # Create a cycle iterator from CEFR levels
-     valid_articles = [article for article in articles if is_valid_image_url(article.get('image'))]
-     for article in valid_articles:
-         article['level'] = next(level_cycle)  # Assign levels in a cyclic manner
-     return valid_articles
+    level_cycle = cycle(cefr_levels)  # Create a cycle iterator from CEFR levels
+    valid_articles = [article for article in articles if is_valid_image_url(article.get('image'))]
+    for article in valid_articles:
+        article['level'] = next(level_cycle)  # Assign levels in a cyclic manner
+    return valid_articles
 
 # YouTube API key
 youtube_api_key = 'AIzaSyCHIkxj1VdqAhzb9M3lSJPxzU9LKb1DXyQ'
 
 # Define the list of allowed channel IDs
 allowed_channels = [
-    'UCYpRDnhk5H8h16jpS84uqsA', #lemondefr
-    'UCCDz_XYeKWd0OIyjp95dqyQ', #LeFigaro
-    'UCAcAnMF0OrCtUep3Y4M-ZPw', #HugoDécrypte
-    'UCb4UAZwZqS4a35FrBcLlMXA', #Canalplus
-    'UCdKTlsmvczkdvGjiLinQwmw', #Philoxime
-    'UCNovJemYKcdKt7PDdptJZfQ', #jean-marcjancovici2537
-    'UCah8C0gmLkdtvsy0b2jrjrw', #CyrusNorth
-    'UC8ggH3zU61XO0nMskSQwZdA', #CanalplusSport
-    'UCkkY_V2YSa_oln5CXm4zDzw', #Amideslobbies
-    'UCSULDz1yaHLVQWHpm4g_GHA', # monsieurbidouille
-    'UC1EacOJoqsKaYxaDomTCTEQ', #LeReveilleur
-    'UCsT0YIqwnpJCM-mx7-gSA4Q', #TEDx
-    'UCYxgidQYV3WPD0eeVGOgibg', #Startupfood
-    'UCSmUdD2Dd_v5uqBuRwtEZug', #MarketingMania
-    'UC4ii4_aeS8iOFzsHuhJTq2w', #poissonfecond
-    'UCaNlbnghtwlsGF-KzAFThqA', #ScienceEtonnante
-    'UCWnfDPdZw6A23UtuBpYBbAg', #DrNozman
-    'UCeR8BYZS7IHYjk_9Mh5JgkA', #scilabus
-    'UCS_7tplUgzJG4DhA16re5Yg', #BaladeMentale
-    'UCOchT7ZJ4TXe3stdLW1Sfxw', #DansTonCorps
-    'UC9BnGZLT4iPaJtDOXYwQuHQ', #PrimumNonNocereVideo
-    'UCDqEttzOpPbDoeC05HRPPDQ', #AsclepiosYT
-    'UCsE6tdKFV2oSHFyDll72rWg', #PsykoCouac
-    'UCAkhrilzn2OWOp1AsB3VJmg', #Bananamo
-    'UC8fgz_7wFO_APrt6LXcQ_iw', #JacksTeam
-    'UC5WFSncb01pBfKcQw3mfO9A', #latribunetvevents
-    'UCO6K_kkdP-lnSCiO3tPx7WA', #franceinfo
-    'UCwI-JbGNsojunnHbFAc0M4Q', #arte
-    'UCJy0lX8ThZ7lCtst7JnegWQ', #jojol
-    'UC5Twj1Axp_-9HLsZ5o_cEQQ', #DocSeven
-    'UC__xRB5L4toU9yYawt_lIKg' #blastinfo
+    'UCYpRDnhk5H8h16jpS84uqsA',  # lemondefr
+    'UCCDz_XYeKWd0OIyjp95dqyQ',  # LeFigaro
+    'UCAcAnMF0OrCtUep3Y4M-ZPw',  # HugoDécrypte
+    'UCb4UAZwZqS4a35FrBcLlMXA',  # Canalplus
+    'UCdKTlsmvczkdvGjiLinQwmw',  # Philoxime
+    'UCNovJemYKcdKt7PDdptJZfQ',  # jean-marcjancovici2537
+    'UCah8C0gmLkdtvsy0b2jrjrw',  # CyrusNorth
+    'UC8ggH3zU61XO0nMskSQwZdA',  # CanalplusSport
+    'UCkkY_V2YSa_oln5CXm4zDzw',  # Amideslobbies
+    'UCSULDz1yaHLVQWHpm4g_GHA',  # monsieurbidouille
+    'UC1EacOJoqsKaYxaDomTCTEQ',  # LeReveilleur
+    'UCsT0YIqwnpJCM-mx7-gSA4Q',  # TEDx
+    'UCYxgidQYV3WPD0eeVGOgibg',  # Startupfood
+    'UCSmUdD2Dd_v5uqBuRwtEZug',  # MarketingMania
+    'UC4ii4_aeS8iOFzsHuhJTq2w',  # poissonfecond
+    'UCaNlbnghtwlsGF-KzAFThqA',  # ScienceEtonnante
+    'UCWnfDPdZw6A23UtuBpYBbAg',  # DrNozman
+    'UCeR8BYZS7IHYjk_9Mh5JgkA',  # scilabus
+    'UCS_7tplUgzJG4DhA16re5Yg',  # BaladeMentale
+    'UCOchT7ZJ4TXe3stdLW1Sfxw',  # DansTonCorps
+    'UC9BnGZLT4iPaJtDOXYwQuHQ',  # PrimumNonNocereVideo
+    'UCDqEttzOpPbDoeC05HRPPDQ',  # AsclepiosYT
+    'UCsE6tdKFV2oSHFyDll72rWg',  # PsykoCouac
+    'UCAkhrilzn2OWOp1AsB3VJmg',  # Bananamo
+    'UC8fgz_7wFO_APrt6LXcQ_iw',  # JacksTeam
+    'UC5WFSncb01pBfKcQw3mfO9A',  # latribunetvevents
+    'UCO6K_kkdP-lnSCiO3tPx7WA',  # franceinfo
+    'UCwI-JbGNsojunnHbFAc0M4Q',  # arte
+    'UCJy0lX8ThZ7lCtst7JnegWQ',  # jojol
+    'UC5Twj1Axp_-9HLsZ5o_cEQQ',  # DocSeven
+    'UC__xRB5L4toU9yYawt_lIKg'  # blastinfo
 ]
 
 @st.cache
-# Fetch YouTube videos with transcripts from specific channels
 def fetch_youtube_videos_with_transcripts(query, max_videos=3):
     try:
         youtube = build('youtube', 'v3', developerKey=youtube_api_key)
@@ -207,7 +206,6 @@ def fetch_youtube_videos_with_transcripts(query, max_videos=3):
         st.error(e)
         return []
 
-        
 # Dummy function to assign levels to videos based on the transcript
 def assign_video_levels(videos):
     level_cycle = cycle(cefr_levels)
@@ -215,94 +213,152 @@ def assign_video_levels(videos):
         video['level'] = next(level_cycle)
     return videos
 
-# Load the model from GitHub
-def download_file_from_github(url, destination):
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(destination, 'wb') as f:
-            f.write(response.content)
+# Initialize Translator and PyDictionary
+translator = Translator()
+dictionary = PyDictionary()
+
+@st.cache
+def translate_to_english(word):
+    translation = translator.translate(word, src='fr', dest='en')
+    return translation.text
+
+@st.cache
+def get_single_definition(word):
+    meaning = dictionary.meaning(word)
+    if meaning:
+        for pos, defs in meaning.items():
+            if defs:
+                return defs[0]
+    return "No definition found."
+
+# Initialize session state for vocab list if it doesn't exist
+if 'vocab_list' not in st.session_state:
+    st.session_state['vocab_list'] = []
+if 'learned_words' not in st.session_state:
+    st.session_state['learned_words'] = []
+
+def rehearse_page():
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        st.title("Let's Rehearse Your French Vocabulary! 📚")
+
+        st.subheader("Got a new word that's puzzling you?")
+        new_word = st.text_input("Type in the French word here:", key="new_word")
+
+        if st.button("Add to My List ✍️", key="add_word"):
+            if new_word:
+                st.session_state['vocab_list'].append(new_word.strip())
+                st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
+                update_tracking_data('word', word=new_word.strip())  # Update tracking data
+                time.sleep(2)
+                st.experimental_rerun()  # Rerun to clear the input field
+            else:
+                st.warning("Oops! Don't forget to type a word before adding it. 📝")
+
+    with col2:
+        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=300)
+
+    st.markdown("---")
+
+    st.subheader("Your Current Vocabulary List 🗒️")
+    if st.session_state['vocab_list']:
+        for idx, word in enumerate(st.session_state['vocab_list']):
+            col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
+            with col1:
+                st.write(word)
+            with col2:
+                translation = translate_to_english(word)
+                st.write(translation)
+            with col3:
+                definition = get_single_definition(translation)
+                st.write(definition)
+            with col4:
+                if st.button(f"✅ Learned", key=f"learn_{idx}"):
+                    st.session_state['learned_words'].append((word, translation, definition))
+                    st.session_state['vocab_list'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
+            with col5:
+                if st.button("🗑️ Remove", key=f"remove_{idx}"):
+                    st.session_state['vocab_list'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
     else:
-        st.error("Failed to download file. Check the URL and network connection.")
+        st.write("No words here yet. Add some new vocabulary to get started! ✨")
 
-def setup_model():
-    """Setup the model by ensuring all necessary files are downloaded and loaded."""
-    model_dir = 'predict_text_difficulty/app'
-    os.makedirs(model_dir, exist_ok=True)
+    st.markdown("---")
 
-    # Check if model files are already downloaded, else download them
-    model_files = {
-        'config.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/config.json',
-        'tokenizer_config.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/tokenizer_config.json',
-        'special_tokens_map.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/special_tokens_map.json',
-        'added_tokens.json': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/added_tokens.json',
-        'model.safetensors': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/model.safetensors',
-        'sentencepiece.bpe': 'https://github.com/vgentile98/predict_text_difficulty/raw/main/app/sentencepiece.bpe.model'
-    }
+    st.subheader("Your Learned Words 🏅")
+    if st.session_state['learned_words']:
+        for idx, (word, translation, definition) in enumerate(st.session_state['learned_words']):
+            col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
+            with col1:
+                st.write(word)
+            with col2:
+                st.write(translation)
+            with col3:
+                st.write(definition)
+            with col4:
+                if st.button(f"🔙 Rehearse", key=f"rehearse_{idx}_learned"):
+                    st.session_state['vocab_list'].append(word)
+                    st.session_state['learned_words'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
+            with col5:
+                if st.button("🗑️ Remove", key=f"remove_{idx}_learned"):
+                    st.session_state['learned_words'].pop(idx)
+                    st.experimental_rerun()  # Refresh the page to reflect changes
+    else:
+        st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
 
-    for file_name, url in model_files.items():
-        file_path = os.path.join(model_dir, file_name)
-        if not os.path.exists(file_path):
-            download_file_from_github(url, file_path)
+    st.markdown("---")
 
-    # Load model and tokenizer
-    #try:
-        #tokenizer = CamembertTokenizer.from_pretrained(model_dir)
-        #model = CamembertForSequenceClassification.from_pretrained(model_dir)
-        #return model, tokenizer
-    #except Exception as e:
-        #st.exception(e)
-        #raise
+# Function to update tracking data
+def update_tracking_data(type, category=None, word=None):
+    date_today = datetime.today().strftime('%Y-%m-%d')
 
-# Setup the model
-#try:
-    #model, tokenizer = setup_model()
-#except Exception as e:
-    #st.error("An error occurred while setting up the model.")
+    if type == 'level':
+        level = st.session_state['users']['default_user']['level']
+        st.session_state['tracking_data']['levels'].append((date_today, level))
 
-# Function to update user level based on feedback
-def update_user_level(user_id, feedback):
-    # Make sure user data is available
-    ensure_user_data()
+    if type == 'article':
+        st.session_state['tracking_data']['articles_read'].append((date_today, category))
 
-    # Access the user data safely from session state
-    feedback_points = {'Too Easy': 1, 'Just Right': 0.5, 'Challenging': 0.5, 'Too Difficult': -1}
-    user_data = st.session_state['users'][user_id]
-    user_data['feedback_points'] += feedback_points[feedback]
+    if type == 'video':
+        st.session_state['tracking_data']['videos_watched'].append((date_today, category))
 
-    # Thresholds for level change
-    upgrade_threshold = 3 # Points needed to move up a level
-    downgrade_threshold = -3 # Points needed to move down a level
+    if type == 'word':
+        st.session_state['tracking_data']['words_learned'].append((date_today, word))
 
-    # Accessing CEFR levels
-    current_index = cefr_levels.index(user_data['level'])
+# Sidebar elements
+def sidebar():
+    st.header("Your Progress")
+    user_id = 'default_user'
+    user_level = st.session_state['users'][user_id]['level']
+    st.write(f"🚀 Current level: {user_level}")
+    st.write("🌟 Badge: Beginner Explorer")
 
-    # Level Change
-    if user_data['feedback_points'] >= upgrade_threshold:
-        new_index = min(current_index + 1, len(cefr_levels) - 1)
-        user_data['level'] = cefr_levels[new_index]
-        user_data['feedback_points'] = 0 # Reset points after level change
-    elif user_data['feedback_points'] <= downgrade_threshold:
-        new_index = max(current_index - 1, 0)
-        user_data['level'] = cefr_levels[new_index]
-        user_data['feedback_points'] = 0 # Reset points after level change
+    st.markdown("---")
 
-    # Update the user data in session state
-    st.session_state['users'][user_id] = user_data
-    update_tracking_data('level')
+    st.header("Your Vocabulary")
 
-    return user_data['level']
+    st.subheader("Word Details")
+    check_word_sidebar = st.text_input("Not sure about a word?", key="check_word")
+    if st.button("Check Word", key="check_word_button"):
+        if check_word_sidebar:
+            st.session_state['translation'] = translate_to_english(check_word_sidebar)
+            st.session_state['definition'] = get_single_definition(check_word_sidebar)
+        else:
+            st.warning("Please enter a word before checking.")
 
-def predict_article_levels(articles, model, tokenizer):
-    for article in articles:
-        if is_valid_image_url(article.get('image')):
-            text = article['title'] + " " + article['description']
-            inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
-            with torch.no_grad():
-                outputs = model(**inputs)
-                predictions = outputs.logits.argmax(-1).item()
-            # Assuming you've mapped the model's output indices to CEFR levels:
-                article['level'] = cefr_levels[predictions]
-    return articles
+    if 'translation' in st.session_state and 'definition' in st.session_state:
+        st.write(f"**Translation:** {st.session_state['translation']}")
+        st.write(f"**Definition:** {st.session_state['definition']}")
+
+    st.subheader("Add to Vocabulary")
+    new_word_sidebar = st.text_input("Got a new word that's puzzling you?", key="new_word_sidebar")
+    if st.button("Add Word", key="add_word_sidebar"):
+        if new_word_sidebar:
+            st.session_state['vocab_list'].append(new_word_sidebar.strip())
+            st.success(f"'{new_word_sidebar}' added to vocabulary!")
+            update_tracking_data('word', word=new_word_sidebar.strip())
 
 # Function for initial assessment
 def initial_assessment():
@@ -413,39 +469,7 @@ def learn_page():
         logo_url = "https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png"
         st.image(logo_url, width=200)
         
-        st.header("Your Progress")
-        st.write(f"🚀 Current level: {user_level}")
-        st.write("🌟 Badge: Beginner Explorer")
-
-        st.markdown("---")
-
-        st.header("Your Vocabulary")
-        
-        st.subheader("Word Details")
-        check_word_sidebar = st.text_input("Not sure about a word?", key="check_word")
-        if st.button("Check Word", key="check_word_button"):
-            if check_word_sidebar:
-                st.session_state['translation'] = translate_to_english(check_word_sidebar)
-                st.session_state['definition'] = get_single_definition(check_word_sidebar)
-                st.experimental_rerun()  # Rerun to display the results
-            else:
-                st.warning("Please enter a word before checking.")
-
-        if 'translation' in st.session_state and 'definition' in st.session_state:
-            st.write(f"**Translation:** {st.session_state['translation']}")
-            st.write(f"**Definition:** {st.session_state['definition']}")
-
-        st.subheader("Add to Vocabulary")      
-        new_word_sidebar = st.text_input("Got a new word that's puzzling you?", key="new_word_sidebar")
-        if st.button("Add Word", key="add_word_sidebar"):
-            if new_word_sidebar:
-                st.session_state['vocab_list'].append(new_word_sidebar.strip())
-                st.success(f"'{new_word_sidebar}' added to vocabulary!")
-                update_tracking_data('word', word=new_word_sidebar.strip())  # Update tracking data
-                time.sleep(2)
-                #st.experimental_rerun()  # Rerun to clear the input field
-            else:
-                st.warning("Please enter a word before adding.")
+        sidebar()
                 
     # Fetch and display news articles
     articles = fetch_news(category)
@@ -509,8 +533,6 @@ def learn_page():
                 with col1:
                     if 'id' in video and video['id']:
                         st.markdown(f'<iframe class="custom-video" src="https://www.youtube.com/embed/{video["id"]}" frameborder="0" allowfullscreen></iframe>', unsafe_allow_html=True)
-                        #video_url = f"https://www.youtube.com/embed/{video['id']}"
-                        #st.components.v1.iframe(video_url, height=400, style="max-width: 500px; width: 100%;")
                     else:
                         st.error("Error: Video ID not found.")
                 with col2:
@@ -537,120 +559,6 @@ def learn_page():
                 st.markdown("---")
     else:
         st.write("No videos found. Try adjusting your filters.")
-        
-# Initialize Translator and PyDictionary
-translator = Translator()
-dictionary = PyDictionary()
-
-# Function to translate text from French to English
-def translate_to_english(word):
-    translation = translator.translate(word, src='fr', dest='en')
-    return translation.text
-
-# Function to get a single definition of a word
-def get_single_definition(word):
-    meaning = dictionary.meaning(word)
-    if meaning:
-        for pos, defs in meaning.items():
-            if defs:
-                return defs[0]
-    return "No definition found."
-
-# Initialize session state for vocab list if it doesn't exist
-if 'vocab_list' not in st.session_state:
-    st.session_state['vocab_list'] = []
-if 'learned_words' not in st.session_state:
-    st.session_state['learned_words'] = []
-            
-def rehearse_page():
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        st.title("Let's Rehearse Your French Vocabulary! 📚")
-
-        st.subheader("Got a new word that's puzzling you?")
-        new_word = st.text_input("Type in the French word here:", key="new_word")
-
-        if st.button("Add to My List ✍️", key="add_word"):
-            if new_word:
-                st.session_state['vocab_list'].append(new_word.strip())
-                st.success(f"Great! '{new_word}' has been added to your vocabulary list. 🎉")
-                update_tracking_data('word', word=new_word.strip())  # Update tracking data
-                time.sleep(2)
-                st.experimental_rerun()  # Rerun to clear the input field
-            else:
-                st.warning("Oops! Don't forget to type a word before adding it. 📝")
-
-    with col2:
-        st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_vocab.png", width=300)
-
-    st.markdown("---")
-
-    st.subheader("Your Current Vocabulary List 🗒️")
-    if st.session_state['vocab_list']:
-        for idx, word in enumerate(st.session_state['vocab_list']):
-            col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
-            with col1:
-                st.write(word)
-            with col2:
-                translation = translate_to_english(word)
-                st.write(translation)
-            with col3:
-                definition = get_single_definition(translation)
-                st.write(definition)
-            with col4:
-                if st.button(f"✅ Learned", key=f"learn_{idx}"):
-                    st.session_state['learned_words'].append((word, translation, definition))
-                    st.session_state['vocab_list'].pop(idx)
-                    st.experimental_rerun()  # Refresh the page to reflect changes
-            with col5:
-                if st.button("🗑️ Remove", key=f"remove_{idx}"):
-                    st.session_state['vocab_list'].pop(idx)
-                    st.experimental_rerun()  # Refresh the page to reflect changes
-    else:
-        st.write("No words here yet. Add some new vocabulary to get started! ✨")
-
-    st.markdown("---")
-
-    st.subheader("Your Learned Words 🏅")
-    if st.session_state['learned_words']:
-        for idx, (word, translation, definition) in enumerate(st.session_state['learned_words']):
-            col1, col2, col3, col4, col5 = st.columns([1, 1, 3, 1, 1])
-            with col1:
-                st.write(word)
-            with col2:
-                st.write(translation)
-            with col3:
-                st.write(definition)
-            with col4:
-                if st.button(f"🔙 Rehearse", key=f"rehearse_{idx}_learned"):
-                    st.session_state['vocab_list'].append(word)
-                    st.session_state['learned_words'].pop(idx)
-                    st.experimental_rerun()  # Refresh the page to reflect changes
-            with col5:
-                if st.button("🗑️ Remove", key=f"remove_{idx}_learned"):
-                    st.session_state['learned_words'].pop(idx)
-                    st.experimental_rerun()  # Refresh the page to reflect changes
-    else:
-        st.write("You haven't marked any words as learned yet. Keep up the great work! 💪")
-
-    st.markdown("---")
-
-# Tracking data update function
-def update_tracking_data(type, category=None, word=None):
-    date_today = datetime.today().strftime('%Y-%m-%d')
-    
-    if type == 'level':
-        level = st.session_state['users']['default_user']['level']
-        st.session_state['tracking_data']['levels'].append((date_today, level))
-    
-    if type == 'article':
-        st.session_state['tracking_data']['articles_read'].append((date_today, category))
-    
-    if type == 'video':
-        st.session_state['tracking_data']['videos_watched'].append((date_today, category))
-    
-    if type == 'word':
-        st.session_state['tracking_data']['words_learned'].append((date_today, word))
 
 def track_page():
     col1, col2 = st.columns([3, 1])
