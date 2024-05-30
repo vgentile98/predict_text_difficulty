@@ -10,7 +10,8 @@ Madame Toast, a British toast, has always had a taste for adventure and challeng
 
 ### 1.1 Context
 This project was carried out as part of the ‘Data Science and Machine Learning’ course given by Professor Vlachos in the SMT master's programme. The idea for this project arose from a Kaggle competition aimed at improving foreign language learning.
-The aim of the Kaggle competition was to create a model capable of predicting the difficulty of texts written in French for English speakers. The main idea is that to improve your skills in a new language, it's important to read texts that are adapted to your level. 
+The aim of the Kaggle competition was to create a model capable of predicting the difficulty of texts written in French for English speakers. 
+
 For Madame Toast, the problem is clear: it is often difficult to find texts that perfectly match her level of proficiency, ranging from A1 to C2. An ideal text should contain a mix of familiar and unfamiliar words, to allow for a natural and stimulating progression. 
 
 ### 1.2 Pedagogical Importance 📘
