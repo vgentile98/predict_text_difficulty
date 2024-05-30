@@ -90,7 +90,23 @@ Diving deeper into these concrete examples of misclassification, here are our ke
 
 #### 2.2.3 Behaviour Analysis
 
+<p align="center">
+  <img src="image/misclassification_per_label.png" alt="Distribution Across Classes" height="250"/>
+  <br>
+  <em>Distribution of Misclassifications Across Classes</em>
+</p>
 
+<p align="center">
+  <img src="image/sentence_length_effect.png" alt="Effect of Sentence Length on Misclassification" height="250"/>
+  <br>
+  <em>Effect of Sentence Length on Misclassification</em>
+</p>
+
+<p align="center">
+  <img src="image/misclassification_patterns.png" alt="Common Misclassification Patterns" width="250"/>
+  <br>
+  <em>Common Misclassification Patterns</em>
+</p>
 
 
 ### 2.3 Final CamemBERT Model 🧀
