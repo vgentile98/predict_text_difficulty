@@ -19,6 +19,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import seaborn as sns
 import random
+import numpy as np
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
@@ -29,12 +30,12 @@ default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
 # Initialize some initial tracking data to simulate evolution if not already initialized
 if 'tracking_data' not in st.session_state:
-    initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
-    initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
+    initial_dates = [datetime.today() - timedelta(days=i) for i in range(59, -1, -1)]
+    initial_levels = ['A1']*29 + ['A2']*26 + ['B1']*5
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
 
     # Create a variable number of words learned per day
-    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2]
+    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2, 2, 2, 0, 0, 2, 0, 3, 0, 0, 0, 1, 2, 1, 3, 2, 1, 2, 0, 1, 2, 1, 3, 1, 3, 0, 3, 2, 3, 3, 1, 1, 0, 0, 1, 2, 1, 2, 3, 3, 3, 1, 2, 1, 3, 2]
     words_learned = []
     word_index = 0
     for i, date in enumerate(initial_dates):
@@ -437,7 +438,7 @@ def learn_page():
                 st.success(f"'{new_word_sidebar}' added to vocabulary!")
                 update_tracking_data('word', word=new_word_sidebar.strip())  # Update tracking data
                 time.sleep(2)
-                st.experimental_rerun()  # Rerun to clear the input field
+                #st.experimental_rerun()  # Rerun to clear the input field
             else:
                 st.warning("Please enter a word before adding.")
                 
@@ -445,7 +446,7 @@ def learn_page():
     articles = fetch_news(category)
     if articles:
         articles = assign_article_levels(articles)
-        articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))]
+        articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))] # Filter articles by user level
         for idx, article in enumerate(articles):
             with st.container():
                 # First row for image and level
@@ -497,7 +498,7 @@ def learn_page():
     if videos:
         videos = assign_video_levels(videos)
         user_level_videos = [video for video in videos if video.get('level') == user_level]  # Filter videos by user level
-        for idx, video in enumerate(videos):
+        for idx, video in enumerate(user_level_videos):
             with st.container():
                 col1, col2 = st.columns([0.9, 0.1])
                 with col1:
@@ -650,7 +651,7 @@ def track_page():
     col1, col2 = st.columns([3, 1])
     with col1:
         st.title("Track Your Progress 📈")
-        st.subheader("Bravo! You've been working hard - It's time to check where you're at!")
+        st.subheader("Bravo! You've been working hard - Let's see your achievements!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=300)
 
@@ -659,13 +660,16 @@ def track_page():
     col1, col2 = st.columns(2, gap="large")
 
     with col1:
-        st.subheader("Language Level Evolution")
+        st.subheader("Your Language Journey 🚀")
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
-            level_evolution['Level'] = pd.Categorical(level_evolution['Level'], categories=cefr_levels, ordered=True)
+            level_evolution['Week'] = level_evolution['Date'].dt.to_period('W').apply(lambda r: r.start_time)
+            level_evolution_grouped = level_evolution.groupby('Week')['Level'].agg(lambda x: x.value_counts().index[0]).reset_index()
+            level_evolution_grouped['Level'] = pd.Categorical(level_evolution_grouped['Level'], categories=cefr_levels, ordered=True)
+            
             plt.figure(figsize=(10, 5))
-            plt.plot(level_evolution['Date'], level_evolution['Level'].cat.codes + 1, marker='o', color='#fda500')
+            plt.plot(level_evolution_grouped['Week'], level_evolution_grouped['Level'].cat.codes + 1, marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Level')
             plt.yticks(ticks=range(1, len(cefr_levels) + 1), labels=cefr_levels)
@@ -678,14 +682,16 @@ def track_page():
             st.write("No data available yet.")
 
     with col2:
-        st.subheader("Words Learned Over Time")
+        st.subheader("Words You've Mastered 🏅")
         words_learned = pd.DataFrame(st.session_state['tracking_data']['words_learned'], columns=['Date', 'Word'])
         if not words_learned.empty:
             words_learned['Date'] = pd.to_datetime(words_learned['Date'])
-            words_learned['Count'] = 1
-            words_learned_grouped = words_learned.groupby('Date').sum().reset_index()
+            words_learned['Week'] = words_learned['Date'].dt.to_period('W').apply(lambda r: r.start_time)
+            words_learned_grouped = words_learned.groupby('Week').count().reset_index()
+            words_learned_grouped.rename(columns={'Word': 'Count'}, inplace=True)
+            
             plt.figure(figsize=(10, 5))
-            plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o', color='#fda500')
+            plt.plot(words_learned_grouped['Week'], words_learned_grouped['Count'], marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
@@ -702,14 +708,15 @@ def track_page():
     if not articles_read.empty or not videos_watched.empty:
         combined_read = pd.concat([articles_read, videos_watched])
         combined_read['Date'] = pd.to_datetime(combined_read['Date'])
+        combined_read['Week'] = combined_read['Date'].dt.to_period('W').apply(lambda r: r.start_time)
         combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby('Date').sum().reset_index()
+        combined_read_grouped = combined_read.groupby('Week').count().reset_index()
 
         col1, col2 = st.columns(2, gap="large")
         with col1:
-            st.subheader("Articles and Videos Read Over Time")
+            st.subheader("Your Reading and Watching Habits 📚🎥")
             plt.figure(figsize=(10, 5))
-            sns.lineplot(data=combined_read_grouped, x='Date', y='Count', marker='o', color='#fda500')
+            sns.lineplot(data=combined_read_grouped, x='Week', y='Count', marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
@@ -719,13 +726,12 @@ def track_page():
             st.pyplot(plt)
 
         with col2:
-            st.subheader("Distribution of Types of Content Read")
-            plt.figure(figsize=(5, 2))
+            st.subheader("Content Type Breakdown 📊")
             content_counts = combined_read['Category'].value_counts()
+            plt.figure(figsize=(5, 2))
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'], textprops={'fontsize': 5})
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
-            #plt.gcf().set_size_inches(10, 5)
             st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
@@ -738,8 +744,6 @@ def main():
 
     if not st.session_state['start']:
         st.title('')
-        st.title('')
-        st.title('')
         st.markdown("<style>div.row-widget.stButton > button:first-child {margin: 0 auto; display: block;}</style>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
@@ -747,7 +751,7 @@ def main():
             with cent_co:
                 st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png")
             st.markdown("<h1 style='text-align: center; color: black;'>From 'Oui Oui' to Fluent</h1>", unsafe_allow_html=True)
-            st.markdown("<h4 style='text-align: center; color: black;'>Start your journey to master French now</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='text-align: center; color: black;'>Start your journey to mastering French now</h4>", unsafe_allow_html=True)
             if st.button("Je commence!"):
                 st.session_state['start'] = True
                 st.session_state['initial_assessment'] = True
