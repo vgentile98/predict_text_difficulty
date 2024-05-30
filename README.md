@@ -27,8 +27,8 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
   <em>Victor Baguetto, the famous poetic baguette</em>
 </p>
 
-## How? - Our Methodology
-### Exporing Models 🔢
+## 2. How? - Our Methodology
+### 2.1 Exporing Models 🔢
 To start our project, we established baseline models to serve as a reference for future improvements. Our baseline models use simple algorithms and default parameters to provide an initial performance benchmark. After establishing our baseline models, we conducted hyperparameter optimization to improve their performance. Hyperparameter optimization involved the following steps:
 
 1. **Defining Parameter Grid**: Specifying a range of values for each hyperparameter. For example, for Logistic Regression, we varied the regularization strength and the solver type.
@@ -44,16 +44,16 @@ We then retrained the models using these optimized settings to ensure they were 
 
 From our report table, we identified Neural Network as the best-performing model based on the evaluation metrics. Therefore, this model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
-### Improving Best-Performing Model 🧠
+### 2.2 Improving Best-Performing Model 🧠
 
 
-### Final CamemBERT Model 🧀
+### 2.3 Final CamemBERT Model 🧀
 
 
 
 
 
-### OpenAI Fine-tuning
+### 2.4 OpenAI Fine-tuning
 As a final step, Mr Baguette tried model fine-tuning. This is a case of transfer learning where an existing model is trained on a specific task in order to optimise its performance. We used OpenAI models, for which you can obtain your API key and all the documentation on their dedicated platform: [OpenAI Platform](https://platform.openai.com/docs/overview)
 
 **Fine-tuning steps**
@@ -90,7 +90,7 @@ By following these steps and using the appropriate data formats, you can, like M
 
 
 ![bannière 3](image/bannière_3.png)
-## What? - Our Solution
+## 3. What? - Our Solution
 
 Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
 
@@ -104,22 +104,21 @@ The fundamental educational principles he has implemented in the application inc
 
 The main features of Monsieur Baguette's application are as follows:
 
-### Level assessment 🥇
+### 3.1 Level assessment 🥇
 Before starting to learn French, Mr Baguette first had to assess Mrs Toast's current level so that he could offer her suitable texts and videos. Eager to do the right thing, he suggests a questionnaire to assess her level.
 
-### Article and Video Browser 📄🎬
+### 3.2 Article and Video Browser 📄🎬
 Madame Toast can now search for articles and videos by filtering them according to the themes that interest her. This is made possible by the YouTube API for videos and the Media Stack API for articles. Monsieur Baguette's application obviously offers texts and videos that match the user's level. If Madame Toast would like to read the transcript of the video, that's also possible.
 
-### Immediate translation 🇬🇧
+### 3.3 Immediate translation 🇬🇧
 If Madame Toast doesn't understand a word, she can copy and paste it into the translator in the sidebar to get an immediate translation, thanks to the Google Translate library.
 
-### Vocabulary list 🆕
+### 3.4 Vocabulary list 🆕
 For words she wants to remember, she can add them to her vocabulary list, where she will have the definition thanks to the PyDictionary library, as well as the translation. She can also remove a word when she considers it has been learnt and track the evolution of her vocabulary.
 
-### Feedback process 🌟
+### 3.5 Feedback process 🌟
 Each time Madame Toast reads a text, she can give feedback: ‘Too Easy’ , ‘Just Right’ , ‘Challenging’, 'Too Difficult' . Depending on her answers, her level gradually changes and the application recommends texts adapted to her new level. She can also consult all her statistics on a dedicated page showing her progress and the various badges she can acquire as she progresses.
 
 These are the key features of the application that really appealed to Madame Toast. Thanks to her desire to learn and the fact that Mr Baguette's application was perfectly suited to her needs, she is no longer content to just say ‘Oui Oui’ to everything. Monsieur Baguette asked her to go for a drink on a Parisian terrace, but she replied ‘Non Non’ and went off into the arms of Monsieur Croissant, who recited Victor Baguetto's famous verses to her.
 
 ![bannière fin](image/bannière_fin.png)
-## Ready to Go - Guide to Run the Code
