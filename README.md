@@ -167,7 +167,25 @@ Our final model determines the difficulty of French texts using a fine-tuned Cam
 Compared to our baseline neural network model, our fine-tuned CamemBERT model offers several enhancements. It provides a deeper and more nuanced understanding of French, thanks to the advanced pre-trained language model. Dynamic padding efficiently handles variable-length inputs, while advanced learning rate scheduling and exponential decay improve training stability. Augmenting the data with synonym replacement increases dataset diversity and robustness. Additionally, class weights are used to address class imbalance, ensuring better performance across all difficulty levels.
 
 #### 2.3.3 Model Evaluation
+Here is a summary of our results, which show the performance of the fine-tuned CamemBERT model on the validation set:
+<p align="center">
+  <img src="image/camembert_evaluation.png" alt="Final Model Evaluation" height="250"/>
+  <br>
+  <em>Final Model Evaluation</em>
+</p>
 
+**Training Performance**:
+- The training loss consistently decreases across epochs, indicating that the model is learning from the training data effectively.
+
+**Validation Performance**:
+- The validation metrics (accuracy, precision, recall, F1-score) improve over the initial epochs, reaching the highest values around epochs 3 to 5.
+- There is a slight drop in performance in the final epoch (epoch 6), which could indicate some overfitting or fluctuations in the learning process.
+
+**General Performance**:
+- The CamemBERT model achieves a peak validation accuracy of 66%, precision of 69%, recall of 66%, and F1-score of 67% around epoch 3.
+- The final metrics are slightly lower but still demonstrate decent performance with 63% accuracy, precision, recall, and F1-score.
+  
+With this model, our accuracy on the actual test data was 0.602, which ranked us **14th** in the Kaggle competition.
 
 ### 2.4 OpenAI Fine-tuning
 As a final step, Mr Baguette tried model fine-tuning. This is a case of transfer learning where an existing model is trained on a specific task in order to optimise its performance. We used OpenAI models, for which you can obtain your API key and all the documentation on their dedicated platform: [OpenAI Platform](https://platform.openai.com/docs/overview)
