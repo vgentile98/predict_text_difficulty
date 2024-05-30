@@ -751,7 +751,7 @@ def main():
             with cent_co:
                 st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_logo.png")
             st.markdown("<h1 style='text-align: center; color: black;'>From 'Oui Oui' to Fluent</h1>", unsafe_allow_html=True)
-            st.markdown("<h4 style='text-align: center; color: black;'>Start your journey to master French now</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='text-align: center; color: black;'>Start your journey to mastering French now</h4>", unsafe_allow_html=True)
             if st.button("Je commence!"):
                 st.session_state['start'] = True
                 st.session_state['initial_assessment'] = True
