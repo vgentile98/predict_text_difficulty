@@ -42,7 +42,16 @@ We then retrained the models using these optimized settings to ensure they were 
   <img src="image/models_table.png" alt="Victor Baguetto" height="300"/>
 </p>
 
-From our report table, we identified Neural Network as the best-performing model based on the evaluation metrics. Therefore, this model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
+From our report table, models can be categorized by the performance:
+- **Best Model**: The Neural Network model outperforms all other models in terms of precision, recall, F1-score, and accuracy. This indicates that it is the most effective model for this classification task.
+
+- **Poor Performers**: KNN and Decision Tree show the poorest performance, struggling to classify the text difficulty accurately.
+
+- **Moderate Performers**: Logistic Regression, Random Forest, and Gradient Boosting have moderate performance, with balanced but not outstanding metrics.
+
+- **Good Performers**: SVM and Naive Bayes perform well, with good precision, recall, F1-score, and accuracy, but are slightly outperformed by the Neural Network.
+
+Therefore, our neural network model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
 ### 2.2 Improving Best-Performing Model 🧠
 
