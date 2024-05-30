@@ -71,9 +71,11 @@ By following these steps and using the appropriate data formats, you can, like M
 
 [![Tutoriel YouTube](image/video.png)](https://www.youtube.com/watch?v=pcwYBXNNm6E)
 
-<a href="https://www.youtube.com/watch?v=pcwYBXNNm6E" target="_blank">
-    <img src="image/video.png" alt="Tutoriel YouTube" width="300"/>
-</a>
+<div align="center">
+    <a href="https://www.youtube.com/watch?v=pcwYBXNNm6E" target="_blank">
+        <img src="image/video.png" alt="Tutoriel YouTube" width="500"/>
+    </a>
+</div>
 
 
 Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
