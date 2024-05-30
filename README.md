@@ -96,17 +96,21 @@ Diving deeper into these concrete examples of misclassification, here are our ke
 
 #### 2.2.3 Behaviour Analysis
 
+Let's do some more analysis to better understand how our model behaves.
+
 <p align="center">
   <img src="image/misclassification_per_label.png" alt="Distribution Across Classes" height="250"/>
   <br>
   <em>Distribution of Misclassifications Across Classes</em>
 </p>
 
-<p align="center">
-  <img src="image/sentence_length_effect.png" alt="Effect of Sentence Length on Misclassification" height="250"/>
-  <br>
-  <em>Effect of Sentence Length on Misclassification</em>
-</p>
+The misclassification rates across different classes reveal that:
+
+- **High Misclassification Rates for A2, B2, and C1**: These classes exhibit the highest misclassification rates, indicating that the model finds it particularly challenging to distinguish texts within these categories.
+- **Lower Misclassification Rates for A1 and B1**: These classes have relatively lower misclassification rates, suggesting better model performance for texts at these difficulty levels.
+- **Intermediate Levels**: The intermediate levels (A2, B2, C1) continue to pose significant challenges for the model, confirming our earlier observations from the confusion matrix.
+
+These findings suggest that the model **struggles with finer distinctions between difficulty levels, especially among intermediate classes**.
 
 <p align="center">
   <img src="image/misclassification_patterns.png" alt="Common Misclassification Patterns" width="250"/>
@@ -114,6 +118,25 @@ Diving deeper into these concrete examples of misclassification, here are our ke
   <em>Common Misclassification Patterns</em>
 </p>
 
+The table of common misclassification patterns reveals that:
+
+- **Adjacent Levels**: The most frequent misclassifications occur between adjacent levels (e.g., A1 misclassified as A2, A2 misclassified as B1). This indicates that the model has difficulty differentiating between closely related difficulty levels.
+- **Patterns of Confusion**: There are specific patterns of confusion, such as A1 and A2, and B1 and B2, where misclassifications are most common.
+  
+These patterns highlight the need for improved **feature extraction or additional context to better differentiate between similar difficulty levels**.
+
+<p align="center">
+  <img src="image/sentence_length_effect.png" alt="Effect of Sentence Length on Misclassification" height="250"/>
+  <br>
+  <em>Effect of Sentence Length on Misclassification</em>
+</p>
+
+The analysis of sentence length distribution indicates that:
+
+- **Shorter Sentences**: Misclassified instances tend to have shorter sentences compared to the overall distribution. This suggests that shorter sentences may lack sufficient contextual information for accurate classification.
+- **Longer Sentences**: There is a slight overlap in the distribution of sentence lengths for correctly classified and misclassified instances, but shorter sentences are more prone to errors.
+
+This insight implies that **enhancing the model's capability to understand context in shorter sentences could improve overall accuracy**.
 
 ### 2.3 Final CamemBERT Model 🧀
 
