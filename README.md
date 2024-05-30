@@ -53,7 +53,7 @@ From our report table, models can be categorized by the performance:
 
 Therefore, our neural network model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
-### 2.2 Improving Best-Performing Model 🧠
+### 2.2 Analyzing The Best-Performing Model 🧠
 #### 2.2.1 Confusion Matrix
 
 <p align="center">
@@ -84,6 +84,8 @@ Diving deeper into these concrete examples of misclassification, here are our ke
 - **Contextual ambiguities**: Sentences with contextual ambiguities or idiomatic expressions (e.g., "Il la sentait contre lui, si près, enfermée avec lui dans cette boîte noire...") are challenging for the model, leading to misclassifications. These cases probably need more contextual understanding which might not be fully captured by our baseline model.
 
 #### 2.2.3 Behaviour Analysis
+
+
 
 
 ### 2.3 Final CamemBERT Model 🧀
