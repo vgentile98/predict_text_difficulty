@@ -170,6 +170,7 @@ The fundamental educational principles he has implemented in the application inc
     </a>
 </div>
 
+
 The main features of Monsieur Baguette's application are as follows:
 
 ### 3.1 Level assessment 🥇
