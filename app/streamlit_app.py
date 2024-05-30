@@ -31,7 +31,7 @@ default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 # Initialize some initial tracking data to simulate evolution if not already initialized
 if 'tracking_data' not in st.session_state:
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(59, -1, -1)]
-    initial_levels = ['A1']*29 + ['A2']*30 + ['B1']*1
+    initial_levels = ['A1']*29 + ['A2']*26 + ['B1']*5
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
 
     # Create a variable number of words learned per day
