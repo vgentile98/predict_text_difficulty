@@ -106,7 +106,7 @@ def assign_article_levels(articles):
     return valid_articles
 
 # YouTube API key
-youtube_api_key = 'AIzaSyBzCYOWCFPFAtZKHAsD_kkj4jiVJBYvoI4'
+youtube_api_key = 'AIzaSyBHktH6XIGar0v7UStL1reXQUyx8aqxHwg'
 
 # Define the list of allowed channel IDs
 allowed_channels = [
