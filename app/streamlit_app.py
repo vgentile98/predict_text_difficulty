@@ -19,6 +19,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import seaborn as sns
 import random
+import numpy as np
 
 # Page Config
 st.set_page_config(layout='wide', page_title="OuiOui French Learning")
@@ -663,9 +664,12 @@ def track_page():
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
-            level_evolution['Level'] = pd.Categorical(level_evolution['Level'], categories=cefr_levels, ordered=True)
+            level_evolution['Week'] = level_evolution['Date'].dt.to_period('W').apply(lambda r: r.start_time)
+            level_evolution_grouped = level_evolution.groupby('Week')['Level'].agg(lambda x: x.value_counts().index[0]).reset_index()
+            level_evolution_grouped['Level'] = pd.Categorical(level_evolution_grouped['Level'], categories=cefr_levels, ordered=True)
+            
             plt.figure(figsize=(10, 5))
-            plt.plot(level_evolution['Date'], level_evolution['Level'].cat.codes + 1, marker='o', color='#fda500')
+            plt.plot(level_evolution_grouped['Week'], level_evolution_grouped['Level'].cat.codes + 1, marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Level')
             plt.yticks(ticks=range(1, len(cefr_levels) + 1), labels=cefr_levels)
@@ -706,13 +710,13 @@ def track_page():
         combined_read['Date'] = pd.to_datetime(combined_read['Date'])
         combined_read['Week'] = combined_read['Date'].dt.to_period('W').apply(lambda r: r.start_time)
         combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby('Week').sum().reset_index()
+        combined_read_grouped = combined_read.groupby(['Week', 'Category']).count().reset_index()
 
         col1, col2 = st.columns(2, gap="large")
         with col1:
             st.subheader("Articles and Videos Read Over Time")
             plt.figure(figsize=(10, 5))
-            sns.lineplot(data=combined_read_grouped, x='Week', y='Count', marker='o', color='#fda500')
+            sns.lineplot(data=combined_read_grouped, x='Week', y='Count', hue='Category', marker='o', palette='tab10')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
