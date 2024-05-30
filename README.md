@@ -16,7 +16,7 @@ For Madame Toast, the problem is clear: it is often difficult to find texts that
 
 ### 1.2 Pedagogical Importance 📘
 Madame Toast has a clear pedagogical principle: free and voluntary reading. As Krashen (2004) points out, this method allows students to choose reading material that interests them personally. This encourages them to read more and acquire new words in relevant contexts.
-However, Madame Toast is a new-generation toast and doesn't stop at written texts. She also loves videos. Martínez (2023) highlights the benefits of YouTube videos, including their accessibility, diversity of topics and levels of difficulty, and their ability to provide practical examples for specific skills, such as pronunciation. These resources are essential for Madame Toast, as they provide her with varied and practical opportunities to improve her French.
+However, Madame Toast is a new-generation toast and doesn't stop at written texts. She also loves videos. Martínez (2022) highlights the benefits of YouTube videos, including their accessibility, diversity of topics and levels of difficulty, and their ability to provide practical examples for specific skills, such as pronunciation. These resources are essential for Madame Toast, as they provide her with varied and practical opportunities to improve her French.
 
 ### 1.3 Our goal 🎯
 Our goal is clear: to help Madame Toast determine the difficulty of texts so that she can read those that are adapted to her level, and to measure the progress of her comprehension by gradually confronting more complex texts. Madame Toast will meet Monsieur Baguette, the most intelligent baguette in France, who will use his innovative application to help her analyze and predict the level of French sentences. This will facilitate personalized and progressive learning, making the process of learning French more motivating.
@@ -168,3 +168,10 @@ Each time Madame Toast reads a text, she can give feedback: ‘Too Easy’ , ‘
 These are the key features of the application that really appealed to Madame Toast. Thanks to her desire to learn and the fact that Mr Baguette's application was perfectly suited to her needs, she is no longer content to just say ‘Oui Oui’ to everything. Monsieur Baguette asked her to go for a drink on a Parisian terrace, but she replied ‘Non Non’ and went off into the arms of Monsieur Croissant, who recited Victor Baguetto's famous verses to her.
 
 ![bannière fin](image/bannière_fin.png)
+
+## Literature Reference
+
+Ma, Guadalupe, Martínez. (2022). YouTube Videos as a Resource for Self-Regulated Pronunciation Practice in EFL Distance Learning Environments. Journal of English language teaching and applied linguistics, 4(2):44-52. doi:10.32996/jeltal.2022.4.2.4:
+
+Krashen, Stephen. (2004). The Power of Reading: Insights from the Research.
+
