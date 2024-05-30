@@ -39,7 +39,7 @@ To start our project, we established baseline models to serve as a reference for
 We then retrained the models using these optimized settings to ensure they were fine-tuned for optimal performance. After retraining the models with the optimized hyperparameters, we evaluated their performance on the test data. The report table below shows the precision, recall, F1-score, and accuracy for all the optimized models:
 
 <p align="center">
-  <img src="image/models_table.png" alt="Victor Baguetto" height="300"/>
+  <img src="image/models_table.png" alt="Comparison Table" height="300"/>
 </p>
 
 From our report table, models can be categorized by the performance:
@@ -54,7 +54,15 @@ From our report table, models can be categorized by the performance:
 Therefore, our neural network model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
 ### 2.2 Improving Best-Performing Model 🧠
+#### 2.2.1 Confusion Matrix
 
+<p align="center">
+  <img src="image/confusion_matrix_nn.png" alt="Confusion Matrix" height="300"/>
+</p>
+
+#### 2.2.2 Erroneous Examples
+
+#### 2.2.3 Behaviour Analysis
 
 ### 2.3 Final CamemBERT Model 🧀
 
