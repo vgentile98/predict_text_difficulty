@@ -20,7 +20,7 @@ Our goal is clear: to help Madame Toast determine the difficulty of texts so tha
 For Madame Toast, every word she learns is a victory, every sentence she understands is another step towards mastering the language. She set off from London ready to overcome every obstacle on her way to understanding French. Her journey begins, with Paris as her final destination, where she hopes one day to converse fluently with Parisian brioches and read the works of the famous poet Victor Baguetto.
 ![victor hugo](image/Victor_Baguetto.png)
 
-
+<img src="image/Victor_Baguetto.png" alt="Victor Baguetto" width="200"/>
 ## How? - Our Methodology
 
 
