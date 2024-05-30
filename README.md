@@ -169,7 +169,7 @@ Compared to our baseline neural network model, our fine-tuned CamemBERT model of
 #### 2.3.3 Model Evaluation
 Here is a summary of our results, which show the performance of the fine-tuned CamemBERT model on the validation set:
 <p align="center">
-  <img src="image/camembert_evaluation.png" alt="Final Model Evaluation" height="250"/>
+  <img src="image/camembert_evaluation.png" alt="Final Model Evaluation" height="200"/>
   <br>
   <em>Final Model Evaluation</em>
 </p>
