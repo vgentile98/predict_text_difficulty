@@ -39,7 +39,7 @@ To start our project, we established baseline models to serve as a reference for
 We then retrained the models using these optimized settings to ensure they were fine-tuned for optimal performance. After retraining the models with the optimized hyperparameters, we evaluated their performance on the test data. The report table below shows the precision, recall, F1-score, and accuracy for all the optimized models:
 
 <p align="center">
-  <img src="image/models_table.png" alt="Victor Baguetto" height="200"/>
+  <img src="image/models_table.png" alt="Victor Baguetto" height="300"/>
 </p>
 
 From our report table, we identified Neural Network as the best-performing model based on the evaluation metrics. Therefore, this model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
