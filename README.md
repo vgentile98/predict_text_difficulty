@@ -69,8 +69,6 @@ By following these steps and using the appropriate data formats, you can, like M
 ![bannière 3](image/bannière_3.png)
 ## What? - Our Solution
 
-[![Tutoriel YouTube](image/video.png)](https://www.youtube.com/watch?v=pcwYBXNNm6E)
-
 <div align="center">
     <a href="https://www.youtube.com/watch?v=pcwYBXNNm6E" target="_blank">
         <img src="image/video.png" alt="Tutoriel YouTube" width="500"/>
