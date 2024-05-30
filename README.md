@@ -28,7 +28,7 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
 </p>
 
 ## How? - Our Methodology
-### Exporing Models
+### Exporing Models 🔢
 To start our project, we established baseline models to serve as a reference for future improvements. Our baseline models use simple algorithms and default parameters to provide an initial performance benchmark. After establishing our baseline models, we conducted hyperparameter optimization to improve their performance. Hyperparameter optimization involved the following steps:
 
 1. **Defining Parameter Grid**: Specifying a range of values for each hyperparameter. For example, for Logistic Regression, we varied the regularization strength and the solver type.
@@ -40,10 +40,10 @@ We then retrained the models using these optimized settings to ensure they were 
 
 From our report table, we identified Neural Network as the best-performing model based on the evaluation metrics. Therefore, this model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
-### Improving CamemBERT Model
+### Improving Best-Performing Model 🧠
 
 
-### Final CamemBERT Model
+### Final CamemBERT Model 🧀
 
 
 ### OpenAI Fine-tuning
