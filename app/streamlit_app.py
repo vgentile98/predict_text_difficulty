@@ -28,7 +28,7 @@ st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
-@st.cache(allow_output_mutation=True)
+@st.cache
 def initialize_tracking_data():
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
     initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
