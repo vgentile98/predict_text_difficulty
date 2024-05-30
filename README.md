@@ -27,7 +27,7 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
 
 ## How? - Our Methodology
 
-
+![bannière 3](image/bannière_3.png)
 ## What? - Our Solution
 Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
 
