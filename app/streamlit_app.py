@@ -28,6 +28,7 @@ st.set_page_config(layout='wide', page_title="OuiOui French Learning")
 cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
+@st.cache(allow_output_mutation=True)
 # Initialize some initial tracking data to simulate evolution if not already initialized
 if 'tracking_data' not in st.session_state:
     initial_dates = [datetime.today() - timedelta(days=i) for i in range(59, -1, -1)]
@@ -69,6 +70,7 @@ def ensure_user_data():
 mediastack_api_key = '76ab282b82f324666ac2a5510fd7f9f2'
 base_url = "http://api.mediastack.com/v1/news"
 
+@st.cache
 # Fetch news articles from mediastack API
 def fetch_news(category):
     params = {
@@ -139,7 +141,8 @@ allowed_channels = [
     'UC5Twj1Axp_-9HLsZ5o_cEQQ', #DocSeven
     'UC__xRB5L4toU9yYawt_lIKg' #blastinfo
 ]
-        
+
+@st.cache
 # Fetch YouTube videos with transcripts from specific channels
 def fetch_youtube_videos_with_transcripts(query, max_videos=3):
     try:
