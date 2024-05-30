@@ -78,7 +78,7 @@ def fetch_news(category):
         'access_key': mediastack_api_key,
         'languages': "fr",
         'categories': category,
-        'limit': 10
+        'limit': 20
     }
     response = requests.get(base_url, params=params)
     if response.status_code == 200:
@@ -143,7 +143,7 @@ allowed_channels = [
     'UC__xRB5L4toU9yYawt_lIKg'  # blastinfo
 ]
 
-def fetch_youtube_videos_with_transcripts(query, max_videos=5):
+def fetch_youtube_videos_with_transcripts(query, max_videos=15):
     try:
         youtube = build('youtube', 'v3', developerKey=youtube_api_key)
         videos = []
