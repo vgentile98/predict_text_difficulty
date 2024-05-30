@@ -50,6 +50,13 @@ For words she wants to remember, she can add them to her vocabulary list, where 
 ### Feedback process
 Each time Madame Toast reads a text, she can give feedback: ‘Too Easy’ , ‘Just Right’ , ‘Challenging’, 'Too Difficult' . Depending on her answers, her level gradually changes and the application recommends texts adapted to her new level. She can also consult all her statistics on a dedicated page showing her progress and the various badges she can acquire as she progresses.
 
-These are the key features of the application that really appealed to Madame Toast. Thanks to her desire to learn and the fact that Mr Baguette's application was perfectly suited to her needs, she is no longer content to just say ‘yes’ to everything. Monsieur Baguette asked her to go for a drink on a Parisian terrace, but she replied ‘No, no’ and went off into the arms of Monsieur Croissant, who recited Victor Baguetto's famous verses to her.
+These are the key features of the application that really appealed to Madame Toast. Thanks to her desire to learn and the fact that Mr Baguette's application was perfectly suited to her needs, she is no longer content to just say ‘Oui Oui’ to everything. Monsieur Baguette asked her to go for a drink on a Parisian terrace, but she replied ‘Non Non’ and went off into the arms of Monsieur Croissant, who recited Victor Baguetto's famous verses to her.
+
+<p align="center">
+  <img src="image/non-non.png" width="200" height="200">
+  <img src="image/amour.png" width="200" height="200">
+  <img src="image/Baguette_triste.png" width="200" height="200">
+</p>
+
 
 ## Ready to Go - Guide to Run the Code
