@@ -52,11 +52,5 @@ Each time Madame Toast reads a text, she can give feedback: ‘Too Easy’ , ‘
 
 These are the key features of the application that really appealed to Madame Toast. Thanks to her desire to learn and the fact that Mr Baguette's application was perfectly suited to her needs, she is no longer content to just say ‘Oui Oui’ to everything. Monsieur Baguette asked her to go for a drink on a Parisian terrace, but she replied ‘Non Non’ and went off into the arms of Monsieur Croissant, who recited Victor Baguetto's famous verses to her.
 
-<p align="center">
-  <img src="image/non-non.png" width="200" height="200">
-  <img src="image/amour.png" width="200" height="200">
-  <img src="image/Baguette_triste.png" width="200" height="200">
-</p>
-
-
+![bannière fin](image/bannière_fin.png)
 ## Ready to Go - Guide to Run the Code
