@@ -106,7 +106,7 @@ def assign_article_levels(articles):
     return valid_articles
 
 # YouTube API key
-youtube_api_key = 'AIzaSyA-bxNi0kWPYZVJO5Pq1oiW23go7XqC9ac'
+youtube_api_key = 'AIzaSyB-EEmKR7y3YsXAJIOTJ1do5DBsJdhpPb4'
 
 # Define the list of allowed channel IDs
 allowed_channels = [
@@ -143,7 +143,7 @@ allowed_channels = [
     'UC__xRB5L4toU9yYawt_lIKg'  # blastinfo
 ]
 
-def fetch_youtube_videos_with_transcripts(query, max_videos=15):
+def fetch_youtube_videos_with_transcripts(query, max_videos=5):
     try:
         youtube = build('youtube', 'v3', developerKey=youtube_api_key)
         videos = []
@@ -523,7 +523,9 @@ def learn_page():
     # Fetch and display YouTube videos with transcripts
     videos = fetch_youtube_videos_with_transcripts(category)
     if videos:
-        videos = assign_video_levels(videos)
+        #videos = assign_video_levels(videos)
+        for video in videos:
+            video['level'] = 'B1'
         user_level_videos = [video for video in videos if video.get('level') == user_level]  # Filter videos by user level
         for idx, video in enumerate(user_level_videos):
             with st.container():
