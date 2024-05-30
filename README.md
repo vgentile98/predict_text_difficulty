@@ -57,8 +57,18 @@ Therefore, our neural network model is the focus of our further analysis and imp
 #### 2.2.1 Confusion Matrix
 
 <p align="center">
-  <img src="image/confusion_matrix_nn.png" alt="Confusion Matrix" height="300"/>
+  <img src="image/confusion_matrix_nn.png" alt="Confusion Matrix" height="350"/>
 </p>
+
+Out of the confusion matrix of our neural network model, here are our key observations:
+- **Strong Performance for A1 and B1**: The model performs well in predicting A1 and B1, with 96 and 91 correct predictions, respectively.
+- **Moderate Performance for A2 and C2**: The model has a moderate number of correct predictions for A2 (69) and C2 (90). However, there are still significant misclassifications in these categories.
+- **Confusion Among Intermediate Levels (A2, B1, B2, C1)**: There is noticeable confusion among the intermediate levels (A2, B1, B2, C1). For example, B1 is often misclassified as A2 (35 times) and B2 (26 times).
+- **Challenges with B2 and C1**: The model struggles more with B2 and C1, showing lower correct predictions (66 for B2 and 65 for C1) and higher misclassifications across other levels.
+
+Therefore, two key insights drive our next improvement actions:
+- The model's ability to distinguish between adjacent levels (e.g., A1 vs A2, B1 vs B2) could be improved.
+- There are relatively fewer misclassifications between non-adjacent levels (e.g., A1 to C2), which indicates the model understands the general progression of difficulty but has trouble with finer distinctions.
 
 #### 2.2.2 Erroneous Examples
 
