@@ -54,9 +54,9 @@ From this table, models can be categorized by their performance:
 
 - **Poor Performers**: KNN and Decision Tree show the poorest performance, struggling to classify the text difficulty accurately.
 
-- **Moderate Performers**: Logistic Regression, Random Forest, and Gradient Boosting have moderate performance, with balanced but not outstanding metrics.
+- **Moderate Performers**: Random Forest, and Gradient Boosting have moderate performance, with balanced but not outstanding metrics.
 
-- **Good Performers**: SVM and Naive Bayes perform well, with good precision, recall, F1-score, and accuracy, but are slightly outperformed by the Neural Network.
+- **Good Performers**: Logistic Regression, Naive Bayes, and SVM perform well, with good precision, recall, F1-score, and accuracy, but are slightly outperformed by the Neural Network.
 
 Therefore, our neural network model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
