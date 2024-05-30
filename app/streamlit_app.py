@@ -422,7 +422,6 @@ def learn_page():
             if check_word_sidebar:
                 st.session_state['translation'] = translate_to_english(check_word_sidebar)
                 st.session_state['definition'] = get_single_definition(check_word_sidebar)
-                st.experimental_rerun()  # Rerun to display the results
             else:
                 st.warning("Please enter a word before checking.")
 
