@@ -45,6 +45,8 @@ We then retrained the models using these optimized settings to ensure they were 
 
 <p align="center">
   <img src="image/models_table.png" alt="Comparison Table" height="300"/>
+  <br>
+  <em>Models Performance Comparison</em>
 </p>
 
 From our report table, models can be categorized by the performance:
@@ -63,6 +65,8 @@ Therefore, our neural network model is the focus of our further analysis and imp
 
 <p align="center">
   <img src="image/confusion_matrix_nn.png" alt="Confusion Matrix" height="350"/>
+  <br>
+  <em>Confusion Matrix</em>
 </p>
 
 Out of the confusion matrix of our neural network model, here are our key observations:
@@ -78,7 +82,9 @@ Therefore, two key insights drive our next improvement actions:
 #### 2.2.2 Erroneous Predictions
 
 <p align="center">
-  <img src="image/erroneous_examples.png" alt="Confusion Matrix" height="250"/>
+  <img src="image/erroneous_examples.png" alt="Erroneous Classifications" height="250"/>
+  <br>
+  <em>Erroneous Classifications</em>
 </p>
 
 Diving deeper into these concrete examples of misclassification, here are our key observations:
