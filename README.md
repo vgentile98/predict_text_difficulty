@@ -18,9 +18,12 @@ However, Madame Toast is a new-generation toast and doesn't stop at written text
 ### 1.3 Our goal
 Our goal is clear: to help Madame Toast determine the difficulty of texts so that she can read those that are adapted to her level, and to measure the progress of her comprehension by gradually confronting more complex texts. Madame Toast will meet Monsieur Baguette, the most intelligent baguette in France, who will use his innovative application to help her analyze and predict the level of French sentences. This will facilitate personalized and progressive learning, making the process of learning French more motivating.
 For Madame Toast, every word she learns is a victory, every sentence she understands is another step towards mastering the language. She set off from London ready to overcome every obstacle on her way to understanding French. Her journey begins, with Paris as her final destination, where she hopes one day to converse fluently with Parisian brioches and read the works of the famous poet Victor Baguetto.
-![victor hugo](image/Victor_Baguetto.png)
 
-<img src="image/Victor_Baguetto.png" alt="Victor Baguetto" width="200"/>
+<p align="center">
+  <img src="image/Victor_Baguetto.png" alt="Victor Baguetto" width="200"/>
+  <br>
+  <em>Victor Baguetto, the famous poetic baguette</em>
+</p>
 ## How? - Our Methodology
 
 
