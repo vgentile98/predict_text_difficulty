@@ -47,10 +47,14 @@ To obtain our best results, we used a temperature of 0.2 and a seed of 42 when g
 
 **Data format**
 For the ‘davinci 002’ model, the training data must be organised in JSON format with prompt-response pairs as follows:
+
+
 {"prompt": "Translate the following English text to French: 'Hello, how are you?'",
   "completion": "Bonjour, comment ça va ?"}
 
 To use the ‘gpt-3.5-turbo’ model, the data must be organised in a different format, following the structure below:
+
+
 {"messages": [
     { "role": "system", "content": "You class French text on their difficulty" },
     { "role": "user", "content": "Bonjour, je suis une baguette'" },
