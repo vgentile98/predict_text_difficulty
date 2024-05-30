@@ -24,10 +24,32 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
   <br>
   <em>Victor Baguetto, the famous poetic baguette</em>
 </p>
+
 ## How? - Our Methodology
 
 
 ## What? - Our Solution
+Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
 
+The fundamental educational principles he has implemented in the application include free reading and different types of media, gamification, progress tracking and adaptation to the user's level.
+
+The main features of Monsieur Baguette's application are as follows:
+
+### Level assessment
+Before starting to learn French, Mr Baguette first had to assess Mrs Toast's current level so that he could offer her suitable texts and videos. Eager to do the right thing, he suggests a questionnaire to assess her level.
+
+### Article and Video Browser
+Madame Toast can now search for articles and videos by filtering them according to the themes that interest her. This is made possible by the YouTube API for videos and the Media Stack API for articles. Monsieur Baguette's application obviously offers texts and videos that match the user's level. If Madame Toast would like to read the transcript of the video, that's also possible.
+
+### Immediate translation
+If Madame Toast doesn't understand a word, she can copy and paste it into the translator in the sidebar to get an immediate translation, thanks to the Google Translate library.
+
+### Vocabulary list
+For words she wants to remember, she can add them to her vocabulary list, where she will have the definition thanks to the PyDictionary library, as well as the translation. She can also remove a word when she considers it has been learnt and track the evolution of her vocabulary.
+
+### Feedback process
+Each time Madame Toast reads a text, she can give feedback: ‘Too Easy’ , ‘Just Right’ , ‘Challenging’ . Depending on her answers, her level gradually changes and the application recommends texts adapted to her new level. She can also consult all her statistics on a dedicated page showing her progress and the various badges she can acquire as she progresses.
+
+These are the key features of the application that really appealed to Madame Toast. Thanks to her desire to learn and the fact that Mr Baguette's application was perfectly suited to her needs, she is no longer content to just say ‘yes’ to everything. Monsieur Baguette asked her to go for a drink on a Parisian terrace, but she replied ‘No, no’ and went off into the arms of Monsieur Croissant, who recited Victor Baguetto's famous verses to her.
 
 ## Ready to Go - Guide to Run the Code
