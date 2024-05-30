@@ -704,14 +704,15 @@ def track_page():
     if not articles_read.empty or not videos_watched.empty:
         combined_read = pd.concat([articles_read, videos_watched])
         combined_read['Date'] = pd.to_datetime(combined_read['Date'])
+        combined_read['Week'] = combined_read['Date'].dt.to_period('W').apply(lambda r: r.start_time)
         combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby('Date').sum().reset_index()
+        combined_read_grouped = combined_read.groupby('Week').sum().reset_index()
 
         col1, col2 = st.columns(2, gap="large")
         with col1:
             st.subheader("Articles and Videos Read Over Time")
             plt.figure(figsize=(10, 5))
-            sns.lineplot(data=combined_read_grouped, x='Date', y='Count', marker='o', color='#fda500')
+            sns.lineplot(data=combined_read_grouped, x='Week', y='Count', marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
@@ -721,13 +722,12 @@ def track_page():
             st.pyplot(plt)
 
         with col2:
-            st.subheader("Type of Content Read")
-            plt.figure(figsize=(5, 2))
+            st.subheader("Distribution of Types of Content Read")
             content_counts = combined_read['Category'].value_counts()
+            plt.figure(figsize=(5, 2))
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'], textprops={'fontsize': 5})
             plt.gca().set_facecolor('#fdf1e1')
             plt.gcf().set_facecolor('#fdf1e1')
-            #plt.gcf().set_size_inches(10, 5)
             st.pyplot(plt)
     else:
         st.write("No articles or videos read yet.")
