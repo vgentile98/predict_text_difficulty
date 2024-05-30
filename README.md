@@ -235,7 +235,8 @@ The fundamental educational principles he has implemented in the application inc
         <img src="image/video.png" alt="Tutoriel YouTube" width="500"/>
     </a>
 </div>
-
+<br>
+*In case the embedded video doesn't work, please find our video here: https://www.youtube.com/watch?v=pcwYBXNNm6E*
 
 The main features of Monsieur Baguette's application are as follows:
 
@@ -263,4 +264,3 @@ These are the key features of the application that really appealed to Madame Toa
 Ma, Guadalupe, Martínez. (2022). YouTube Videos as a Resource for Self-Regulated Pronunciation Practice in EFL Distance Learning Environments. Journal of English language teaching and applied linguistics, 4(2):44-52. doi:10.32996/jeltal.2022.4.2.4:
 
 Krashen, Stephen. (2004). The Power of Reading: Insights from the Research.
-
