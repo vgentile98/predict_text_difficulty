@@ -737,9 +737,9 @@ def main():
         st.session_state['start'] = False  # This keeps track of whether the user has started the app
 
     if not st.session_state['start']:
-        st.title('')
-        st.title('')
-        st.title('')
+        #st.title('')
+        #st.title('')
+        #st.title('')
         st.markdown("<style>div.row-widget.stButton > button:first-child {margin: 0 auto; display: block;}</style>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
