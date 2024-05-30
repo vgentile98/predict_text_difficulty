@@ -192,7 +192,7 @@ These are the key features of the application that really appealed to Madame Toa
 
 ![bannière fin](image/bannière_fin.png)
 
-## Literature Reference
+## Literature References
 
 Ma, Guadalupe, Martínez. (2022). YouTube Videos as a Resource for Self-Regulated Pronunciation Practice in EFL Distance Learning Environments. Journal of English language teaching and applied linguistics, 4(2):44-52. doi:10.32996/jeltal.2022.4.2.4:
 
