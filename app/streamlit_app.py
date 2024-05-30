@@ -651,7 +651,7 @@ def track_page():
     col1, col2 = st.columns([3, 1])
     with col1:
         st.title("Track Your Progress 📈")
-        st.subheader("Bravo! You've been working hard - It's time to check where you're at!")
+        st.subheader("Bravo! You've been working hard - Let's see your achievements!")
     with col2:
         st.image("https://raw.githubusercontent.com/vgentile98/predict_text_difficulty/main/app/images/baguette_progress.png", width=300)
 
@@ -660,7 +660,7 @@ def track_page():
     col1, col2 = st.columns(2, gap="large")
 
     with col1:
-        st.subheader("Language Level Evolution")
+        st.subheader("Your Language Journey 🚀")
         level_evolution = pd.DataFrame(st.session_state['tracking_data']['levels'], columns=['Date', 'Level'])
         if not level_evolution.empty:
             level_evolution['Date'] = pd.to_datetime(level_evolution['Date'])
@@ -682,7 +682,7 @@ def track_page():
             st.write("No data available yet.")
 
     with col2:
-        st.subheader("Words Learned Over Time")
+        st.subheader("Words You've Mastered 🏅")
         words_learned = pd.DataFrame(st.session_state['tracking_data']['words_learned'], columns=['Date', 'Word'])
         if not words_learned.empty:
             words_learned['Date'] = pd.to_datetime(words_learned['Date'])
@@ -710,13 +710,13 @@ def track_page():
         combined_read['Date'] = pd.to_datetime(combined_read['Date'])
         combined_read['Week'] = combined_read['Date'].dt.to_period('W').apply(lambda r: r.start_time)
         combined_read['Count'] = 1
-        combined_read_grouped = combined_read.groupby(['Week', 'Category']).count().reset_index()
+        combined_read_grouped = combined_read.groupby('Week').count().reset_index()
 
         col1, col2 = st.columns(2, gap="large")
         with col1:
-            st.subheader("Articles and Videos Read Over Time")
+            st.subheader("Your Reading and Watching Habits 📚🎥")
             plt.figure(figsize=(10, 5))
-            sns.lineplot(data=combined_read_grouped, x='Week', y='Count', hue='Category', marker='o', palette='tab10')
+            sns.lineplot(data=combined_read_grouped, x='Week', y='Count', marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
@@ -726,7 +726,7 @@ def track_page():
             st.pyplot(plt)
 
         with col2:
-            st.subheader("Distribution of Types of Content Read")
+            st.subheader("Content Type Breakdown 📊")
             content_counts = combined_read['Category'].value_counts()
             plt.figure(figsize=(5, 2))
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'], textprops={'fontsize': 5})
