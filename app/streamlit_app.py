@@ -682,10 +682,12 @@ def track_page():
         words_learned = pd.DataFrame(st.session_state['tracking_data']['words_learned'], columns=['Date', 'Word'])
         if not words_learned.empty:
             words_learned['Date'] = pd.to_datetime(words_learned['Date'])
-            words_learned['Count'] = 1
-            words_learned_grouped = words_learned.groupby('Date').sum().reset_index()
+            words_learned['Week'] = words_learned['Date'].dt.to_period('W').apply(lambda r: r.start_time)
+            words_learned_grouped = words_learned.groupby('Week').count().reset_index()
+            words_learned_grouped.rename(columns={'Word': 'Count'}, inplace=True)
+            
             plt.figure(figsize=(10, 5))
-            plt.plot(words_learned_grouped['Date'], words_learned_grouped['Count'], marker='o', color='#fda500')
+            plt.plot(words_learned_grouped['Week'], words_learned_grouped['Count'], marker='o', color='#fda500')
             plt.xlabel('Date')
             plt.ylabel('Count')
             plt.grid(True)
@@ -719,7 +721,7 @@ def track_page():
             st.pyplot(plt)
 
         with col2:
-            st.subheader("Distribution of Types of Content Read")
+            st.subheader("Type of Content Read")
             plt.figure(figsize=(5, 2))
             content_counts = combined_read['Category'].value_counts()
             plt.pie(content_counts, labels=content_counts.index, autopct='%1.1f%%', startangle=140, colors=['#fda500', '#fdaa00', '#fdac00', '#fdaf00', '#fdb100', '#fdb300', '#fdb500'], textprops={'fontsize': 5})
