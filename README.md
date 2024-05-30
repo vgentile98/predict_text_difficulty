@@ -28,6 +28,10 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
 </p>
 
 ## 2. How? - Our Methodology
+
+![bannière 2](image/bannière_2.png)
+
+
 ### 2.1 Exporing Models 🔢
 To start our project, we established baseline models to serve as a reference for future improvements. Our baseline models use simple algorithms and default parameters to provide an initial performance benchmark. After establishing our baseline models, we conducted hyperparameter optimization to improve their performance. Hyperparameter optimization involved the following steps:
 
