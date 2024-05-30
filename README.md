@@ -73,7 +73,7 @@ Therefore, two key insights drive our next improvement actions:
 #### 2.2.2 Erroneous Predictions
 
 <p align="center">
-  <img src="image/erroneous_examples.png" alt="Confusion Matrix" height="200"/>
+  <img src="image/erroneous_examples.png" alt="Confusion Matrix" height="250"/>
 </p>
 
 Diving deeper into these concrete examples of misclassification, here are our key observations:
