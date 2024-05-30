@@ -49,7 +49,7 @@ We then retrained the models using these optimized settings to ensure they were 
   <em>Models Performance Comparison</em>
 </p>
 
-From our report table, models can be categorized by their performance:
+From this table, models can be categorized by their performance:
 - **Best Model**: The Neural Network model outperforms all other models in terms of precision, recall, F1-score, and accuracy. This indicates that it is the most effective model for this classification task.
 
 - **Poor Performers**: KNN and Decision Tree show the poorest performance, struggling to classify the text difficulty accurately.
