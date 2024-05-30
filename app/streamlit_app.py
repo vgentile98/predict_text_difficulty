@@ -36,7 +36,7 @@ def initialize_tracking_data():
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
 
     # Create a variable number of words learned per day
-    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2, 1, 2, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 3, 2, 1, 2, 3, 1, 2, 3, 3, 2, 1, 2, 1, 2, 1, 3, 2]
+    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2, 1, 2, 0, 1, 1, 1, 3, 2, 1, 0, 1, 2, 1, 0, 2, 1, 2, 0, 1, 2, 1, 3, 2, 1, 2, 1, 2, 2, 3, 2, 1, 2, 2, 1, 3, 1, 3, 2, 3, 3, 1, 2, 1, 3, 3]
     words_learned = []
     word_index = 0
     for i, date in enumerate(initial_dates):
