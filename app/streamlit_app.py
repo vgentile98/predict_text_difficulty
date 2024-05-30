@@ -445,7 +445,7 @@ def learn_page():
     articles = fetch_news(category)
     if articles:
         articles = assign_article_levels(articles)
-        articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))]
+        articles = [article for article in articles if article.get('level') == user_level and is_valid_image_url(article.get('image'))] # Filter articles by user level
         for idx, article in enumerate(articles):
             with st.container():
                 # First row for image and level
@@ -497,7 +497,7 @@ def learn_page():
     if videos:
         videos = assign_video_levels(videos)
         user_level_videos = [video for video in videos if video.get('level') == user_level]  # Filter videos by user level
-        for idx, video in enumerate(videos):
+        for idx, video in enumerate(user_level_videos):
             with st.container():
                 col1, col2 = st.columns([0.9, 0.1])
                 with col1:
@@ -737,9 +737,7 @@ def main():
         st.session_state['start'] = False  # This keeps track of whether the user has started the app
 
     if not st.session_state['start']:
-        #st.title('')
-        #st.title('')
-        #st.title('')
+        st.title('')
         st.markdown("<style>div.row-widget.stButton > button:first-child {margin: 0 auto; display: block;}</style>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
