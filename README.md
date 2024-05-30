@@ -3,8 +3,6 @@
 ![bannière 1](image/bannière_1.png)
 
 
-[![Tutoriel YouTube](image/video.png)](https://www.youtube.com/watch?v=pcwYBXNNm6E)
-
 
 ## 1. Why? - Our Challenge
 
@@ -70,6 +68,10 @@ By following these steps and using the appropriate data formats, you can, like M
 
 ![bannière 3](image/bannière_3.png)
 ## What? - Our Solution
+
+[![Tutoriel YouTube](image/video.png)](https://www.youtube.com/watch?v=pcwYBXNNm6E)
+
+
 Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
 
 The fundamental educational principles he has implemented in the application include free reading and different types of media, gamification, progress tracking and adaptation to the user's level.
