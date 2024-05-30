@@ -236,6 +236,7 @@ The fundamental educational principles he has implemented in the application inc
     </a>
 </div>
 <br>
+
 *In case the embedded video doesn't work, please find our video here: https://www.youtube.com/watch?v=pcwYBXNNm6E*
 
 The main features of Monsieur Baguette's application are as follows:
