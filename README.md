@@ -31,8 +31,8 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
 ### Exporing Models
 To start our project, we established baseline models to serve as a reference for future improvements. Our baseline models use simple algorithms and default parameters to provide an initial performance benchmark. After establishing our baseline models, we conducted hyperparameter optimization to improve their performance. Hyperparameter optimization involved the following steps:
 
-1. **Defining Parameter Grid**: Specifying a range of values for each hyperparameter. For example, for Logistic Regression, we varied the regularization strength (`C`) and the solver type.
-2. **Search Method**: Using Grid Search (`GridSearchCV`) to explore different hyperparameter combinations systematically.
+1. **Defining Parameter Grid**: Specifying a range of values for each hyperparameter. For example, for Logistic Regression, we varied the regularization strength and the solver type.
+2. **Search Method**: Using Grid Search to explore different hyperparameter combinations systematically.
 3. **Cross-Validation**: Evaluating the performance of each combination using 5-fold cross-validation to ensure the model generalizes well.
 4. **Selecting Best Parameters**: Identifying and selecting the combination that yields the best performance metrics.
 
