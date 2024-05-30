@@ -62,6 +62,8 @@ To use the ‘gpt-3.5-turbo’ model, the data must be organised in a different 
   ]}
 
 By following these steps and using the appropriate data formats, you can, like Mr Baguette, fine-tune the OpenAI models to classify the level of French text. 
+
+
 ![bannière 3](image/bannière_3.png)
 ## What? - Our Solution
 Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
