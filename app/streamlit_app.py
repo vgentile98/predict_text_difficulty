@@ -29,14 +29,13 @@ cefr_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 default_user_data = {'default_user': {'level': 'A1', 'feedback_points': 0}}
 
 @st.cache(allow_output_mutation=True)
-# Initialize some initial tracking data to simulate evolution if not already initialized
-if 'tracking_data' not in st.session_state:
-    initial_dates = [datetime.today() - timedelta(days=i) for i in range(59, -1, -1)]
-    initial_levels = ['A1']*29 + ['A2']*26 + ['B1']*5
+def initialize_tracking_data():
+    initial_dates = [datetime.today() - timedelta(days=i) for i in range(14, -1, -1)]
+    initial_levels = ['A1']*5 + ['A2']*5 + ['B1']*3 + ['B2']*2
     initial_words = ['tempête', 'engueuler', 'rigoler', 'jaune', 'dormir', 'bleu', 'voiture', 'ciseaux', 'souris', 'lapin']
 
     # Create a variable number of words learned per day
-    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2, 2, 2, 0, 0, 2, 0, 3, 0, 0, 0, 1, 2, 1, 3, 2, 1, 2, 0, 1, 2, 1, 3, 1, 3, 0, 3, 2, 3, 3, 1, 1, 0, 0, 1, 2, 1, 2, 3, 3, 3, 1, 2, 1, 3, 2]
+    words_per_day = [1, 2, 0, 1, 2, 1, 3, 2, 1, 0, 1, 2, 1, 3, 2]
     words_learned = []
     word_index = 0
     for i, date in enumerate(initial_dates):
@@ -54,12 +53,15 @@ if 'tracking_data' not in st.session_state:
         for _ in range(random.randint(0, 2)):  # Variable number of videos per day
             videos_watched.append((date, random.choice(categories)))
 
-    st.session_state['tracking_data'] = {
+    return {
         'levels': list(zip(initial_dates, initial_levels)),
         'articles_read': articles_read,
         'videos_watched': videos_watched,
         'words_learned': words_learned
     }
+
+if 'tracking_data' not in st.session_state:
+    st.session_state['tracking_data'] = initialize_tracking_data()
     
 # Function to ensure that user data is initialized in session state
 def ensure_user_data():
