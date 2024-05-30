@@ -70,9 +70,21 @@ Therefore, two key insights drive our next improvement actions:
 - The model's ability to distinguish between adjacent levels (e.g., A1 vs A2, B1 vs B2) could be improved.
 - There are relatively fewer misclassifications between non-adjacent levels (e.g., A1 to C2), which indicates the model understands the general progression of difficulty but has trouble with finer distinctions.
 
-#### 2.2.2 Erroneous Examples
+#### 2.2.2 Erroneous Predictions
+
+<p align="center">
+  <img src="image/erroneous_examples.png" alt="Confusion Matrix" height="300"/>
+</p>
+
+Diving deeper into these concrete examples of misclassification, here are our key observations:
+
+- **Complex sentences with higher difficulty**: Sentences labeled as C2 are often misclassified as C1 (e.g., "J'étais également incapable de distraction et d'étude."). This might be due to subtle nuances and complex structures in C2 sentences that are not captured effectively by the model.
+- **Intermediate levels**: As previously observed already, misclassifications are common among intermediate levels (e.g., B1, B2, C1). For instance, "Elle est arrivée blessée à la consultation médicale, mais souriante." is labeled as B2 but predicted as B1. This indicates that the model struggles to differentiate between closely related difficulty levels.
+- **Simple sentences misclassified as harder levels**: Simple sentences like "Ils sont au lycée français." labeled as A1 are misclassified as B2. This suggests that the model may be overestimating the complexity due to certain keywords or structures.
+- **Contextual ambiguities**: Sentences with contextual ambiguities or idiomatic expressions (e.g., "Il la sentait contre lui, si près, enfermée avec lui dans cette boîte noire...") are challenging for the model, leading to misclassifications. These cases probably need more contextual understanding which might not be fully captured by our baseline model.
 
 #### 2.2.3 Behaviour Analysis
+
 
 ### 2.3 Final CamemBERT Model 🧀
 
