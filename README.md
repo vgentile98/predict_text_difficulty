@@ -31,6 +31,33 @@ For Madame Toast, every word she learns is a victory, every sentence she underst
 ### OpenAI Fine-tuning
 As a final step, Mr Baguette tried model fine-tuning. This is a case of transfer learning where an existing model is trained on a specific task in order to optimise its performance. We used OpenAI models, for which you can obtain your API key and all the documentation on their dedicated platform: [OpenAI Platform](https://platform.openai.com/docs/overview)
 
+**Fine-tuning steps**
+
+**1. Data Preparation:** Gather and prepare the data specific to the task for which you wish to fine-tune the model. For ‘davinci 002’, the data must be organised into prompt-response pairs.
+
+**2. Model Selection:** Choose a pre-trained base model such as ‘davinci 002’ or ‘gpt-3.5-turbo’ from the OpenAI platform.
+
+**3. Model Training:** Use the OpenAI API to start the fine-tuning process with your prepared dataset.
+
+**4. Evaluation and Prediction Generation:** Evaluate the performance of the fine-tuned model. Make predictions on test data. 
+
+We found slightly lower results in terms of accuracy compared with our best Bert model, but better consistency in the results. The model that works best is ‘davinci 002’, followed by the famous ‘gpt-3.5-turbo’.
+
+To obtain our best results, we used a temperature of 0.2 and a seed of 42 when generating the predictions. You will find a notebook to use in the document. You will of course need to enter your own API key for this to work. The notebook shows an example of fine-tuning the ‘davinci 002’ model.
+
+**Data format**
+For the ‘davinci 002’ model, the training data must be organised in JSON format with prompt-response pairs as follows:
+{"prompt": "Translate the following English text to French: 'Hello, how are you?'",
+  "completion": "Bonjour, comment ça va ?"}
+
+To use the ‘gpt-3.5-turbo’ model, the data must be organised in a different format, following the structure below:
+{"messages": [
+    { "role": "system", "content": "You class French text on their difficulty" },
+    { "role": "user", "content": "Bonjour, je suis une baguette'" },
+    { "role": "assistant", "content": "A1" }
+  ]}
+
+By following these steps and using the appropriate data formats, you can, like Mr Baguette, fine-tune the OpenAI models to classify the level of French text. 
 ![bannière 3](image/bannière_3.png)
 ## What? - Our Solution
 Now that we've found the right model for Madame Toast to overcome her major difficulty of defining the difficulty of texts, she only needs to take a few more steps before conquering Paris. When she arrived on French shores, she met Monsieur Baguette. An experienced StreamLit application developer and madly in love with Madame Toast, he decided to develop an application that would meet her needs perfectly.
