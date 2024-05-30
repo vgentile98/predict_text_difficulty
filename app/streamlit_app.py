@@ -73,7 +73,6 @@ def ensure_user_data():
 mediastack_api_key = '76ab282b82f324666ac2a5510fd7f9f2'
 base_url = "http://api.mediastack.com/v1/news"
 
-@st.cache
 def fetch_news(category):
     params = {
         'access_key': mediastack_api_key,
@@ -144,7 +143,6 @@ allowed_channels = [
     'UC__xRB5L4toU9yYawt_lIKg'  # blastinfo
 ]
 
-@st.cache
 def fetch_youtube_videos_with_transcripts(query, max_videos=3):
     try:
         youtube = build('youtube', 'v3', developerKey=youtube_api_key)
