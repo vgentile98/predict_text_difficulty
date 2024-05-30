@@ -60,7 +60,7 @@ From our report table, models can be categorized by the performance:
 
 Therefore, our neural network model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
-### 2.2 Analyzing The Best-Performing Model 🧠
+### 2.2 Analyzing & Improving The Best-Performing Model 🧠
 #### 2.2.1 Confusion Matrix
 
 <p align="center">
@@ -94,7 +94,7 @@ Diving deeper into these concrete examples of misclassification, here are our ke
 - **Simple sentences misclassified as harder levels**: Simple sentences like "Ils sont au lycée français." labeled as A1 are misclassified as B2. This suggests that the model may be overestimating the complexity due to certain keywords or structures.
 - **Contextual ambiguities**: Sentences with contextual ambiguities or idiomatic expressions (e.g., "Il la sentait contre lui, si près, enfermée avec lui dans cette boîte noire...") are challenging for the model, leading to misclassifications. These cases probably need more contextual understanding which might not be fully captured by our baseline model.
 
-#### 2.2.3 Behaviour Analysis
+#### 2.2.3 Further Behaviour Analysis
 
 Let's do some more analysis to better understand how our model behaves.
 
@@ -140,8 +140,33 @@ This insight implies that **enhancing the model's capability to understand conte
 
 ### 2.3 Final CamemBERT Model 🧀
 
+#### 2.3.1 How Does the Model Determine Difficulty?
+Our final model determines the difficulty of French texts using a fine-tuned CamemBERT model. CamemBERT is a transformer-based model specifically designed for French language understanding, similar to BERT but adapted to French. The model takes in text inputs and processes them to predict the difficulty level based on the learned patterns from the training data.
 
+#### 2.3.2 What Does the Algorithm Include?
+**Data Preparation**:
+- **Text Preprocessing**: Clean the text data by converting to lowercase, removing punctuation, and removing extra whitespace.
+- **Label Encoding**: Encode the difficulty levels into numerical format for training.
 
+**Data Augmentation**:
+- **Augment the training data**: Use synonym replacement to increase the diversity of training examples.
+
+**Tokenization and Encoding**:
+- **Use the CamemBERT tokenizer** to convert text into tokens and encode them into input tensors suitable for the CamemBERT model. This involves adding special tokens, truncating to the maximum length, and generating attention masks.
+
+**Model Training**:
+- **Load the pre-trained CamemBERT model and fine-tune it** on the training data.
+- **Apply class weights** to handle class imbalance during training.
+- **Use dynamic padding** to efficiently handle varying sentence lengths.
+
+**Optimization**:
+- **Use an AdamW optimizer with a learning rate scheduler** to adjust the learning rate during training.
+- **Apply exponential decay** to stabilize training.
+
+#### 2.3.3 What Key Improvements Have Been Made?
+Compared to our baseline neural network model, our fine-tuned CamemBERT model offers several enhancements. It provides a deeper and more nuanced understanding of French, thanks to the advanced pre-trained language model. Dynamic padding efficiently handles variable-length inputs, while advanced learning rate scheduling and exponential decay improve training stability. Augmenting the data with synonym replacement increases dataset diversity and robustness. Additionally, class weights are used to address class imbalance, ensuring better performance across all difficulty levels.
+
+#### 2.3.3 Model Evaluation
 
 
 ### 2.4 OpenAI Fine-tuning
