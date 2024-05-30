@@ -1,5 +1,7 @@
 # Madame Toast's French Adventure
 
+![bannière 1](image/bannière_1.png)
+
 ## 1. Why? - Our Challenge
 
 Madame Toast, a British toaster, has always had a taste for adventure and challenge. From her London kitchen, she dreams of strolling the cobbled streets of Paris, picking up croissants, chatting to the finest macaroons and reading French classics with ease. But to do so, she has to overcome a major obstacle: learning French.
