@@ -38,12 +38,17 @@ To start our project, we established baseline models to serve as a reference for
 
 We then retrained the models using these optimized settings to ensure they were fine-tuned for optimal performance. After retraining the models with the optimized hyperparameters, we evaluated their performance on the test data. The report table below shows the precision, recall, F1-score, and accuracy for all the optimized models:
 
+![comparison table](image/models_table.png)
+
 From our report table, we identified Neural Network as the best-performing model based on the evaluation metrics. Therefore, this model is the focus of our further analysis and improvement steps. In the next sections, we take a closer look at this best model, analyze its performance in more detail, and refine it to achieve even better results.
 
 ### Improving Best-Performing Model 🧠
 
 
 ### Final CamemBERT Model 🧀
+
+
+
 
 
 ### OpenAI Fine-tuning
